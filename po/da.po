@@ -1,0 +1,377 @@
+# Danish translation of menu.
+# Copyright (C) 2011 menu og nedenstående oversættere.
+# This file is distributed under the same license as the menu package.
+# Morten Brix Pedersen <morten@wtf.dk>, 2005.
+# Joe Hansen (joedalton2@yahoo.dk), 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: menu 2.1.44\n"
+"Report-Msgid-Bugs-To: menu@packages.debian.org\n"
+"POT-Creation-Date: 2007-10-05 07:30+0200\n"
+"PO-Revision-Date: 2011-01-10 17:30+01:00\n"
+"Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
+"Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
+"Language: da\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../install-menu/functions.cc:92
+msgid "Zero-size argument to print function."
+msgstr "Argument med nul-størrelse angivet til print-funktion."
+
+#: ../install-menu/install-menu.cc:202
+msgid "install-menu: checking directory %1\n"
+msgstr "install-menu: tjekker mappen %1\n"
+
+#: ../install-menu/install-menu.cc:215
+msgid "install-menu: creating directory %1:\n"
+msgstr "install-menu: opretter mappen %1:\n"
+
+#: ../install-menu/install-menu.cc:217
+msgid "Could not create directory(%1): %2"
+msgstr "Kunne ikke oprette mappe(%1): %2"
+
+#: ../install-menu/install-menu.cc:219
+msgid "Could not change directory(%1): %2"
+msgstr "Kunne ikke ændre mappe(%1): %2"
+
+#: ../install-menu/install-menu.cc:222
+msgid "install-menu: directory %1 already exists\n"
+msgstr "install-menu: mappen %1 findes allerede\n"
+
+#. Do not translate supported
+#: ../install-menu/install-menu.cc:447
+msgid "install-menu: [supported]: name=%1\n"
+msgstr "install-menu: [supported]: name=%1\n"
+
+#: ../install-menu/install-menu.cc:464
+msgid "Menu entry lacks mandatory field \"%1\".\n"
+msgstr "Menupunkt mangler det obligatoriske felt \"%1\".\n"
+
+#: ../install-menu/install-menu.cc:470
+msgid "Unknown value for field %1=\"%2\".\n"
+msgstr "Ukendt værdi i feltet %1=\"%2\".\n"
+
+#. Do not translate quoted text
+#: ../install-menu/install-menu.cc:617
+msgid ""
+"install-menu: \"hotkeycase\" can only be \"sensitive\" or \"insensitive\"\n"
+msgstr ""
+"install-menu: \"hotkeycase\" kan kun være \"sensitive\" eller \"insensitive"
+"\"\n"
+
+#: ../install-menu/install-menu.cc:647
+msgid ""
+"install-menu: Warning: Unknown identifier `%1' on line %2 in file %3. "
+"Ignoring.\n"
+msgstr ""
+"install-menu: Advarsel: Ukendt identifier '%1' på linje %2 i filen %3. "
+"Ignorerer.\n"
+
+#: ../install-menu/install-menu.cc:657
+msgid "install-menu: %1 must be defined in menu-method %2"
+msgstr "install-menu: %1 skal være defineret i menu-method %2"
+
+#: ../install-menu/install-menu.cc:824
+msgid "Cannot open file %1 (also tried %2).\n"
+msgstr "Kan ikke åbne fil %1 (prøvede også %2)\n"
+
+#: ../install-menu/install-menu.cc:832 ../install-menu/install-menu.cc:839
+#: ../install-menu/install-menu.cc:847
+msgid "Cannot open file %1.\n"
+msgstr "Kan ikke åbne fil %1.\n"
+
+#: ../install-menu/install-menu.cc:849
+msgid ""
+"In order to be able to create the user config file(s) for the window "
+"manager,\n"
+"the above file needs to be writeable (and/or the directory needs to exist).\n"
+msgstr ""
+"For at kunne oprette bruger opsætningsfilerne for "
+"vindueshåndteringsprogrammer, skal den ovenstående fil være skrivbar (og "
+"mappen skal eksistere).\n"
+
+#: ../install-menu/install-menu.cc:871
+msgid "Warning: the string %1 did not occur in template file %2\n"
+msgstr "Advarsel: Strengen %1 blev ikke fundet i eksempelfil %2\n"
+
+#. Don't translate quoted string
+#: ../install-menu/install-menu.cc:896
+msgid ""
+"install-menu [-vh] <menu-method>\n"
+"  Read menu entries from stdin in \"update-menus --stdout\" format\n"
+"  and generate menu files using the specified menu-method.\n"
+"  Options to install-menu:\n"
+"     -h --help    : this message\n"
+"        --remove  : remove the menu instead of generating it.\n"
+"     -v --verbose : be verbose\n"
+msgstr ""
+"install-menu [-vh] <menu-metode>\n"
+"  Læs menupunkter fra standard-ind i formatet \"update-menus --stdout\"\n"
+"  og generer menufiler med den angivne menu-metode.\n"
+"  Tilvalg til install-menu:\n"
+"     -h --help    : denne besked\n"
+"        --remove  : fjern menuen i stede nfor at oprette den.\n"
+"     -v --verbose : skriv mere om hvad der sker\n"
+
+#: ../install-menu/install-menu.cc:943
+msgid "install-menu: no menu-method script specified!"
+msgstr "install-menu: intet menu-metode skript angivet!"
+
+#: ../install-menu/install-menu.cc:956
+msgid "Cannot open script %1 for reading.\n"
+msgstr "Kan ikke åbne skript %1 til læsning.\n"
+
+#: ../install-menu/install-menu.cc:979
+msgid "Warning: script %1 does not provide removemenu, menu not deleted\n"
+msgstr "Advarsel: Skript %1 tilbyder ikke removemenu, menu er ikke slettet\n"
+
+#: ../install-menu/install-menu.cc:1014
+msgid "Running: \"%1\"\n"
+msgstr "Kører: \"%1\"\n"
+
+#: ../install-menu/install-menu.cc:1030
+msgid "install-menu: %1: aborting\n"
+msgstr "install-menu: %1: afbryder\n"
+
+#: ../install-menu/install-menu.h:199
+msgid "Number of arguments to function %1 does not match."
+msgstr "Antallet af argumenter til funktion %1 passer ikke."
+
+#: ../install-menu/install-menu.h:207
+msgid "Unknown function: \"%1\""
+msgstr "Ukendt funktion: \"%1\""
+
+#: ../install-menu/install-menu.h:216
+msgid "Indirectly used, but not defined function: \"%1\""
+msgstr "Indirekte brugt, men ikke defineret funktion: \"%1\""
+
+#: ../install-menu/install-menu.h:225
+msgid "Unknown identifier: \"%1\""
+msgstr "Ukendt identificering: \"%1\""
+
+#: ../install-menu/install-menu.h:234
+msgid "Encoding conversion error: \"%1\""
+msgstr "Fejl i tegn-konverteringen: \"%1\""
+
+#: ../update-menus/exceptions.h:43
+msgid "Unknown error."
+msgstr "Ukendt fejl."
+
+#: ../update-menus/exceptions.h:55 ../update-menus/parsestream.h:114
+msgid "Unknown error, message=%1"
+msgstr "Ukendt fejl, besked=%1"
+
+#: ../update-menus/exceptions.h:64
+msgid "Unable to open file \"%1\"."
+msgstr "Ikke i stand til at åbne filen \"%1\"."
+
+#: ../update-menus/exceptions.h:73
+msgid "Failed to pipe data through \"%1\" (pipe opened for reading)."
+msgstr "Kunne ikke lede data videre gennem \"%1\" ('pipe' åbnet for læsning)."
+
+#: ../update-menus/exceptions.h:89
+msgid "%1: missing required tag: \"%2\""
+msgstr "%1: manglende krævet mærke: \"%2\""
+
+#: ../update-menus/parsestream.cc:50
+msgid "(probably) stdin"
+msgstr "(sandsynligvis) stdin"
+
+#: ../update-menus/parsestream.cc:450
+msgid "In file \"%1\", at (or in the definition that ends at) line %2:\n"
+msgstr "I fil \"%1\", på (eller i definitionen der ender på) linje %2:\n"
+
+#: ../update-menus/parsestream.cc:471
+msgid "Somewhere in input file:\n"
+msgstr "Et sted i inddata-filen:\n"
+
+#: ../update-menus/parsestream.h:122
+msgid "Unexpected end of file."
+msgstr "Uventet afslutning på fil."
+
+#: ../update-menus/parsestream.h:129
+msgid "Unexpected end of line."
+msgstr "Uventet afslutning på linje."
+
+#: ../update-menus/parsestream.h:136
+msgid "Identifier expected."
+msgstr "Identificering forventet."
+
+#: ../update-menus/parsestream.h:144
+msgid "Expected: \"%1\""
+msgstr "Forventet: \"%1\""
+
+#: ../update-menus/parsestream.h:153
+msgid "Unexpected character: \"%1\""
+msgstr "Uventet bogstav: \"%1\""
+
+#: ../update-menus/parsestream.h:162
+msgid ""
+"Boolean (either true or false) expected.\n"
+"Found: \"%1\""
+msgstr ""
+"Boolsk værdi (enten sand eller falsk) forventet.\n"
+"Fandt: \"%1\""
+
+#: ../update-menus/parsestream.h:172
+msgid "Unknown compat mode: \"%1\""
+msgstr "Ukendt compat mode: \"%1\""
+
+#: ../update-menus/stringtoolbox.cc:85
+msgid ""
+"replacewith($string, $replace, $with): $replace and $with must have the same "
+"length."
+msgstr ""
+"replacewith($string, $replace, $with): $replace og $with skal have samme "
+"længde."
+
+#: ../update-menus/update-menus.cc:150
+msgid ""
+"file %1 line %2:\n"
+"Discarding entry requiring missing package %3."
+msgstr ""
+"fil %1 linje %2:\n"
+"Fjerner punkt der kræver manglende pakke %3."
+
+#. Translation here and below refer to the file
+#. /etc/menu-methods/translate_menus that allow to rename and reorganize
+#. menu entries automatically. It does not refer to the localisation
+#. (translation to other languages).
+#.
+#: ../update-menus/update-menus.cc:364
+msgid "Reading translation rules in %1."
+msgstr "Læser oversættelsesregler i %1."
+
+#: ../update-menus/update-menus.cc:444
+msgid "Reading installed packages list..."
+msgstr "Læser liste af installerede pakker..."
+
+#: ../update-menus/update-menus.cc:493
+msgid "Execution of %1 generated no output or returned an error.\n"
+msgstr "Eksekvering af %1 generede ingen uddata, eller returnerede en fejl.\n"
+
+#: ../update-menus/update-menus.cc:534 ../update-menus/update-menus.cc:538
+msgid "Skipping file because of errors...\n"
+msgstr "Skipper filen på grund af fejl...\n"
+
+#: ../update-menus/update-menus.cc:555
+msgid "Reading menu-entry files in %1."
+msgstr "Læser menupunkts filer i %1."
+
+#: ../update-menus/update-menus.cc:578
+msgid "Error reading %1.\n"
+msgstr "Fejl ved læsning af %1.\n"
+
+#: ../update-menus/update-menus.cc:584
+msgid "%1 menu entries found (%2 total)."
+msgstr "%1 menupunkter fundet (%2 totalt)."
+
+#: ../update-menus/update-menus.cc:595
+msgid "Running method: %1 --remove"
+msgstr "Kører metode: %1 --remove"
+
+#: ../update-menus/update-menus.cc:607 ../update-menus/update-menus.cc:669
+#: ../update-menus/update-menus.cc:990
+msgid "Script %1 could not be executed."
+msgstr "Skript %1 kunne ikke eksekveres."
+
+#: ../update-menus/update-menus.cc:610 ../update-menus/update-menus.cc:672
+msgid "Script %1 returned error status %2."
+msgstr "Skript %1 returnerede fejlstatus %2."
+
+#: ../update-menus/update-menus.cc:613 ../update-menus/update-menus.cc:675
+msgid "Script %1 received signal %2."
+msgstr "Skript %1 modtog signal %2."
+
+#: ../update-menus/update-menus.cc:630
+msgid "Running method: %1"
+msgstr "Kører metode: %1"
+
+#: ../update-menus/update-menus.cc:633
+msgid "Cannot create pipe."
+msgstr "Kan ikke oprette datakanal (pipe)."
+
+#: ../update-menus/update-menus.cc:685
+msgid "Running menu-methods in %1."
+msgstr "Kører menu-metoder i %1."
+
+#: ../update-menus/update-menus.cc:717
+msgid "Other update-menus processes are already locking %1, quitting."
+msgstr "Andre update-menus processer låser allerede &1, afslutter."
+
+#: ../update-menus/update-menus.cc:720
+msgid "Cannot lock %1: %2 - Aborting."
+msgstr "Kan ikke låse %1: %2 - Afbryder."
+
+#: ../update-menus/update-menus.cc:730
+msgid "Cannot write to lockfile %1 - Aborting."
+msgstr "Kan ikke skrive til lås-filen %1 - Afbryder."
+
+#: ../update-menus/update-menus.cc:743
+msgid "Cannot remove lockfile %1."
+msgstr "Kan ikke fjerne låsfilen %1."
+
+#: ../update-menus/update-menus.cc:759
+msgid "Update-menus is run by user."
+msgstr "Update-menus er kørt af bruger."
+
+#: ../update-menus/update-menus.cc:813
+msgid ""
+"Waiting for dpkg to finish (forking to background).\n"
+"(checking %1)"
+msgstr ""
+"Venter på at dpkg afslutter (gemmer sig i baggrunden).\n"
+"(tjekker %1)"
+
+#: ../update-menus/update-menus.cc:816
+msgid "Further output (if any) will appear in %1."
+msgstr "Yderligere uddata (hvis nogen) vil kunne ses i %1."
+
+#: ../update-menus/update-menus.cc:845
+msgid "Dpkg is not locking dpkg status area, good."
+msgstr "Dpkg låser ikke dpkg statusområde, godt."
+
+#. This is the update-menus --help message
+#: ../update-menus/update-menus.cc:855
+msgid ""
+"Usage: update-menus [options] \n"
+"Gather packages data from the menu database and generate menus for\n"
+"all programs providing menu-methods, usually window-managers.\n"
+"  -d                     Output debugging messages.\n"
+"  -v                     Be verbose about what is going on.\n"
+"  -h, --help             This message.\n"
+"  --menufilesdir=<dir>   Add <dir> to the lists of menu directories to "
+"search.\n"
+"  --menumethod=<method>  Run only the menu method <method>.\n"
+"  --nodefaultdirs        Disable the use of all the standard menu "
+"directories.\n"
+"  --nodpkgcheck          Do not check if packages are installed.\n"
+"  --remove               Remove generated menus instead.\n"
+"  --stdout               Output menu list in format suitable for piping to\n"
+"                         install-menu.\n"
+"  --version              Output version information and exit.\n"
+msgstr ""
+"Brug: update-menus [tilvalg] \n"
+"Hent pakkedata fra menu databasen og opret menuer for alle programmer \n"
+"der har menu-metoder, normalt vindueshåndteringsprogrammer.\n"
+"  -d                     Vis fejlsøgningsbeskeder\n"
+"  -v                     Vis i detaljer, hvad der sker.\n"
+"  -h, --help             Denne besked.\n"
+"  --menufilesdir=<mappe> Tilføj <mappe> til listen over menumapper, der skal "
+"gennemsøges.\n"
+"  --menumethod=<metode>  Kør kun menumetoden <metode>.\n"
+"  --nodefaultdirs        Deaktiverer brugen af alle standard-menumapperne.\n"
+"  --nodpkgcheck          Tjek ikke om pakker er installeret.\n"
+"  --remove               Fjern i steden for oprettede menuer.\n"
+"  --stdout               Viser menulisten i et format, der kan ledes videre\n"
+"                         til install-menu.\n"
+"  --version              Vis versionsinformation og afslut.\n"
+
+#: ../update-menus/update-menus.h:151
+msgid ""
+"Unknown install condition \"%1\" (currently, only \"package\" is supported)."
+msgstr ""
+"Ukendt installationstilstand \"%1\" (endnu understøttes kun \"package\")."

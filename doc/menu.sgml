@@ -1,0 +1,1758 @@
+<!doctype debiandoc system>
+
+<!--
+ Debian Menu System
+ Copyright (C) 1997 Joost Witteveen, Joey Hess, Christian Schwarz;
+ Modification (C) 2002-2005 Bill Allombert
+ released under the terms of the GNU
+ General Public License, version 2 or (at your option) any later.
+ -->
+
+<book>
+
+<title>Debian Menu System
+<author>Joost Witteveen <email/joostje@debian.org/
+<author>Joey Hess <email/joeyh@debian.org/
+<author>Christian Schwarz <email/schwarz@debian.org/
+<author>Bill Allombert <email/ballombe@debian.org/
+<version>version 1.4, <date>
+
+<abstract>
+The <tt/menu/ package was inspired by the <prgn/install-fvwm2-menu/
+program from the old <prgn/fvwm2/ package. However, <tt/menu/ tries to
+provide a more general interface for menu building.  With the
+<prgn/update-menus/ command from this package, no package needs to be
+modified for every X window manager again, and it provides a unified
+interface for both text- and X-oriented programs.
+</abstract>
+
+<copyright>Copyright &copy;1997 Joost Witteveen, Joey Hess, Christian Schwarz.
+&copy;2002-2005 Bill Allombert.
+<p>
+
+This manual is free software; you may redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the
+Free Software Foundation; either version 2, or (at your option) any
+later version.
+<p>
+
+This is distributed in the hope that it will be useful, but
+<em>without any warranty</em>; without even the implied warranty of
+merchantability or fitness for a particular purpose.  See the GNU
+General Public License for more details.
+<p>
+
+A copy of the GNU General Public License is available as
+<file>/usr/share/common-licenses/GPL</file> in the Debian GNU/Linux
+distribution or on the World Wide Web at
+<tt>http://www.gnu.org/copyleft/gpl.html</tt>. You can also obtain it
+by writing to the Free Software Foundation, Inc., 
+51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+<p>
+
+<toc sect>
+
+<chapt>Introduction
+<p>
+
+Before  the  advent  of  <prgn/update-menus/,  when  the sysadmin
+installed a package onto a Debian system, they would  need
+to  edit  various  window manager config files to make the
+new program show up on, for  example,  <prgn/fvwm/'s  menus.  The
+menus  could  easily become out of sync with what programs
+were actually available, with some menu items that  didn't
+work,  and  other  programs  that  lacked  a  menu  entry.
+update-menus and Debian's menu package aim to  solve  this
+problem.
+<p>
+
+<prgn/update-menus/  automatically  generates  menus of installed
+programs for window managers and other menu  programs.  It
+should  be  run whenever a menu file or menu-method file
+is changed.  <prgn/update-menus/ will be ran  automatically  when
+Debian  packages  that contain menu files are installed or
+removed from the system. Users themselves can add/delete menu items,
+and should then run <prgn/update-menus/ as that user, thus creating
+window-manager startup files that are used in preference to the
+systemwide files.
+<p>
+
+One problem we ran into with menu-1.x (and before) was that the number of
+entries in any submenu vary wildly: on my system there are only two entries in
+<tt>/Applications/Editors</tt>, while I'm sure that other people have more like
+20 entries there. Many people complained about the fullness of certain
+submenus, citing scientific studies or personal experience to explain why
+overfull or underfull submenus are a bad thing. To overcome this, menu-2.0 now
+can optimize the tree itself, possibly subdividing for example the
+<tt>/Applications/Editors</tt> tree in, say <tt>Editors/Beginner</tt>,
+<tt>Editors/Experienced</tt>, or whatever, if there are many entries in that
+submenu, or maybe even totally removing <tt>/Applications/Editors</tt> on
+systems where there are few editors installed. To be able to do this, menu
+follows the information supplied to it in the `hints' variables (see paragraph
+below, or the hints chapter).
+
+<p>
+
+Each package that needs to add an entry to the menu tree, 
+includes a menu file <file>/usr/share/menu/package-name</file>. In
+this file, it will have one line per menu entry, like this (copied
+from <file>/usr/share/menu/xbase</file>):
+<example>
+   ?package(xbase):command="/usr/bin/xedit" needs="X11" \
+                section="Applications/Editors" title="Xedit" \
+                hints="Beginner,Small"
+</example>
+This describes the type of interface Xedit needs (X11),
+the menu section the menu entry should be in,
+the menu text, and the command that should be executed.
+Also, it tells menu that, if <tt>/Applications/Editors</tt>
+is overfull, it could put Xedit in a <tt>Applications/Editors/Beginner</tt> 
+or <tt>Applications/Editors/Small</tt> subsection.
+
+<p>
+
+Whenever <tt/root/ runs <prgn/update-menus/, it will check all
+menu files in <file>/etc/menu</file>, <file>/usr/lib/menu</file>, 
+<file>/usr/share/menu</file>, and run the installation scripts that display
+managers like <prgn/fvwm2/ should provide in <file>/etc/menu-methods</file>.
+<p>
+
+The menu package itself provides a set of default menu files,
+for people to get the idea, and to speed up things a bit.
+(These files should be incorporated into the package.)
+<p>
+
+Note, that substantial and incompatible changes took place with the
+menu-1.0 release, while substantial features were added by the release
+of menu-2.0. This document describes menu-2.0. 
+Menu-2.0 now doesn't accept the menu-methods written for menu-0.x, but
+for most window managers that still have those old menu-methods, I
+have put new style menu-methods in /usr/share/doc/menu/examples. Everything
+written for menu-1.0 will work with menu-2.0.
+<p>
+
+Most notable changes between menu-0.x and menu-1.x are listed in the file
+README.changes in the menu package, the features added by menu-2.0 can
+be summarised here: hints, and the menu-2 compat mode. (where lines
+are finished by a ';' instead of a newline).
+
+<chapt> Menu from the viewpoint of a user
+<p>
+<sect> How/when do the window manager startup files get created?
+<p>
+Basically, users don't need to know any of how and when the
+startup files are created, but they might be interested to know anyway.
+<p>
+When a package that wants to add something to the menu tree gets
+installed, it will run <prgn/update-menus/ in its <file/postinst/ script.
+Update-menus then reads in all menu files in <file>/etc/menu/</file>,
+<file>/usr/lib/menu</file>, <file>/usr/share/menu</file> and
+<file>/usr/share/menu/default</file>, and stores the menu entries of all
+installed packages in memory. Once that has been done, it will run the
+menu-methods in
+<file>/etc/menu-methods/*</file>, and pipe the information about the menu
+entries to the menu-methods on stdout, so that the menu-methods can
+read this. Each window-manager or other program that wants to have
+the Debian menu tree, will supply a menu-method script in
+<file>/etc/menu-methods/</file>. This menu-method then knows how to
+generate the startup-file for that window manager. To facilitate this
+task for the window-manager maintainers, menu provides a
+<prgn>install-menu</prgn> program. This program can generate the
+startupfiles for just about every window manager.
+
+<sect> Tuning of the generated window manager startup files
+<p>
+
+In principle this is a very window-manager specific business.
+But for all window managers (and others) applies:
+<p>
+The file to attack is the menu-method in 
+<file>/etc/menu-methods/$wm</file>, with <tt/$wm/ the
+name of your window manager. However, if this menu-method
+<tt/!include/-s the <file/menu.h/ file (as it should), you can also edit
+that file, to make your changes work for every installed window
+manager.
+<p>
+If the menu-method file of your window manager does <tt/!include/ the
+<file/menu.h/ file, and makes proper use of the definitions in there,
+then you can look at the comments in that <file/menu.h/ file to see how
+you can make minor adjustments to the look of your menus in your
+window manager.
+<p>
+To generally change the menu tree, see the next section.
+
+<sect> Optimization of menu tree: hints
+<p>
+If <tt/hint_optimize=true/ has been set in a menu-method script (actually, that definition should appear in
+the <tt/!include/-ed <tt/menu.h/ file), then install-menu will try to
+alter the menu tree, to make every submenu have about the optimum
+number of menu entries (as specified by <tt/hints_nentry=.../). It
+will do that by removing under-full submenus (only if the `parent' of
+that submenu isn't itself already overfull), and by possibly creating
+new submenus, using hints. Note, however, that the optimization of the
+tree takes in principle exponential time, so menu speeds up the
+process, at the expense of occasionally not finding the best tree. So,
+the tree you are presented with may not be optimal. For tuning
+variables, see the hint_* variables in the last chapter.
+
+<chapt> The menu file 
+<p>
+<sect> Location
+<p>
+Packages-provided menu files should be in <file>/usr/share/menu/</file>,
+unless the menu files are actually executable binaries, in which case they go
+in <file>/usr/lib/menu/</file>.
+System-local menu files should be in <file>/etc/menu/</file>.
+User-specific menu files should be in <file>~/.menu/</file>
+<sect> Syntax
+<p> The format is:
+<example>
+?package(package[,package2,...]): \
+   field1="value1"\
+   field2="value2"\
+</example>
+<p>
+Here is an example to describe the syntax of such a file:
+<example>
+?package(gnumeric):\             specifies what packages need to be installed
+                                 multiple requirements should be separated by
+                                 comma
+  needs="X11"\                   what kind of environment this command expects
+  section="Applications/Office"\ in what section this menu entry should be
+  title="Gnumeric"\              the title of the menu entry
+  command="gnumeric" \           the command to run
+  hints="Gnome,Spreadsheets" \   some hints about menu placement.
+  icon="/usr/share/pixmaps/gnumeric.xpm"  the path to the icon to use.
+</example>
+<p>
+A number sign ("#") can be used to include comments. An entry must be
+terminated by a newline; however you can use a backslash to escape a newline.
+<p>
+Values must be quoted with ", and meta-characters (", backslash, newline) must
+be escaped with a backslash.
+<p>
+You can include several entries in the same file. 
+<p>
+The file must be encoded in 7-bit ASCII. This is necessary to accomodate 
+window managers that do not support 8-bit encodings. However the translations
+are not limited in encoding.
+
+<p> <tt/?package(...)/ contains a comma-separated list of packages that
+need to be installed for the menu entry to be displayed. That should include
+the package containing the menu file and any packages necessary to run the
+command not depended on by the package nor essential.  Users can use
+pseudo-package names starting with "<tt/local./" which are assumed to be always
+installed.
+<p> The fields <tt/needs/, <tt/section/, <tt/title/ and <tt/command/ are
+mandatory. Other fields are optional. Custom fields are supported, so
+you can add new fields for you own purpose. If a field is specified multiple
+times in a menu entry, the last instance will be used.
+
+<sect> The <tt/title/ field
+<p>
+
+The <tt/title/ must follow the following requirements:
+<enumlist>
+  <item> It must be short. There is an optional <tt/longtitle/ field for
+  users that want longer titles.
+  <item> It must be properly capitalized. Use <em/Emacs/ and not <em/emacs/.
+  <item> It must be unique. Two entries must not have the same title.
+</enumlist>
+
+<sect> The <tt/needs/ field
+<p>
+
+The following <tt/needs/ are documented for use in the Debian menu.
+<enumlist>
+  <item> <tt/X11/: if this program runs under X11.
+  <item> <tt/text/: if it runs under a terminal.  X11 window managers will
+  spawn an X terminal emulator.
+  <item> <tt/vc/: if it runs under a linux virtual console but not under a X
+  terminal emulator.
+  <item> <tt/wm/: if it is a X11 window manager. The current window manager
+  will exec(2) this program to avoid "Another window manager is running"
+  errors.
+</enumlist>
+<p>
+
+A menu manager can use a special <tt/needs/ value reflecting the menu manager
+name for menu entries that must only be displayed in this menu manager.
+Examples include <tt/fvwm/ modules, <tt/dwww/ menu entries.
+<p>
+A program like gnuplot which can be run on X11 as well as on a text
+terminal should <em/not/ have an extra entry with <tt/needs=X11/
+with an hard-coded call to an X terminal emulator, because this would defeat
+the configuration mechanism of menu that allow to choose which window manager
+is called.
+<p>
+
+On the other hand, if a program (like <prgn/emacs/) can be run as real X
+application as well as in a terminal, two entries should be listed,
+otherwise the program will always be run in an <prgn/xterm/ (or
+<prgn/rxvt/). However, two entries are not allowed to have the same title. The
+title must be unique.
+<p>
+<sect> The <tt/section/ field
+<p>
+The <tt/section/ field holds a slash-separated list of hierarchical sections
+components.
+<p>
+The <em/authoritative list of Debian's menu structure/ is maintained
+in the Debian Menu sub-policy document which is part of the Debian
+Policy package. The current menu structure was drafted in 2006 by Linas
+Zvirblis with input from the debian-devel mailing list.
+<p>
+The menu structure below is included only for convenience and is not
+authoritative. If it disagrees with the structure in the Debian Menu
+sub-policy, please send a wishlist bug to the <tt/menu/ package.
+<p>
+Packages must be placed in leaf sections.
+Please do <em/not/ put your packages into any other sections.
+<p>
+<taglist>
+  <tag>Applications</tag>
+  <item>
+    <p>Normal applications</p>
+    <p><taglist>
+        <tag>Accessibility</tag>
+        <item> 
+          <p>Tools to aid people with disabilities or for machines
+             lacking usual input devices.</p>
+          <p>Examples: gok, yasr, dasher.</p>
+        </item>
+        <tag>Amateur Radio</tag>
+        <item>
+          <p>Anything relating to HAM radio.</p>
+          <p>Examples: baken, hamsoft, twlog</p>
+        </item> 
+        <tag>Data Management</tag>
+        <item>
+          <p>Interactive database programs, collection managers,
+             address books, bibliography tools, etc.</p>
+          <p>gaby, alexandria, mdbtools</p>
+        </item>
+        <tag>Editors</tag>
+        <item>
+          <p>Editors, other than office word processors, for 
+             text-based information.</p>
+          <p>Examples: ksubtile, nano, hexedit</p>
+        </item>
+        <tag>Education</tag>
+        <item>
+          <p>Educational and training softwares.</p>
+          <p>Examples: gtypist, gcompris, quiz</p>
+        </item>
+        <tag>Emulators</tag>
+        <item>
+          <p>Software that allows you to run non-native
+          software or more than one OS at a time.</p>
+          <p>Examples: wine, dosemu, qemu</p>
+        </item>
+        <tag>File Management</tag>
+        <item>
+          <p>Tools for file management, archiving,
+          searching, CD/DVD burning, backup, etc.</p>
+          <p>Examples: file-roller, mc, baobab</p>
+        </item>
+        <tag>Graphics</tag>
+        <item>
+          <p>2D and 3D graphics manipulation software.</p>
+          <p>Examples: gimp, inkscape, imagemagick</p>
+        </item>
+        <tag>Mobile Devices</tag>
+        <item>
+          <p>Software that allows you to interface with mobile
+             devices (phones, PDAs, etc.).</p>
+          <p>Examples: kandy, gnokii, gnome-pilot</p>
+        </item>
+        <tag>Network</tag>
+        <item>
+          Network related software. This is a three-level
+          section, do not put entries directly here.
+          <taglist>
+          <tag>Communication</tag>
+          <item>
+            <p>Mail, USENET news, chat, instant messaging,
+               IP telephony, video conferencing software, etc.</p>
+            <p>Examples: xchat, gaim, mutt</p>
+          </item>
+          <tag>File Transfer</tag>
+          <item>
+             <p>File transfer software such as download
+                managers, FTP clients, P2P clients, etc.</p>
+             <p>Examples: amule, gftp, d4x</p>
+          </item>
+          <tag>Monitoring</tag>
+          <item>
+             <p>Network monitoring software</p>
+             <p>Examples: gip, ettercap, iptstate</p>
+          </item>
+          <tag>Web Browsing</tag>
+          <item>
+             <p>Web browsers, tools for offline browsing, etc.</p>
+             <p>Examples: elinks, epiphany-browser, webhttrack</p>
+          </item>
+          <tag>Web News</tag>
+          <item>
+            <p>Web feed (RSS, Atom, etc.) and podcast aggregators.
+            </p>
+            <p>Examples: akregator, kitty, liferea</p>
+          </item>
+          </taglist>
+        </item>
+        <tag>Office</tag>
+        <item>
+        <p>Office suites, word processors, spreadsheets,
+           CRM, ERP, financial sofware, etc.</p>
+        <p>Examples: openoffice.org, tinyerp-client, gnucash</p>
+        </item>
+        <tag>Programming</tag>
+        <item>
+          <p>IDEs, debuggers, etc.</p>
+          <p>Examples: anjuta, gdb, eclipse</p>
+        </item>
+        <tag>Project Management</tag>
+        <item>
+          <p>Timetable managers, group task trackers,
+          bug tracking software, etc.</p>
+          <p>Examples: planner, bugzilla, gnotime</p>
+        </item>
+        <tag>Science</tag>
+        <item>
+        Scientific and engineering-related software.
+        <taglist>
+          <tag>Astronomy</tag>
+          <item>
+            <p>Astronomy-related software.</p>
+            <p>Examples: celestia, spacechart, stellarium</p>
+          </item>
+          <tag>Biology</tag>
+          <item>
+            <p>Biology-related software.</p>
+            <p>Examples: arb, ncbi-tools-x11, seaview</p>
+          </item>
+          <tag>Chemistry</tag>
+          <item>
+            <p>Chemistry-related software.</p>
+            <p>Examples: chemtool, kalzium, xdrawchem</p>
+          </item>
+          <tag>Data Analysis</tag>
+          <item>
+            <p>Software designed for processing, extracting,
+               and presenting generic scientific data.</p>
+            <p>Examples: fityk, ygraph, mn-fit</p>
+          </item>
+          <tag>Electronics</tag>
+          <item>
+            <p>Circuit design tools, simulators and
+               assemblers for microprocessors, etc</p>
+            <p>Examples: geda, gnucap, tkgate</p>
+          </item>
+          <tag>Engineering</tag>
+          <item>
+            <p>CAD, UML tools, diagram-drawing and
+               other engineering-related software.</p>
+            <p>Examples: tcm, dia, qcad</p>
+          </item>
+          <tag>Geoscience</tag>
+          <item>
+            <p>Geoscience-related software.</p>
+            <p>Examples: earth3d, qgis, therion</p>
+          </item>
+          <tag>Mathematics</tag>
+          <item>
+            <p>Mathematics-related software.</p>
+            <p>Examples: gcalctool, snappea, xeukleides</p>
+          </item>
+          <tag>Medicine</tag>
+          <item>
+            <p>Medicine-related software.</p>
+            <p>Examples: mssstest, gnumed-client, xmedcon</p>
+          </item>
+          <tag>Physics</tag>
+          <item>
+            <p>Physics-related software.</p>
+            <p>Examples: kxterm, ifrit, paw</p>
+          </item>
+          <tag>Social</tag>
+          <item>
+            <p>Social sciences-related software.</p>
+            <p>Examples: gnomesword, hanzim, bibletime</p>
+          </item>
+        </taglist>
+        </item>
+        <tag>Shells</tag>
+        <item>
+          <p>Various shells to be used inside a terminal emulator.</p>
+          <p>Examples: bash, ksh, zsh</p>
+        </item>
+        <tag>Sound</tag>
+        <item>
+          <p>Sound players, editors, and rippers/recorders.</p>
+          <p>Examples: beep-media-player, grip, audacity</p>
+        </item>
+        <tag>System</tag>
+        <item>
+          System related software.
+        <taglist>
+          <tag>Administration</tag>
+          <item>
+            <p>Administrative and system configuration utilities,
+               also tools for personal user settings.</p>
+            <p>Examples: gnome-control-center, configure-debian, gksu</p>
+          </item>
+          <tag>Hardware</tag>
+          <item>
+            <p>Tools for manipulating specific hardware,
+               especially non-standard laptop hardware.</p>
+            <p>Examples: toshutils, nvclock-gtk, nvtv</p>
+          </item>
+          <tag>Language Environment</tag>
+          <item>
+            <p>This section is reserved for language-env as a
+               special case.</p>
+          </item>
+          <tag>Monitoring</tag>
+          <item>
+            <p>System information and monitoring tools, log viewers,
+               etc.</p>
+            <p>Examples: top, hal-device-manager, gtkdiskfree</p>
+          </item>
+          <tag>Package Management</tag>
+          <item>
+            <p>Package managers and related tools.</p>
+            <p>Examples: aptitude, deborphan, smartpm</p>
+          </item>
+          <tag>Security</tag>
+          <item>
+            <p>Security, cryptography and privacy related software,
+               antiviruses, tools to track and report bugs, etc.</p>
+            <p>Examples: gpgkeys, bastille, avscan</p>
+          </item>
+          </taglist>
+        </item>
+        <tag>Terminal Emulators</tag>
+        <item>
+          <p>Graphical terminal emulators.</p>
+          <p>Examples: xterm, gnome-terminal, rxvt</p>
+        </item>
+        <tag>Text</tag>
+        <item>
+          <p>Text oriented tools like dictionaries, OCR,
+             translation, text analysis software, etc.</p>
+          <p>Examples: kdrill, stardict, turkey</p>
+        </item>
+        <tag>TV and Radio</tag>
+        <item>
+          <p>TV-in, TV-out, FM radio, teletext browsers, etc.</p>
+          <p>Examples: gradio, gatos, alevt</p>
+        </item>
+        <tag>Viewers</tag>
+        <item>
+          <p>Software for viewing images, documents
+             and other (non-video) media.</p>
+          <p>Examples: gqview, evince, gthumb</p>
+        </item>
+        <tag>Video</tag>
+        <item>
+          <p>Video players, editors, and rippers/recorders.</p>
+          <p>Examples: istanbul, totem, kino</p>
+        </item>
+        <tag>Web Development</tag>
+        <item>
+          <p>Software for web site editing, web
+             programming, and site administration.</p>
+          <p>Examples: bluefish, screem, gphpedit</p>
+        </item>
+      </taglist>
+    </p>
+  </item>
+  <tag>Games</tag>
+  <item>
+    Games and recreations
+    <taglist>
+    <tag>Action</tag>
+    <item>
+      <p>Games that involve a lot of action
+         and require fast reflexes.</p>
+      <p>Examples: xsoldier, supertux, xmoto</p>
+    </item>
+    <tag>Adventure</tag>
+    <item>
+      <p>Role playing and adventure games,
+         interactive movies and stories, etc.</p>
+      <p>Examples: beneath-a-steel-sky, egoboo, kq</p>
+    </item>
+    <tag>Blocks</tag>
+    <item>
+      <p>Tetris-like games involving falling blocks.</p>
+      <p>Examples: crack-attack, frozen-bubble, netris</p>
+    </item>
+    <tag>Board</tag>
+    <item>
+      <p>Games played on a board.</p>
+      <p>Examples: phalanx, xshogi, xboard</p>
+    </item>
+    <tag>Card</tag>
+    <item>
+      <p>Games involving a deck of cards.</p>
+      <p>Examples: pysol, ace-of-penguins, xpat2</p>
+    </item>
+    <tag>Puzzles</tag>
+    <item>
+      <p>Tests of ingenuity and logic.</p>
+      <p>Examples: xmpuzzles, sgt-puzzles, enigma</p>
+    </item>
+    <tag>Simulation</tag>
+    <item>
+      <p>Simulations of the real world
+         in all detail and complexity.</p>
+      <p>Examples: flightgear, torcs</p>
+    </item>
+    <tag>Strategy</tag>
+    <item>
+      <p>Games involving long-term strategic thinking.</p>
+      <p>Examples: wesnoth, widelands, netpanzer</p>
+    </item>
+    <tag>Tools</tag>
+    <item>
+      <p>Server browsers, configurators, editors, and other
+         game-related tools that are not games themselves.</p>
+      <p>Examples: xqf, crystalspace</p>
+    </item>
+    <tag>Toys</tag>
+    <item>
+      <p>Amusements, eye-candy, entertaining
+         demos, screen hacks (screensavers), etc.</p>
+      <p>Examples: xdesktopwaves, xphoon, xpenguins</p>
+    </item>
+    </taglist>
+  </item>
+  <tag>Help</tag>
+  <item>
+    <p>programs that provide user documentation</p>
+    <p>Examples: debian-reference, apt-howto, dhelp</p>
+  </item>
+  <tag>Screen</tag>
+  <item>
+    Programs that affect the whole screen.
+    <taglist>
+    <tag>Saving</tag>
+    <item>
+      <p>Tools for blanking the screen. Entries of screen hacks and
+         configuration GUIs should go to other appropriate sections.
+      </p>
+      <p>Examples: xscreensaver, xlockmore</p>
+    </item>
+    <tag>Locking</tag>
+    <item>
+      <p>Tools for locking the screen.</p>
+      <p>Examples: xscreensaver, xlockmore</p>
+    </item>
+    </taglist>
+  </item>
+  <tag>Window Managers</tag>
+  <item>
+    <p>X window managers.</p>
+    <p>Examples: fluxbox, metacity, waimea</p>
+  </item>
+  <tag>FVWM Modules</tag>
+  <item>
+    <p>FVWM-based window manager modules. As only modules related to
+       the running window-manager are displayed, do not create 
+       subsections for specific window-managers.</p>
+    <p>Examples: fvwm, fvwm-gnome, fvwm95</p>
+  </item>
+  <tag>Window Maker</tag>
+  <item>
+    <p>This section is reserved for wmaker as a special case.</p>
+    <p>All wmaker specific entries must go here.</p>
+  </item>
+</taglist>
+<p>
+Users wanting to access some menu entries quickly can also put
+them in the root menu. This is done by using <em>section="/"</em>.
+Package-provided menu entries must never use this feature.
+<sect> The <tt/command/ field
+<p>
+The command field holds the command that should be executed when the
+menu entry is selected. Commands will be executed with <prgn/sh -c/
+using 
+<example>
+execl("/bin/sh","sh","-c",command)
+</example>
+or the equivalent.
+
+<sect> The <tt/icon/ field
+<p>
+
+Please make sure the icons you specify are always available on the
+system. So, if you want to have an icon with your menu entry, the
+preferred method is to supply the icon with that package. 
+Icons should generally be installed in the directory
+<file>/usr/share/pixmaps</file>.
+<p>
+
+Debian package maintainers should ensure that any icons they include
+for use in the Debian menus conform to the following points:
+<enumlist>
+  <item>The icons should be in xpm format.
+  <item>The icons may not be larger than 32x32 pixels, although smaller
+  sizes are ok.
+  <item>The background area of the icon should be transparent, if
+  possible.
+</enumlist>
+<p>
+
+You can provide both 16x16 and 32x32 pixels icons using the variables icon16x16
+and icon32x32 so that the user can configure menu to use one or the other.
+<p>
+
+If you, as a system administrator, don't like the icons in the menus, simply
+change the <tt/icon()/ function from the file
+<file>/etc/menu-methods/menu.h</file>, and run <prgn/update-menus/.
+<p>
+
+<sect> The <tt/hints/ field
+<p>
+Hints are used to help menu structure generated menus in a more optimal way.
+For example:
+<p>
+<example>
+?package(emacs20):\
+  needs="x11"\
+  hints="Big,Expert,Featureful" \
+  section="Applications/Editors"\
+  title="Emacs 20"\
+  command="/usr/bin/emacs20"\
+  icon=/usr/share/emacs/20.3/etc/emacs.xbm
+</example>
+The above hints will tell <tt/menu/ to consider grouping <tt/emacs/
+together with other editors that are marked similar. For example, if
+<tt/vi/ on your system has a hints="Small,Expert" definition, and
+there are too many entries in the <tt>/Applications/Editors</tt> menu entry,
+then menu will consider creating a <tt>/Applications/Editors/Expert</tt>
+submenu, and put both <tt/vi/ and <tt/emacs/ in it. (Of course, only if you
+have <tt/hint_optimize=true/ in your <file>/etc/menu-methods/menu.h</file>
+file).
+
+<sect> Entries for menu sections.
+<p>
+It is possible to add entries for menu sections, but it is not mandatory
+since section entries are created automatically.
+
+However, this allows to specify fields for sections like <tt/icon/ and
+<tt/sort/.
+
+The syntax for menu sections entries is the same as for regular entries,
+the <tt/section/ field holding the name of the parent section.
+
+For example
+<example>
+?package(local.games): needs="text" title="Games" section="/" sort="001"
+</example>
+will sort <tt/Games/ first.
+
+<sect>Fvwm's task and title bars
+<p>
+
+The problem with the stuff in the task bar is that all items are
+displayed all of the time. So, if 1500 Debian packages all were to
+register a button, the buttons would quickly fill the screen, making
+the exercise useless. The few applications that are considered
+important enough to be listed in the task bar usually vary widely on
+each system, making it impossible to select a ``happy few'' apps that
+are allowed there on every Debian system. If you (as a local system
+administrator) want your <prgn/fvwm2/ to have a few buttons, you can
+install files for those packages in <tt>/menu/$package</>, containing
+a menu entry like this:
+<example>
+  ?Package(xmball):needs=button\
+                section=Games/Puzzles\
+                icon=path-to-pixmap.xpm\
+                title="Xmball"\
+                command=/usr/games/xmball
+</example>
+Then, do the following:
+<example>
+  cd /etc/menu-methods/
+  cp fvwm2 fvwm2button
+  vi fvwm2button
+</example>
+and remove all the "supported" entries, adding the one below. For the rest,
+leave everything the same except those listed below.
+<example>
+  supported 
+    button="+ Style \"" $title "\" TitleIcon" $icon " Exec "  $command "\n"
+  endsupported
+  startmenu:   "AddToTitlebar \n"
+  endmenu:     "\n"
+  submenutitle:""
+  mainmenu:
+  genmenu:   "buttondefs.hook"
+</example>
+(Of course regular users (not system administrators) can also specify
+`buttonfiles' in their ~/.menu/ directory).
+
+<chapt>What packages with applications should do
+<sect> Providing a menu file
+<p>
+A package should provide a menu file
+<file>/usr/share/menu/&lt;package-name&gt;</file> that contains
+information about each program it likes to make available in the
+menus.
+<p>
+<sect> Adding a hook for dpkg in your packages
+<p>
+The <tt/postinst/ script and the <file/postrm/ script of the package 
+should include the line
+<example>
+ if test -x /usr/bin/update-menus; then update-menus; fi
+</example>
+If you are using  <prgn/debhelper/, the program <prgn/dh_installmenu/ 
+can do it for you.
+<p>
+
+<chapt>What packages with menu managers should do
+<p>
+
+Each package containing a <em/menu manager/ (i.e., a program that can
+display a menu) should provide a script or program in
+<file>/etc/menu-methods/</> that can read the menu files. This script
+will be executed by <prgn/update-menus/, which will feed the menu
+entries to be installed to your script via standard input (stdin).
+<p>
+
+The scripts in <file>/etc/menu-methods/</> should be configuration
+files, so the user can tune the behaviour of the script, and they must always
+include the <file>/etc/menu-methods/menu.h</> configuration file at the beginning
+with the command <tt>!include menu.h</>
+
+For the same reason, scripts in <file>/etc/menu-methods/</> are requested
+to use the following configurable functions:
+
+<tt/title()/ for the title (in place of <tt/$title/),
+<tt/icon()/ for the icon (in place of <tt/$icon/),
+<tt/term()/ for running <tt/text/ command under <tt/X11/.
+<tt/sections_translations()/ for the list of translations of sections name
+available. This later one is only defined if you <tt>!include lang.h</tt>
+<p>
+
+Good examples for these scripts for nearly all Debian window managers
+are included in the <tt/menu/ package in
+<file>/usr/share/doc/menu/examples</file>. Note that while working on your script,
+you can use the tricks described in "The internals of the menu
+package", section "The update-menus program", to run just your script,
+instead of having update-menus run all scripts (can save quite a lot
+of time).
+<p>
+
+This script should not be executable in the package. Instead
+the <tt/postinst/ should add the execute bit and then run
+<prgn/update-menus/ (if it is executable).
+<p>
+
+Similarly, the <file/postrm/ script when called with option ``remove'' should
+remove the execute bit and run <prgn/update-menus/ (if it is executable).
+<p>
+
+Here is an example of such a <file/postrm/ script using <prgn/sh/:
+<example>
+  #!/bin/sh
+  set -e
+  inst=/etc/menu-methods/#PACKAGE#
+  case "$1" in
+     remove)
+        if [ -f $inst ]; then
+                chmod a-x $inst
+                if [ -x /usr/bin/update-menus ]; then update-menus ; fi
+        fi
+     ;;
+     purge)
+         #remove the files that install-menu creates:
+         rm -rf /var/lib/foo-wm/menu
+     ;;
+     upgrade);;
+     *)
+         echo "postrm called with unknown argument \`$1'" >&2
+         exit 0
+     ;;
+  esac
+</example>
+
+And here is a good example for a <file/postinst/ script:
+<example>
+  #!/bin/sh
+  set -e
+  inst=/etc/menu-methods/#PACKAGE#
+  if [ -f $inst ]; then
+      chmod a+x $inst
+      if [ -x /usr/bin/update-menus ]; then
+          update-menus
+      fi
+  fi
+</example>
+If you are using  <prgn/debhelper/, the program <prgn/dh_installmenu/ 
+can help you do it.
+<p>
+Please, do not make your package <em/depend/ on the menu package! The
+preferred way of telling dpkg that your wm can cooperate with menu is:
+<example>
+   Suggests: menu
+</example>
+Please only consider using "depends" if you feel providing reasonable
+defaults for systems without <prgn>menu</prgn> will make life very difficult
+for you.
+<p>
+
+<chapt>How a user can override the menus
+<p>
+
+<sect>Configuring the menus
+<p>
+
+Users can specify their own menu entries in the <file>~/.menu</> directory.
+The files can have an arbitrary file name as long as the new syntax
+for the menu entries is used. They should start with either
+<example>
+  ?package(installed-package):
+</example>
+or
+<example>
+  ?package(local.mystuff):
+</example>
+if it's something that isn't ``debian-officially'' installed. (Any
+``package'' that starts with ``<tt/local./'' is considered installed.)
+<p>
+
+If users want to have their own menu methods, they should create
+a <file>~/.menu-methods</> directory and put all their menu methods in it.
+(If <file>~/.menu-methods</> exists,
+<file>/etc/menu-methods</> will not be searched when a user runs
+<prgn/update-menus/).
+<p>
+
+A system administrator should place system-wide menu entries in
+<file>/etc/menu</> (not in <file>/usr/share/menu/package</>, since these
+files will probably be overwritten by a package upgrade).
+<p>
+
+<sect>Specifying that a menu entry should not be displayed
+<p>
+
+If a user wants to remove the entries of <tt/package/ from the system menu then
+this will do the trick:
+<example>
+  echo -n  > ~/.menu/package
+</example>
+The zero-size file will tell <prgn/update-menus/ that the
+corresponding package should not have any menu entries listed.
+
+A system administrator can remove menu entries system-wide with
+<example>
+  echo -n  > /etc/menu/package
+</example>
+
+<p>
+
+<sect> Including other files
+<p>
+
+<var> Historical comment by Joost:</var> 
+<p>
+<var>
+More out of curiosity than anything else, I recently read the KDE
+mailing list. In it I saw some discussion about how good the Debian
+menu system is (whow, thanks, guys!), but one person found a missing
+feature: s/he said you couldn't include other files in the user
+menu files. Well, actually, it was already possible, but not very well
+documented. 
+</var>
+<p>
+To include the contents of the file <file>/usr/share/menu/somefile</>,
+add this to your menu file:
+
+<example>
+!include /usr/share/menu/somefile
+</example>
+
+Apart from that, it is of course possible to make the menu entry file
+executable (<tt>chmod a+x ~/.menu/package</>), and do something like
+<example>
+#!/bin/sh
+cat  /usr/share/menu/somefile
+sed -e  "/unwanted_entry/s/?package(/?package(notinstalled./" \
+     /usr/share/menu/someotherfile
+</example>
+to get the same effect, with the added flexibility of being able to
+filter out unwanted lines.
+
+<chapt>The internals of the menu package
+<p>
+
+<sect>The update-menus program
+<p>
+
+On startup, update-menus checks the file
+<file>/var/run/update-menus.pid</> and the pid in it. If there's an
+<prgn/update-menus/ process with that pid it kills it.
+If <file>/var/lib/dpkg/lock</> exists, it checks to see if dpkg supports
+triggers. If so, it uses dpkg-trigger to trigger a real update-menus run later.
+Otherwise, it forks to background and returns control to dpkg. The background
+process checks the <file>/var/lib/dpkg/lock</> file approx. every two second
+until the file's gone. 
+<p>
+
+Once it's decided to run, whether in the background after dpkg exits, or in
+the foreground when used with a trigger-capable dpkg, 
+<prgn/update-menus/ reads the menu-entry files in
+the following directories: <file>/etc/menu</>, <file>/usr/lib/menu</>,
+<file>/usr/share/menu</>, <file>/usr/share/menu/default</>.
+(if a user runs <prgn/update-menus/, it will add <file>~/.menu</> to the
+front of that list). For every menu entry line in each file it checks
+if the corresponding package is installed. The menu entries of all 
+packages marked as installed by dpkg
+are added together in one big buffer that is kept in memory (exception:
+executable menu entry files are executed, and stdout is placed in
+the buffer). 
+<p>
+Once it's read all menu entry files, <prgn/update-menus/ starts all
+executable scripts in <file>/etc/menu-methods/</>, hands the scripts the
+previously created buffer via stdin. (If <prgn/update-menus/ is run by
+a user, it will first try to run the scripts in <file>~/.menu-methods</>, and
+only if that directory doesn't exist, it will run the scripts in
+<file>/etc/menu-methods</>). 
+<p>
+
+Note that as an aid to debugging, one can use
+<example>
+update-menus --stdout > /tmp/menu-stdin
+</example>
+and then view the file <file>/tmp/menu-stdin</> to see exactly what
+<prgn/update-menus/ handed the menu-methods on their stdin.
+<p>
+
+This may also be useful for people writing <file>/etc/menu-method/*</> scripts:
+Running <prgn/update-menus/ every time you changed something in the script may
+be quite time-consuming. So, it's much easier to run 
+<prgn/update-menus --stdout/ once, and then run
+<example>
+  /etc/menu-methods/mymethod < /tmp/menu-stdin
+</example>
+(and, if that also takes too long, just try editing /tmp/menu-stdin,
+and removing 90% or so of all entries)
+
+<sect>The install-menu program
+<p>
+
+The files <file>/etc/menu-methods/$wm</> are executable config
+files that start with the line
+<example>
+  #!/usr/bin/install-menu
+</example>
+and thus start that program, handing it the configuration file for the
+specific window manager in the first command line argument. This
+configuration consists of:
+<enumlist>
+<item>the compatibility mode ("menu-1" or "menu-2").
+<item>where the various files should be stored/read.
+<item>what "needs" are supported, and what wrapper files should
+   be used for each "type".
+<item>how to remove the generated menu files.
+</enumlist>
+See <file>/usr/share/doc/menu/examples/</> of the menu package for more
+comments.
+<p>
+
+Options to <prgn/install-menu/:
+<example>
+  --remove  Remove the menu files instead of generating them.
+  --verbose Output outline of operations that are performed.
+</example>
+<p>
+
+Some window managers don't support an `include'-like statement in their
+<file/system.*rc/ files (like <prgn/m4/ or <prgn/cpp/ preprocessing); they
+cannot read the <file/menudefs.hook/ file generated by install-menu from their
+<file/system.*rc/ config file. To still be able to use them,
+<prgn/install-menu/ will copy the file <file>$path/$examplercfile</file> to
+<file>$path/$rcfile</file> (with <file/$examplercfile/ and <file/$rcfile/
+defined in the <prgn/install-menu/ config file, and <file/$path/ either the
+<file/$rootprefix/ or <file>${HOME}/$userprefix</file>, depending on whether
+root or user executed the file.), and replace all occurrences of
+``install-menu-defs'' with the <file/$genmenu/ file it just
+generated. 
+<p>
+As an example, consider the following:
+<tt>examplercfile=system.foo-wm-example</tt>,
+<tt>rcfile=system.foo-wm</tt>, <tt>genmenu=menudefs.hook</tt> and
+<tt>rootprefix=/var/lib/foo-wm/menu</tt>. Now, if <prgn/install-menu/ gets run, it
+will first generate the file
+<file>/var/lib/foo-wm/menu/menudefs.hook</file>. Next, it will line-by-line 
+read the file <file>/var/lib/foo-wm/menu/system.foo-wm-example</file> and copy
+its contents to <file>/var/lib/foo-wm/menu/system.foo-wm</file>, replacing
+every occurrence of the string <tt>install-menu-defs</tt> with the
+contents of the file <file>/var/lib/foo-wm/menu/menudefs.hook</file>. 
+<p>
+
+To activate the file copying in this way, simply define the <tt/$examplercfile/
+and <tt/$rcfile/ variables in the <prgn/install-menu/ configuration file (for
+example, see <file>/etc/menu-methods/fvwm</file>), and make sure there is a
+<file>$path/$examplercfile</> (<tt>$path</> being either <tt/$rootprefix/, or
+<file/$userprefix/.)
+<p>
+
+If you are writing a menu method, you can use the following to make
+debugging it somewhat more easily:
+<enumlist>
+<item>use <tt>update-menus --stdout > /tmp/menu-stdin </tt>
+to create a list of menu entries in <file>/tmp/menu-stdin</file>
+and then
+<item>you can run just your menu-method with (if it's called wm):
+<example>
+  ./wm -v < /tmp/menu-stdin 
+</example>
+</enumlist>
+<p>
+
+<sect>The install-menu config script definitions
+<p>
+
+The menu-methods in <file>/etc/menu-methods/*</> are basically made up of
+a lot of ``tag=string'' definitions, telling <prgn/install-menu/
+how to generate a <file/system.${wm}rc/ script. This way you can tune
+the look of generated <file/system.${wm}rc/ to your needs.
+<p>
+
+In the following, something like 
+<example>
+  treewalk="c(m)"
+</example>
+means that the treewalk variable by default has the value "c(m)".
+<p>
+
+For examples of what these scripts can look like, see
+<file>/usr/share/doc/menu/examples/*</>.
+<p>
+
+<taglist>
+<tag><tt/compat="menu-1"/
+<item>
+Two mode are defined:
+<taglist>
+<tag> <tt/"menu-1"/ <item> menu directives are terminated by an end-of-line
+character. </item>
+<tag> <tt/"menu-2"/ <item> menu directives are terminated by a semicolon
+character. </item>
+</taglist>
+This must be just after the <tt>!include "menu.h"</tt> directive so that
+<file>menu.h</file> can use its own compat mode.
+
+<tag><tt/outputencoding="UTF-8"/
+<item> Set the encoding used for output files. Use <tt/iconv --list/ to get
+the list of supported encoding. Useful values include "UTF-8" and
+"ISO-8859-1".  The special value "LOCALE" means that the current locale
+encoding will be used. If set to an empty string, no translations are
+performed.  This is the default.
+
+<tag><tt/outputlanguage=""/
+<item>
+If set to "C" automatic translations will be disabled. Note that you 
+can still use translate() to perform explicit translation.
+
+<tag><tt/supported/
+<tag><tt/endsupported/
+<item>
+Between the <tt/supported/ and <tt/endsupported/ keywords you define
+what "needs" are supported by this window manager. So, the following
+is an example for a wm that supports both needs=x11 and needs=text:
+<example>
+  function q($s) = "\"" esc($s,"\\\"") "\""
+  supported
+    x11 =" ShowEntry(" q(title()) ", " q($command) ")"
+    text=" ShowEntry(" q(title()) ", " q(term())   ")"
+  endsupported
+</example>
+
+For the variable substitution (and functions, not shown above), see
+the next paragraph. In the above example, you'll notice that for the
+menu entries that "need=text", the term() function is used. This is a
+user-supplied function that will run $command in a X terminal emulator.  Also,
+as X11 is higher up in the supported list above than text, a package that
+supplies both a "needs=X11" and a "needs=text" entry will have the needs=X11
+entry installed, in favour of the needs=text entry.  You can continue lines on
+the next line with a backslash ("\"), but make sure you don't add any spaces
+after the backslash.
+
+<tag><tt/startmenu=""/
+<tag><tt/endmenu=""/
+<tag><tt/submenutitle=""/
+<item>
+These define what to print for the beginning/end of a menu, and
+how to the print a menu entry that pops up another menu.
+They are substituted the same way as the "supported" stuff is;
+see next paragraph.
+
+<tag><tt/treewalk="c(m)"/
+<item>
+This string defines in what order to dump the <tt/$startmenu/, <tt/$endmenu/,
+and <tt/$submenutitle/ (and its children). Each char in the string
+refers to:
+<example>
+    c  : dump children of menu.
+    m  : dump this menu's $submenutitles
+    (  : dump $startmenu
+    )  : dump $endmenu
+    M  : dump all $submenutitles of this menu and this menu's children.
+</example>
+
+The default is "c(m)". For olvwm, one needs: "(M)"
+
+<tag><tt/genmenu=""/
+<item>
+The menu file to generate (usually something like <tt>system."$wm"rc</>).
+The file itself may depend on the level or title that is currently
+being worked on, like 
+<example>
+    genmenu="/subdir/" replacewith($section," ","_") "/rc.menu"
+</example>
+(Substitution works just like in the supported stuff, see above).
+Note that the files made this way are truncated upon
+opening, so if you have a genmenu like the example above, then
+your <tt/endmenu=/ will override the startmenu stuff (but you probably
+only need one of the two anyway).
+
+<tag><tt>rootsection="/Debian"</>
+<item>
+the prefix every <tt/$section/ variable gets.
+
+<tag><tt/prerun=""/
+<tag><tt/postrun=""/
+<item>
+The commands to run before and after, respectively, the actual generation of the
+<file/menudefs.hook/ (genmenu) file. Commands will be executed by <prgn/sh/.
+Example: 
+<example>
+  prerun="rm -rf " prefix() "/*"
+  postrun="killall -USR1 fvwm2"
+</example>
+(Substitution works just like the supported stuff, see below).
+<tag><tt/preruntest=""/
+<item>
+Just like prerun, but if the return value of the command is non-zero,
+menu will quit.
+<tag><tt/also_run=""/
+<item>
+If non-zero, install-menus will, after generating the output files,
+also load the file also_run, and use the new assignments to treewalk,
+genmenu, etc. to generate more output. This second time, variables like
+<tt/prerun/ and all of the hint stuff are ignored.
+<p>
+
+<tag><tt/removemenu=""/
+<item>
+The command to run when the menu-method is invoked with the option
+<tt/--remove/. This should remove all the autogenerated menu files.
+If this option is not present, then install menu will remove
+<tt/genmenu/ if it is a constant string and <tt/rcfile/ if it is 
+defined, and try to remove <tt/prefix()/ if it is empty.
+
+<tag><tt/onlyrunasroot=false/
+<tag><tt/onlyrunasuser=false/
+<item>
+If <tt/onlyrunasroot/ is set to true, <prgn>install-menu</> will quit silently
+when run as a user. Similarly for <tt/onlyrunasuser/.
+
+<var><tt/onlyrunasroot/ is deprecated since it is simpler to just not define
+<tt/userprefix/.</var> On the other hand, <tt/onlyrunasuser/ might be needed 
+if you use <tt/rcfile/ since <tt/rootprefix/ is used as a fallback location
+for the template.
+
+<tag><tt>preoutput="#Automatically generated file. Do not edit (see /usr/share/doc/menu/html)\n\n"</tt>
+<tag><tt>postoutput=""</tt>
+<item>
+Text to put at the beginning resp. end of the generated file ($genmenu).
+
+<tag><tt/command=""/
+<item>
+A command to run instead of <prgn/install-menus/. This command used
+to be needed to get around limitations due to compatibility stuff. But
+that compatibility with pre menu-1 stuff has been dropped, and isn't
+needed any more.
+<p>
+
+Example:
+<example>
+  command="cat > /tmp/menu-stdin"
+</example>
+
+<tag><tt/hotkeyexclude=""/
+<item>
+Keys not to use for hotkey generation. You can use the same 
+variables and functions here as in for example the startmenu
+sections.
+<p>
+
+Example:
+<example>
+  hotkeyexclude="q" $section
+</example>
+
+<tag><tt/hotkeycase="insensitive"/
+<item>
+can be either "insensitive" or "sensitive". Determines
+whether the hotkeys can be of mixed case (<tt/fvwm2/ reads
+the hotkeys case-insensitive, <tt/pdmenu/ case-sensitive).
+In case of the titles "Xa" and "xb", hotkey case-insensitive will
+generate "X" and "b", whereas case-sensitive would generate "X" and
+"x".
+<p>
+
+<tag><tt/sort=$sort ":" $title/
+<item>
+Entries within one menu will be alphabetically sorted by whatever
+sort returns. So, if you do 
+<tt/sort=ifelse($command, "1", "0"):$title/, then all submenus will
+appear above the commands in a submenu. (A submenu always has 
+<tt/$command=""/). Or, as Joey Hess writes:
+<example>
+  You can add another field to the menu items, with whatever name you like,
+  let's say it's called priority. Then add this line to
+  /etc/menu-methods/*:
+  
+  sort=ifelse($priority, $priority, "9")
+  
+  This has the result of sorting things so items with a low priority sort to the
+  top, and items with no priority default to priority 9 and sort to the bottom.
+  
+  (Note that it compares the strings alphabetically, not numerically.)
+</example>
+
+<tag><tt/rcfile=""/
+<item>
+If the window manager doesn't support an "include filename" or
+"read(filename)" statement in it's config file, you can rename
+the wm's config file to <tt>system."$wm"rc-menu</>, and insert
+a "install-menu-defs" line (without the quotes, or whitespace around
+it, and "install-menu-defs" must be the only thing on the line)
+in the <tt>system."$wm"rc-menu</> file. This will then get replaced
+by the <tt/$genmenu/ file that was just created (see
+also <tt/$examplercfile/).
+<p>
+  
+<tag><tt/examplercfile=""/
+<item>
+if needed (see <tt/rcfile/), this is the <tt/system.rc"$wm"-menu/
+file. In that case, make <tt/rcfile=system.rc"$wm"/.
+<p>
+
+<tag><tt/rootprefix=""/
+<item>
+The prefix to use when running as root (applies to $genmenu, $rcfile,
+$examplercfile  and other old cache files). If it is not defined,
+the menu-method will be skipped when run as root.
+
+<p>
+<tag><tt/userprefix=""/
+<item>
+As <tt/rootprefix/, but when running as user. userprefix is relative to
+the user home directory, unless it start with 2 slashes, in which case it
+is treated as an absolute path. If it is not defined, the menu-method will be
+skipped when run as a user.
+<p>
+
+<tag><tt/hint_optimize=false/
+<item>
+If set to true, menu will try to generate an `optimal' tree, using
+the variables below. If set to false, menu will keep the sections as
+they are specified in the menu entry files (and ignore any hint stuff).
+
+<tag><tt/hint_nentry=6/
+<item>
+Optimal number of entries in a submenu. It's a float, so you can set
+it to 5.5 if you cannot decide between 5 and 6. Also, values less 
+than 3 probably don't work very well at the moment.
+
+<tag><tt/hint_topnentry=5/
+<item>
+Same as hint_nentry, but for the top level menu. Often here are other
+entries, added by the window-manager itself (like Exit, Xterm,
+whatever) that menu doesn't know about, so that you may want to
+instruct menu to put less entries in the top level menu.
+
+<tag><tt/hint_mixedpenalty=15.0/
+<item>
+Penalty for `mixed' menus. Mixed menus are those with both submenus
+and direct commands in them.
+
+<tag><tt/hint_minhintfreq=0.1/
+<item>
+Minimal relative frequency for the hints before they are considered.
+Internal variable to speed up the tree generation. If you find menu
+slow, increase this value (to, say 0.2 or 0.3).
+
+<tag><tt/hint_mlpenalty=2000/
+<item>
+`max local penalty',
+while evaluating the possible trees, menu gives `penalties' for
+submenus that don't contain the desired number of submenus. The
+penalty is sqrt(n_entry_opt-n_entry), and eventually will be
+calculated as a sum of all nodes. But to speed things up, menu will
+discard possibilities in which any node has a `local' penalty of more
+than hint_mlpenalty. Increase this value if you think menu is
+overlooking your favorite tree (also decrease minhintfreq), decrease
+this value if you think menu is wasting too much time.
+Because of hint_max_ntry, the influence of this variable is nearly
+zero nowadays.
+<tag><tt/hint_max_ntry=4/
+<item>
+menu will recursively, for each node, try the hint_max_ntry best local
+menu-divisions.
+
+<tag><tt/hints_max_iter_hint=5/
+<item>
+The search for what hints to use in one menu is rather expensive. But
+due to the way things are sorted, menu seems to always find the `best'
+match in the first 2% of iterations. Thus, a way to speed things up is
+simply to cut of menu searching after `some' iterations are
+done. This value controls this, and limits the number of iterations to 
+5+hint_max_iter_hint*number_of_possible_hints. Set this value to
+negative to disable this.
+
+<tag><tt/hint_debug=false/
+<item>
+Set to true if you want to see loads and loads of debug output.
+</taglist>
+
+<sect> Hints, tree optimization
+<p>
+The hints actually work in a rather strange way: when
+<tt/hint_optimize=true/ then all <tt/$section/ elements are added to
+the specified <tt/$hints/ variable, and the order
+(<tt>/Applications/Editors</tt> or <tt>/Editors/Applications</tt>) of the
+resulting hints is completely ignored. Then, the hints for each menu entry are
+handed to the optimization routine, which will calculate a reasonable tree for
+those hints. That tree must
+comply with the following:
+<p>
+
+When a user looks for a program "Program" with, say, hints 
+"Good,Bulky,Heaven", then, while walking through the tree, it should at
+every node visited
+be clear for the user what submenu to select (or the menu should have
+"Program" directly in it). So, the top-level menu may
+look like
+<example>
+  Good
+  Hell
+  Microsoft
+</example>
+because then a searcher for a menu entry with hints "Good,Bulky,Heaven"
+will know to select the submenu "Good". The toplevel menu may not look
+like
+<example>
+  Good
+  Hell
+  Heaven
+</example>
+as now it isn't clear whether to visit the Good or the Heaven submenu.
+<p>
+That rule allows usually for many different trees, and the task of the
+optimization procedure is to select, in a finite amount of time, the
+tree that best matches the user's desire about the optimum number of
+menu entries.
+
+<chapt>Variables and functions in the install-menu scripts
+<p>
+
+The supported "needs" definitions and "startmenu=", "endmenu="
+and "submenutitle=" are interpreted as follows:
+
+<sect> String constants
+<p>
+  Anything inside double quotes ("") is interpreted as a string, and
+  is written verbatim to the output file.
+  Escape sequences like \n, \t, ... will be replaced with their C expansions 
+  (but currently \0xx octal escape sequences are not supported).
+
+<sect> Variables
+<p>
+  Anything matching $[a-z,A-Z,_]* is interpreted as a variable, and
+  the corresponding definition from the menu entry is substituted.
+</p>
+<sect1>  Special variables
+<p>
+    The following variables are treated in a special way by install-menus,
+    either because they are used for other purposes too, or because they
+    are modified by install-menus (the ones marked with a "!" are modified
+    by install-menus).
+<taglist>
+<tag>    needs:   
+<item>
+             Used to determine whether the window manager supports this
+             menu entry.
+<tag>    command: 
+<item>
+             If this is undefined, this menu entry is taken as defining
+             a sub-menu. This way you can specify icons of sub-menus.
+<tag>    title!:  
+<item>
+             Used for sorting (see section).
+             For sub-menu entries (those with empty command), this
+             is initialised to the last part of the section.
+             Please, keep the title short (two words at maximum).
+             The title is for people who already know what program
+             they want to start. See "longtitle" and "description" below
+             for longer descriptions.
+<tag>    sort:    
+<item>
+             Used for sorting (see section). To make sure an entry is
+             at the beginning, use something with a low ASCII number,
+             like "$". For sorting at the end, use "|"
+<tag>    section!:
+<item>
+             Used to determine the section of the menu entry.
+             The menu entries that have a empty $command, ie those that
+             define a submenu, have $title added to the end of $section 
+             The menu entries that have a non-empty $command have their
+             $section modified to $section/$title, or $section/$sort:$title
+             if $sort is defined. The menu entries within one submenu
+             are sorted according to $section. If you want to retrieve the
+             real section name, see the $basesection variable.
+<tag>    basesection!:
+<item>
+             Used to contain the *real* section name. This is useful because
+             $section will be changed to $section/$title in special cases
+             (see above). This causes a problem when you want to do
+             parent($section) because you won't get the real parent section.
+             Instead you can use $basesection, which will never contain the
+             title.
+<tag>    hotkey!: 
+<item>
+             Modified to reflect what install-menus thinks is the
+             most suitable hotkey for this menu entry. The hotkey=
+             in the menu entry file is taken as a suggestion, that could
+             be overwritten if there is another entry with the same hotkey=.
+             To suggest two possible hotkeys for an entry use
+             hotkey="ab", with "a" being the most preferred hotkey.
+</taglist>
+<sect1>
+  Preferred variables
+<p>
+    The following aren't special for install-menus, but it's nice 
+    (read: essential) to use the same variables for the same things.
+    So, I'll suggest some here. If you want to invent new ones, please
+    do so and mail them to me so that I can include them here.
+<taglist>
+<tag> icon: <item>  
+             The location of the icon file for this menu entry.
+             If you don't have an icon file, just leave out the icon=
+             in the menu entry.
+<tag> icon32x32: <item>
+             The location of a 32x32 icon file for this menu entry.
+<tag> icon16x16: <item> 
+             The location of a 16x16 icon file for this menu entry.
+             This allows users to choose between 16x16 and 32x32 icon.
+<tag> longtitle: <item>
+             For people that like descriptive titles (about one line)
+             It is probably best to include this in your menu entries,
+             while the window-managers don't (by default) put it in the
+             menus. That way, people who want descriptive titles can
+             turn them on, but others don't need to use them.
+<tag> description: <item>
+             An even longer description (about 5 lines).
+             For example, a description of the documentation in
+             the dwww generated html pages.
+</taglist>
+<sect1>
+  Suggested variables
+<p>
+    The following variables probably shouldn't appear often (or at
+    all) in the menu files supplied with packages. They are mostly
+    intended for use by local system managers. Nevertheless, it is
+    advised that all Debian systems use the following variable names:    
+<taglist>   
+<tag> visible <item>
+             Some apps add entries to utmp the utmp file, so that
+             "who" and friends know they are running (this is
+             especially true for xterms etc). If $visible set
+             (to anything other than "" or "none"), xterms etc will
+             not write logging info to utmp. (may not work for
+             your window manager).
+<tag> geometry <item>
+             For X apps, this will be the size of the (main) window
+             that will be created (units in either chars or pixels,
+             depending on type of main window (xterm or graphic)).
+             If you as package maintainer want to use this, you should
+             probably think about setting this variable somewhere
+             in an Xresources file.
+</taglist>   
+<sect> Functions
+<p>
+  Anything matching <tt/[a-zA-Z_]+/ is taken as a function name, and an error
+  is generated if the function doesn't exist. The arguments of the
+  functions can be other functions, string constants or variables.
+<taglist>
+<tag> prefix() <item>
+     returns the current prefix dir: either $rootprefix, or
+     $HOME/$userprefix, depending on who runs install-menu
+
+<tag> ifroot($rootarg, $userarg) <item>
+     if(getuid()==0) print $rootarg, else print $userarg
+
+<tag> print($arg)     <item>
+     Same as just $arg; if $arg is empty, generate an error.
+
+<tag> nstring($n, $string) <item>
+     write $string $n times. So, nstring(3,"Aa") writes "AaAaAa".
+     (Useful in combination with level()).
+
+<tag> esc($arg1,$arg2) <item>
+     Print $arg1, but escape all occurrences of characters in $arg2
+     with a '\' (thus, if arg1="hello", arg2="lo", print "he\l\l\o").
+
+<tag> escwith($arg1, $arg2, $arg3) <item>
+     Same as esc, but use $arg3 as escape sequence.
+
+<tag> escfirst($arg1, $arg2, $arg3) <item>
+     Same as escwith, but only escapes first occurrence of $arg2.
+
+<tag> cppesc($arg1) <item>
+     Escape anything that isn't a letter, number or _ with
+     $&lt;hex-ascii-code&gt;. So, for example, a '-' is replaced by '$2D'.
+     This way, $arg1 can be used as a #define in cpp.
+
+<tag> tolower($arg)
+<tag> toupper($arg) <item>
+     Returns the argument set in lowercases resp uppercases. 
+
+<tag> replacewith($s, $replace, $with) <item>
+     Search $s for occurrences of characters from string replace, and
+     replace them by the corresponding character in $with.
+     Example:
+      replacewith("hello $world, %dir", "$% ", "123")
+      returns:   "hello31world,32dir"
+
+<tag> replace($s, $replace, $with) <item>
+     Search $s for occurences of $replace and replace them with $with.
+     Note that the behaviour of this function is quite different than the
+     replacewith() function.
+
+<tag> ifempty($arg1, $arg2) <item>
+     If $arg1 is empty, print $arg2, otherwise print nothing.
+     For compatibility, $arg1="none" is interpreted as empty.
+
+<tag> ifnempty($arg1, $arg2)      <item>
+     If $arg1 is not empty, print $arg2.
+     For compatibility, the string "none" is seen as empty.
+
+<tag> ifelse($arg1,$arg2,$arg3) <item>
+     If $arg1 is non-empty, print $arg2, otherwise $arg3.
+     For compatibility, the string "none" is seen as empty.
+
+<tag> ifeq($arg1, $arg2, $arg3) <item>
+     If ($arg1==$arg2) then print $arg3
+<tag> ifneq($arg1, $arg2, $arg3) <item>
+     If ($arg1!=$arg2) then print $arg3
+<tag> ifeqelse($arg1, $arg2, $arg3, $arg4) <item>
+     If ($arg1==$arg2) then print $arg3 else print $arg4
+
+<tag> cond_surr($arg1, $arg2, $arg3) <item>
+     If $arg1 is non-empty print $arg2$arg1$arg3, otherwise print nothing.
+     For compatibility, $arg1="none" is interpreted as empty.
+
+<tag> iffile($arg1, $arg2) <item>
+     If file $arg1 exists, and can be opened for reading by whoever
+     started the current process, return $arg2, otherwise return nothing.
+
+
+<tag> ifelsefile($arg1, $arg2, $arg3) <item>
+     If file $arg1 exists, and can be opened for reading by whoever
+     started the current process, return $arg2, otherwise return $arg3.
+
+<tag> catfile($arg1) <item>
+     Return the contents of file $arg1.
+
+<tag> shell($arg1) <item>
+     Return the output of the shell command $arg1.
+  
+<tag> forall($array, "var", $exec) <item>
+     For each element of the column separated array $array, set
+     $var to that element, and print $exec.
+     Example:
+     <example>
+      !include lang.h
+      forall(sections_translations(), "lang", \ 
+         " section[" $lang "]=" translate($lang, title()) "\n")
+      </example>
+
+<tag> parent($arg) <item>
+     for $arg a "directory", return parent directory:
+     parent("/Debian/Applications/Editors") = "/Debian/Applications".
+
+<tag> basename($arg) <item>
+     return the last part of the parent directory:
+     basename("/Debian/Applications/Editors") = "Applications".
+
+<tag> stripdir($arg) <item>
+     everything after the last slash, i.e. what basename() 
+     should have returned: stripdir("/Debian/Applications/Editors") = "Editors".
+
+<tag> entrycount() <item>
+     the number of entries in this menu.
+ 
+<tag> entryindex() <item>
+     returns relative position of this entry. Start with 0,
+     last entry is entrycount() - 1.
+     BUG: if sort= anything other than $title, then this
+     entryindex() will return incorrect values.
+
+<tag> firstentry($arg) <item>
+     return $arg if this is the first entry of this menu
+     (that is, entryindex() = 0). Else, return nothing.
+
+<tag> lastentry() <item>
+     return $arg if this is the last entry in this menu
+     (that is, entryindex() = entrycount() -1). Else, return nothing.
+     
+<tag> level() <item>
+     return nesting of this menu in the total menu tree.
+
+<tag> add($arg1,$arg2)
+<tag> sub($arg1,$arg2) 
+<tag> mult($arg1,$arg2) 
+<tag> div($arg1,$arg2) <item>
+     returns the sum, difference, product or quotient of $arg1 and
+     $arg2. Note that the arguments are strings, that are converted
+     to integers.
+     example: mult("24", entryindex())
+     
+<tag> rcfile() 
+<tag> examplercfile()  
+<tag> mainmenutitle() 
+<tag> rootsection() 
+<tag> rootprefix() 
+<tag> userprefix() 
+<tag> treewalk() 
+<tag> postoutput() 
+<tag> preoutput() 
+<item>
+     These functions all output whatever they were defined to be in
+     the menu-method file.
+
+<tag> translate($lang, $text) <item>
+     Translate $text into $lang using gettext, see <tt/forall/ for an
+     example.  Note that currently outputlanguage must be set to "C".
+     If $lang is the empty string, $text will be translated in the
+     current locale language. See sections_translations() for a list
+     of available translations.
+     
+<tag> implicit concatenation <item>
+String constants, variables and functions can be concatenated 
+by placing them after each other with a space in between, like:
+
+"hello" ifelse($comma, $comma, " sorry" $period " comma not defined") " world"
+</taglist>
+  
+</book>
+

@@ -1,0 +1,215 @@
+.\" -*- nroff -*-
+.TH MENUFILE 5 "File Formats" "DEBIAN"
+.SH NAME
+menufile \- entry in the Debian menu system
+.SH SYNOPSIS
+.B ~/.menu/*
+.PP
+.B /etc/menu/*
+.PP
+.B /usr/lib/menu/*
+.PP
+.B /usr/share/menu/*
+.PP
+.B /usr/share/menu/default/*
+.SH DESCRIPTION
+Menu files add entries to the Debian menu system. The system administrator can
+place menu files in /etc/menu/ to override menu files that packages add to
+/usr/share/menu/ .  The user can place menu files in ~/.menu/ to override all
+other menu files.
+.PP
+Please read the Debian menu manual available in /usr/share/doc/menu/html 
+for the complete specification of menu files.
+.PP
+The menu files are usually named after the Debian package that
+contains the programs listed in them. In it, you can list several
+"menu entries" that specify a specific item in the menu
+structure. Each menu entry specifies which packages it depends on; if
+that package are not installed, the menu entry will be ignored by
+\fBupdate-menus(1)\fP.
+(In a menu entry you can specify pseudo-packages that start
+with "local."; update-menus will always use those menu entries).
+If you wish to remove an item from the menu entirely, make an empty menu
+file with the same name as the file you want to override.
+.SH Examples
+Dosemu could install the following menu file as /usr/share/menu/dosemu:
+.PP                                                              
+ ?package(dosemu):needs="text" section="Applications/Emulators" title="Dosemu" command="dosemu"
+ ?package(dosemu):needs="X11" section="Applications/Emulators" title="Dosemu" command="xdos"
+.PP
+The system administrator wants to override this file to change how dosemu is
+run, so /etc/menu/dosemu is created:
+.PP
+ ?package(dosemu):needs="text" section="Applications/Emulators" title="Dosemu" command="dosemu -A"
+ ?package(dosemu):needs="X11"  section="Applications/Emulators" title="Dosemu" command="xdos -A"
+.PP
+A user does not want Dosemu to appear in the menus at all, so the user creates
+an empty file named \fI~/.menu/dosemu\fP.
+.SH FORMAT
+A menu file consists of 0 or more lines of the following format:
+.RS
+.PP
+\fB?package(package-name):var1=value1 var2=value2 \fR ...
+.TP
+needs
+Specify what kind of environment the program require. This variable must be
+defined, and should be one of the following:
+.RS
+.TP
+needs="text"
+Program requires a terminal
+.TP
+needs="x11"
+Program requires a X server
+.TP
+needs="vc"
+Program requires a Linux console (i.e.: svgalib programs)
+.TP
+needs="wm"
+The program is a window manager.
+.TP
+needs="fvwmmodule"
+The program is a fvwm compatible module.
+.RE
+.TP
+section
+The section in which the menu entry should appear. See \fBMENU LAYOUT\fP for
+preferred section names.
+.RS
+.RE
+.TP
+icon
+An icon for this menu entry. If no icon is available, just don't
+define this. 
+.TP
+title
+The title of the program that will appear on the menus. Keep it short.
+If two menu entries share the same title and section, the one that
+best fits the available display will be used. So in the example above
+with two menu entries that both have the menu id "title", if X is
+available, the X11 one will be used; otherwise the text one will be used.
+Must be defined.
+.TP
+command
+The command to be executed when this menu entry is selected.
+.TP
+hints
+A comma-separated list of hints on how grouping menu entries; see the manual.
+.RE
+.SH "MENU LAYOUT"
+The \fBauthoritative\fP list of Debian's menu structure is maintained in the
+Debian Menu sub-policy document which is part of the Debian Policy package. The
+menu structure below is included only for convenience. Please do not put your
+packages into any other sections. 
+
+Use `/' to separate sub-menu names, for example, "Applications/Editors" or
+"Games/Arcade".
+.PP
+ \fIApplications\fP
+   \fIAccessibility\fP
+   \fIAmateur Radio\fP
+   \fIData Management\fP
+   \fIEditors\fP
+   \fIEducation\fP
+   \fIEmulators\fP
+   \fIFile Management\fP
+   \fIGraphics\fP
+   \fIMobile Devices\fP
+   \fINetwork\fP
+     \fICommunication\fP
+     \fIFile Transfer\fP
+     \fIMonitoring\fP
+     \fIWeb Browsing\fP
+     \fIWeb News\fP
+   \fIOffice\fP
+   \fIProgramming\fP
+   \fIProject Management\fP
+   \fIScience\fP
+     \fIAstronomy\fP
+     \fIBiology\fP
+     \fIChemistry\fP
+     \fIData Analysis\fP
+     \fIElectronics\fP
+     \fIEngineering\fP
+     \fIGeoscience\fP
+     \fIMathematics\fP
+     \fIMedicine\fP
+     \fIPhysics\fP
+     \fISocial\fP
+   \fIShells\fP
+   \fISound\fP
+   \fISystem\fP
+     \fIAdministration\fP
+     \fIHardware\fP
+     \fILanguage Environment\fP
+     \fIMonitoring\fP
+     \fIPackage Management\fP
+     \fISecurity\fP
+   \fITerminal Emulators\fP
+   \fIText\fP
+   \fITV and Radio\fP
+   \fIViewers\fP
+   \fIVideo\fP
+   \fIWeb Development\fP
+ \fIGames\fP
+   \fIAction\fP
+   \fIAdventure\fP
+   \fIBlocks\fP
+   \fIBoard\fP
+   \fICard\fP
+   \fIPuzzles\fP
+   \fISimulation\fP
+   \fIStrategy\fP
+   \fITools\fP
+   \fIToys\fP
+ \fIHelp\fP
+ \fIScreen\fP
+   \fISaving\fP
+   \fILocking\fP
+ \fIWindow Managers\fP
+ \fIFVWM Modules\fP
+ \fIWindow Maker\fP
+
+.SH NOTES
+If you want to specify an icon or hotkey for a sub-menu (for example,
+the Editors sub-menu), just use the same syntax but leave the command
+empty:
+
+?package(mypackage):needs="X11" section="Applications" \\
+ icon="/usr/share/pixmaps/icon.xpm" hotkey="E" title="Editors"
+
+.PP
+Whenever any menu files are changed, you must run
+.BR update-menus (1)
+.SH FILES
+(Earlier listed files override later files with the same names.)
+.PP
+.I ~/.menu/*
+.RS
+Menu files added by the user.
+.RE
+.I /etc/menu/*
+.RS
+Menu files added by the system administrator.
+.RE
+.I /usr/lib/menu/*
+.RS
+Architecture-dependant menu files provided by other Debian packages.
+.RE
+.I /usr/share/menu/*
+.RS
+Architecture-independant menu files provided by other Debian packages.
+.RE
+.I /usr/share/menu/default/*
+.RS
+Menu files provided by the menu package.
+.RE
+.SH AUTHORS
+Joost Witteveen <joostje@debian.org>, based on work by 
+Lars Wirzenius <liw@iki.fi>. Now maintained by 
+Bill Allombert <ballombe@debian.org>.
+.PP
+(Man page by Joey Hess, <joeyh@debian.org>)
+.SH "SEE ALSO"
+.BR update-menus (1),
+.BR /usr/share/doc/menu/html/index.html

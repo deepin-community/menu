@@ -1,4 +1,116 @@
-#!/usr/bin/make -f
+#! /usr/bin/make -f
+#   -*- mode: makefile; -*-
+#
+# Based on the sample file shipped with debhelper.
 
-%:
-	dh $@
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+arch    := $(shell dpkg-architecture -qDEB_HOST_ARCH)
+
+DEB_HOST_GNU_CPU    ?= $(shell dpkg-architecture -qDEB_HOST_GNU_CPU)
+DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
+DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
+DEB_HOST_MULTIARCH  ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+
+CXXFLAGS = -g -Wall
+CFLAGS = -g -Wall
+LDFLAGS = -Wl,-z,relro
+
+ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
+CXXFLAGS += -O0
+CFLAGS += -O0
+else
+CXXFLAGS += -O2
+CFLAGS += -O2
+endif
+
+build-indep:
+build-arch: build-stamp
+build: build-indep build-arch
+build-stamp:
+	dh_testdir
+	./configure --host=$(DEB_HOST_GNU_TYPE) --target=$(DEB_HOST_GNU_TYPE) \
+                    --build=$(DEB_BUILD_GNU_TYPE) \
+                    --prefix=/usr --infodir=/usr/share/info --mandir=/usr/share/man
+	$(MAKE) CXXFLAGS="$(CXXFLAGS)" CFLAGS="$(CFLAGS)" "LDFLAGS=$(LDFLAGS)"
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp install-stamp config.log
+
+	# Add here commands to clean up after the build process.
+	[ ! -f Makefile ] || $(MAKE) distclean
+
+	dh_clean
+
+install: install-stamp
+install-stamp: build-stamp
+	dh_testdir
+	dh_testroot
+	dh_prep
+	dh_installdirs \
+		   etc/menu-methods \
+		   etc/menu \
+		   usr/share/menu \
+		   usr/share/man/man1 \
+		   usr/share/bug/menu
+
+
+	# Add here commands to install the package into debian/menu.
+	$(MAKE) install DESTDIR=`pwd`/debian/menu/
+
+	install -p -g root -o root -m 644 \
+	      examples/translate_menus debian/menu/etc/menu-methods
+	install -p -g root -o root -m 644 \
+	      examples/menu.h debian/menu/etc/menu-methods
+	install -p -g root -o root -m 644 \
+	      po-sections/lang.h debian/menu/etc/menu-methods
+	install -p -g root -o root -m 644 \
+	      examples/menu.config debian/menu/etc/menu-methods
+	#
+	install -p -g root -o root -m 644 \
+	   doc/README.config-menus debian/menu/etc/menu/README
+	install -p -g root -o root -m 644 \
+	   doc/README.menu-methods debian/menu/etc/menu-methods/README
+	install -p -g root -o root -m 644 \
+	   doc/README.package-menus debian/menu/usr/share/menu/README
+	#
+	install -p -g root -o root -m 644 \
+	   debian/bug.presubj debian/menu/usr/share/bug/menu/presubj
+	#
+	touch install-stamp
+
+# Build architecture-independent files here.
+binary-indep: build-indep install
+# We have nothing to do here, no architecture independant packages here.
+
+# Build architecture-dependent files here.
+binary-arch: build-arch install
+	dh_testdir
+	dh_testroot
+	dh_installdocs
+	dh_installexamples
+	dh_installman doc/update-menus.fr.1 doc/su-to-root.fr.1 \
+	              doc/menufile.fr.5
+	dh_installinfo doc/menu.info.gz
+	dh_installchangelogs
+	dh_lintian
+	dh_strip
+	dh_compress
+	dh_fixperms
+	#Ensure update-menus is not shipped executable
+	chmod a-x debian/menu/usr/bin/update-menus
+	dh_installdeb
+#	refuse debhelper V3 conffiles behaviour.
+	cp debian/conffiles debian/menu/DEBIAN
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+
+binary: binary-indep binary-arch
+.PHONY: build build-indep build-arch clean binary-indep binary-arch binary

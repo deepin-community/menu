@@ -1,0 +1,57 @@
+.\" Process this file with
+.\" groff -man -Tascii foo.1
+.\"
+.TH  su\-to\-root 1 "20 October 1998" "Debian Project" "Debian GNU/Linux manual"
+.SH NAME
+su\-to\-root \- A simple script to give an `interactive' front-end to su.
+It can be used in menu entry commands to ask for the root password
+.SH SYNOPSIS
+.B su\-to\-root [\-X] [\-p <user>] \-c <command>
+.SH DESCRIPTION
+Most menu entries simply start an editor or a game or whatever. But
+some menu entries would like to give the user the ability to change
+important settings in the system, that require root privileges. 
+\fBsu\-to\-root\fP can be used to ask for the root password.
+.SH OPTIONS
+.IP "\-c <command>"
+The command to execute as a string. This option is mandatory.
+.IP "\-p <user>"
+The name of the user to change to, instead of root.
+.IP "\-X"
+The command is a X11 program that does not require a terminal.
+This is to be used with menu entries that declare needs="X11".
+.SH ENVIRONMENT
+.IP SU_TO_ROOT_X
+Select the su-like program called by \fIsu\-to\-root \-X\fP.
+Supported values are \fIgksu\fP, \fIkdesu\fP, \fIkde4su\fP, \fIktsuss\fP,
+ \fIsux\fP, \fIsudo-askpass\fP, \fIgksudo\fP and \fIkdesudo\fP.
+\fIkde4su\fP denotes the KDE4 version of \fBkdesu\fP.
+\fIsudo-askpass\fP require \fBssh-askpass\fP to be installed.
+.IP
+When this variable is not set \fBsu\-to\-root\fP will currently try to use
+\fIgksu\fP, \fIkdesu\fP, \fIkde4su\fP, \fIktsuss\fP, \fIsux\fP and the built-in
+code, in that order with the exception that under a KDE session, \fIkdesu\fP
+and \fIkde4su\fP are preferred over \fIgksu\fP.
+.IP
+The exact set of programs to try and their order is subject to change without
+notice.
+.IP SU_TO_ROOT_SU
+Select the su-like program used in text mode.
+Supported values are \fIsudo\fP, \fIsux\fP and \fIsu\fP, the later being
+the default.
+.SH FILES
+.IP /etc/su\-to\-rootrc
+.IP ~/.su\-to\-rootrc
+\fBsu\-to\-root\fP will source these files at startup in this order. This lets
+you define and modify the environment variables above without restarting your X
+session.  
+.SH COPYING
+\fBsu\-to\-root\fP is distributed under the GNU General Public License.
+(GPL 2.0 or greater).
+.SH AUTHORS
+Joost Witteveen <joostje@debian.org>
+.P
+X11 support by Morten Brix Pedersen and Bill Allombert
+.RI <ballombe@debian.org>
+.SH "SEE ALSO"
+\fBupdate\-menus\fP(1), \fBmenufile\fP(5), \fB/usr/share/doc/menu/html\fP

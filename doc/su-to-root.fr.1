@@ -1,0 +1,61 @@
+.\" Process this file with
+.\" groff -man -Tascii foo.1
+.TH su\-to\-root 1 "20 octobre 1998" "Projet Debian" "Manuel Debian GNU/Linux"
+.SH NOM
+su\-to\-root \- un simple script qui est une interface interactive à su. Il 
+peut être utilisé dans les commandes des entrées de menu pour demander le 
+mot de passe du super-utilisateur.
+.SH SYNOPSIS
+\fBsu\-to\-root [\-X] [\-p <utilisateur>] \-c <commande>\fP
+.SH DESCRIPTION
+La plupart des entrées de menu démarrent un éditeur, un jeu, ou n'importe 
+quoi d'autre. Mais certaines entrées de menu veulent fournir à l'utilisateur 
+la possibilité de changer des réglages importants du système, ce qui 
+nécessite des droits d'administration. 
+\fBsu\-to\-root\fP peut être utilisé pour demander le mot de passe du
+super-utilisateur.
+.SH OPTIONS
+.IP "\-c <command>"
+La commande à exécuter sous forme de chaîne de caractères. Cette option est 
+obligatoire.
+.IP "\-p <utilisateur>"
+Le compte utilisateur cible, en lieu et place de root.
+.IP \-X
+La commande est un programme X11 qui ne nécessite pas de terminal. Elle doit 
+être utilisée avec les entrées de menu qui déclarent le champs needs="X11".
+.SH ENVIRONNEMENT
+.IP SU_TO_ROOT_X
+Indique le programme permettant de devenir super-utilisateur qui sera appelé 
+par \fBsu\-to\-root \-X\fP. Les valeurs acceptées sont \fIgksu\fP, \fIkdesu\fP,
+\fIkde4su\fP, \fIktsuss\fP, \fIsux\fP, \fIgksudo\fP et \fIkdesudo\fP. \fIkde4su\fP
+indique la version KDE4 de \fBkdesu\fP.
+.IP
+Quand cette variable n'est pas définie, \fBsu-to-root\fP essaie actuellement 
+d'utiliser \fIgksu\fP, \fIkdesu\fP, \fIkde4su\fP, \fIktsuss\fP, \fIsux\fP et le
+code intégré dans cet ordre avec l'exception que, dans une session KDE,
+\fIkdesu\fP et \fIkde4su\fP seront préférés à \fIgksu\fP.
+.IP
+La liste de programmes à essayer et son ordre est sujet à changement sans avertissement. 
+.IP SU_TO_ROOT_SU
+Indique le programme permettant de devenir super-utilisateur qui sera appelé 
+en mode texte. Les valeurs acceptées sont \fIsux\fP, \fIsudo\fP
+et \fIsu\fP, ce dernier étant la valeur par défaut.
+.SH FICHIERS
+.IP /etc/su\-to\-rootrc
+.IP ~/.su\-to\-rootrc
+\fBsu\-to\-root\fP sourcera ce fichier au lancement. Ceci
+permet de définir et modifier les variables d'environnement décrite
+précédemment sans avoir à redémarrer votre session X.
+.SH DISTRIBUTION
+\fBsu\-to\-root\fP est distribué sous la licence publique générale («\ GPL\ »)
+du projet GNU (GPL version 2.0 ou supérieure).
+.SH AUTEURS
+Joost Witteveen <joostje@debian.org>
+.P
+Gestion de X11 par Morten Brix Pedersen et Bill Allombert <ballombe@debian.org>.
+.P
+Cette page de manuel est basée sur une première traduction réalisée par Nicolas
+François le 3 septembre 2005.
+.SH "VOIR AUSSI"
+\fBupdate\-menus\fP(1), \fBmenufile\fP(5), \fB/usr/share/doc/menu/html\fP
+
