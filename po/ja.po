@@ -1,0 +1,416 @@
+# Japanese translation of menu
+# Copyright (C) 2004 Debian menu team
+# This file is distributed under the same license as the menu package.
+# GOTO Masanori <gotom@debian.org>, 2004
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: menu\n"
+"Report-Msgid-Bugs-To: menu@packages.debian.org\n"
+"POT-Creation-Date: 2007-10-05 07:30+0200\n"
+"PO-Revision-Date: 2004-09-27 19:59+0900\n"
+"Last-Translator: GOTO Masanori <gotom@debian.org>\n"
+"Language-Team: Japanese <debian-japanese@lists.debian.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=EUC-JP\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../install-menu/functions.cc:92
+msgid "Zero-size argument to print function."
+msgstr "関数表示時に長さゼロの引数が与えられました"
+
+#: ../install-menu/install-menu.cc:202
+msgid "install-menu: checking directory %1\n"
+msgstr "install-menu: ディレクトリ %1 を検査中です\n"
+
+#: ../install-menu/install-menu.cc:215
+msgid "install-menu: creating directory %1:\n"
+msgstr "install-menu: ディレクトリ %1 を作成中:\n"
+
+#: ../install-menu/install-menu.cc:217
+msgid "Could not create directory(%1): %2"
+msgstr "ディレクトリ (%1) が作成できません: %2"
+
+#: ../install-menu/install-menu.cc:219
+msgid "Could not change directory(%1): %2"
+msgstr "ディレクトリ (%1) を変更できません: %2"
+
+#: ../install-menu/install-menu.cc:222
+msgid "install-menu: directory %1 already exists\n"
+msgstr "install-menu: ディレクトリ %1 は既に存在しています\n"
+
+#. Do not translate supported
+#: ../install-menu/install-menu.cc:447
+msgid "install-menu: [supported]: name=%1\n"
+msgstr "install-menu: [supported]: name=%1\n"
+
+#: ../install-menu/install-menu.cc:464
+msgid "Menu entry lacks mandatory field \"%1\".\n"
+msgstr "メニューエントリは必須フィールド \"%1\" を欠いています.\n"
+
+#: ../install-menu/install-menu.cc:470
+msgid "Unknown value for field %1=\"%2\".\n"
+msgstr "項目 %1=\"%2\" が未知の値.\n"
+
+#. Do not translate quoted text
+#: ../install-menu/install-menu.cc:617
+msgid ""
+"install-menu: \"hotkeycase\" can only be \"sensitive\" or \"insensitive\"\n"
+msgstr ""
+"install-menu: \"hotkeycase\" は \"sensitive\" または \"insensitive\" のみ指定"
+"できます\n"
+
+#: ../install-menu/install-menu.cc:647
+msgid ""
+"install-menu: Warning: Unknown identifier `%1' on line %2 in file %3. "
+"Ignoring.\n"
+msgstr ""
+"install-menu: 警告: 未知の識別子 `%1' がファイル %3 の %2 行にあります. 無視"
+"します.\n"
+
+#: ../install-menu/install-menu.cc:657
+msgid "install-menu: %1 must be defined in menu-method %2"
+msgstr "install-menu: %1 は menu-method %2 中で定義されていなければなりません"
+
+#: ../install-menu/install-menu.cc:824
+msgid "Cannot open file %1 (also tried %2).\n"
+msgstr "ファイル %1 が開けません (%2 も試験済み).\n"
+
+#: ../install-menu/install-menu.cc:832 ../install-menu/install-menu.cc:839
+#: ../install-menu/install-menu.cc:847
+msgid "Cannot open file %1.\n"
+msgstr "ファイル %1 が開けません.\n"
+
+#: ../install-menu/install-menu.cc:849
+msgid ""
+"In order to be able to create the user config file(s) for the window "
+"manager,\n"
+"the above file needs to be writeable (and/or the directory needs to exist).\n"
+msgstr ""
+"ウインドウマネージャ用のユーザ設定ファイルを作成可能とするために, 上記ファイ"
+"ルは\n"
+"書込み可能である必要があります (またはディレクトリが存在していなければなりま"
+"せん).\n"
+
+#: ../install-menu/install-menu.cc:871
+msgid "Warning: the string %1 did not occur in template file %2\n"
+msgstr "警告: 文字列 %1 はテンプレートファイル %2 中で見い出されませんでした\n"
+
+#. Don't translate quoted string
+#: ../install-menu/install-menu.cc:896
+#, fuzzy
+msgid ""
+"install-menu [-vh] <menu-method>\n"
+"  Read menu entries from stdin in \"update-menus --stdout\" format\n"
+"  and generate menu files using the specified menu-method.\n"
+"  Options to install-menu:\n"
+"     -h --help    : this message\n"
+"        --remove  : remove the menu instead of generating it.\n"
+"     -v --verbose : be verbose\n"
+msgstr ""
+"install-menu [-vh] <menu-method>\n"
+"  標準入力から \"update-menus --stdout\" フォーマットのメニューエントリを\n"
+"  読み取り, そして指定 menu-method でメニューファイルを生成する.\n"
+"  install-menu のオプション:\n"
+"     -h --help    : このメッセージを表示\n"
+"     -v --verbose : 冗長表示\n"
+
+#: ../install-menu/install-menu.cc:943
+msgid "install-menu: no menu-method script specified!"
+msgstr "install-menu: menu-method スクリプトが指定されていません!"
+
+#: ../install-menu/install-menu.cc:956
+msgid "Cannot open script %1 for reading.\n"
+msgstr "読込み時にスクリプト %1 が開けません.\n"
+
+#: ../install-menu/install-menu.cc:979
+msgid "Warning: script %1 does not provide removemenu, menu not deleted\n"
+msgstr ""
+
+#: ../install-menu/install-menu.cc:1014
+msgid "Running: \"%1\"\n"
+msgstr "実行中: \"%1\"\n"
+
+#: ../install-menu/install-menu.cc:1030
+msgid "install-menu: %1: aborting\n"
+msgstr "install-menu: %1: 中断\n"
+
+#: ../install-menu/install-menu.h:199
+msgid "Number of arguments to function %1 does not match."
+msgstr "関数 %1 に対する引数の個数が一致しません."
+
+#: ../install-menu/install-menu.h:207
+msgid "Unknown function: \"%1\""
+msgstr "未知の関数: \"%1\""
+
+#: ../install-menu/install-menu.h:216
+msgid "Indirectly used, but not defined function: \"%1\""
+msgstr "間接使用されているが, 未定義の関数: \"%1\""
+
+#: ../install-menu/install-menu.h:225
+msgid "Unknown identifier: \"%1\""
+msgstr "未知の識別子: \"%1\""
+
+#: ../install-menu/install-menu.h:234
+msgid "Encoding conversion error: \"%1\""
+msgstr "エンコーディング変換エラー: \"%1\""
+
+#: ../update-menus/exceptions.h:43
+msgid "Unknown error."
+msgstr "未知のエラー."
+
+#: ../update-menus/exceptions.h:55 ../update-menus/parsestream.h:114
+msgid "Unknown error, message=%1"
+msgstr "未知のエラー, メッセージ=%1"
+
+#: ../update-menus/exceptions.h:64
+msgid "Unable to open file \"%1\"."
+msgstr "ファイル \"%1\" が開けません."
+
+#: ../update-menus/exceptions.h:73
+msgid "Failed to pipe data through \"%1\" (pipe opened for reading)."
+msgstr ""
+"\"%1\" を通じてのデータのパイプに失敗しました (読込み用にパイプを開きました)."
+
+#: ../update-menus/exceptions.h:89
+msgid "%1: missing required tag: \"%2\""
+msgstr "%1: 必須タグが見当たらない: \"%2\""
+
+#: ../update-menus/parsestream.cc:50
+msgid "(probably) stdin"
+msgstr "(おそらく) 標準入力"
+
+#: ../update-menus/parsestream.cc:450
+msgid "In file \"%1\", at (or in the definition that ends at) line %2:\n"
+msgstr "ファイル \"%1\" の %2 行 (またはそれ以前の定義行内):\n"
+
+#: ../update-menus/parsestream.cc:471
+msgid "Somewhere in input file:\n"
+msgstr "入力ファイルのどこか:\n"
+
+#: ../update-menus/parsestream.h:122
+msgid "Unexpected end of file."
+msgstr "予期せぬファイルの終端 (エンドオブファイル)."
+
+#: ../update-menus/parsestream.h:129
+msgid "Unexpected end of line."
+msgstr "予期せぬ行末 (エンドオブライン)."
+
+#: ../update-menus/parsestream.h:136
+msgid "Identifier expected."
+msgstr "識別子が期待されています."
+
+#: ../update-menus/parsestream.h:144
+msgid "Expected: \"%1\""
+msgstr "予期: \"%1\""
+
+#: ../update-menus/parsestream.h:153
+msgid "Unexpected character: \"%1\""
+msgstr "予期せぬ文字: \"%1\""
+
+#: ../update-menus/parsestream.h:162
+msgid ""
+"Boolean (either true or false) expected.\n"
+"Found: \"%1\""
+msgstr ""
+"ブーリアン (真または偽のどちらか) を要求.\n"
+"発見: \"%1\""
+
+#: ../update-menus/parsestream.h:172
+msgid "Unknown compat mode: \"%1\""
+msgstr "未知の compat モード: \"%1\""
+
+#: ../update-menus/stringtoolbox.cc:85
+msgid ""
+"replacewith($string, $replace, $with): $replace and $with must have the same "
+"length."
+msgstr ""
+"replacewith($string, $replace, $with): $replace と $with は同じ長さで\n"
+"なければなりません."
+
+#: ../update-menus/update-menus.cc:150
+msgid ""
+"file %1 line %2:\n"
+"Discarding entry requiring missing package %3."
+msgstr ""
+
+#. Translation here and below refer to the file
+#. /etc/menu-methods/translate_menus that allow to rename and reorganize
+#. menu entries automatically. It does not refer to the localisation
+#. (translation to other languages).
+#.
+#: ../update-menus/update-menus.cc:364
+msgid "Reading translation rules in %1."
+msgstr "%1 中の翻訳ルールを読込み中."
+
+#: ../update-menus/update-menus.cc:444
+msgid "Reading installed packages list..."
+msgstr "インストール済パッケージリストを読込み中..."
+
+#: ../update-menus/update-menus.cc:493
+msgid "Execution of %1 generated no output or returned an error.\n"
+msgstr "%1 の実行によって何も出力が生成されないかエラーが返されました.\n"
+
+#: ../update-menus/update-menus.cc:534 ../update-menus/update-menus.cc:538
+msgid "Skipping file because of errors...\n"
+msgstr "エラーによってファイルをスキップします...\n"
+
+#: ../update-menus/update-menus.cc:555
+msgid "Reading menu-entry files in %1."
+msgstr "%1 中のメニューエントリファイルを読込み中."
+
+#: ../update-menus/update-menus.cc:578
+msgid "Error reading %1.\n"
+msgstr "%1 読込み中にエラー.\n"
+
+#: ../update-menus/update-menus.cc:584
+msgid "%1 menu entries found (%2 total)."
+msgstr "%1 メニューエントリを発見 (%2 トータル)."
+
+#: ../update-menus/update-menus.cc:595
+#, fuzzy
+msgid "Running method: %1 --remove"
+msgstr "実行中メソッド: %1"
+
+#: ../update-menus/update-menus.cc:607 ../update-menus/update-menus.cc:669
+#: ../update-menus/update-menus.cc:990
+msgid "Script %1 could not be executed."
+msgstr "スクリプト %1 は実行できませんでした."
+
+#: ../update-menus/update-menus.cc:610 ../update-menus/update-menus.cc:672
+msgid "Script %1 returned error status %2."
+msgstr "スクリプト %1 はエラーステータス %2 を返しました."
+
+#: ../update-menus/update-menus.cc:613 ../update-menus/update-menus.cc:675
+msgid "Script %1 received signal %2."
+msgstr "スクリプト %1 はシグナル %2 を受け取りました."
+
+#: ../update-menus/update-menus.cc:630
+msgid "Running method: %1"
+msgstr "実行中メソッド: %1"
+
+#: ../update-menus/update-menus.cc:633
+msgid "Cannot create pipe."
+msgstr "パイプが作成できません."
+
+#: ../update-menus/update-menus.cc:685
+msgid "Running menu-methods in %1."
+msgstr "%1 中の menu-methos を実行中."
+
+#: ../update-menus/update-menus.cc:717
+msgid "Other update-menus processes are already locking %1, quitting."
+msgstr "他の update-menus プロセスが既に %1 をロック中, 終了します."
+
+#: ../update-menus/update-menus.cc:720
+msgid "Cannot lock %1: %2 - Aborting."
+msgstr "ロック不能 %1: %2 - 中断."
+
+#: ../update-menus/update-menus.cc:730
+msgid "Cannot write to lockfile %1 - Aborting."
+msgstr "ロックファイル %1 に書込めませんでした - 中断."
+
+#: ../update-menus/update-menus.cc:743
+msgid "Cannot remove lockfile %1."
+msgstr "ロックファイル %1 を削除できません."
+
+#: ../update-menus/update-menus.cc:759
+msgid "Update-menus is run by user."
+msgstr "update-menus はユーザによって実行されました."
+
+#: ../update-menus/update-menus.cc:813
+msgid ""
+"Waiting for dpkg to finish (forking to background).\n"
+"(checking %1)"
+msgstr ""
+"dpkg の終了を待っています (バックグランドにフォーク中).\n"
+"(チェック中 %1)"
+
+#: ../update-menus/update-menus.cc:816
+msgid "Further output (if any) will appear in %1."
+msgstr "以降の出力は (もしあるなら) %1 に出されます."
+
+#: ../update-menus/update-menus.cc:845
+msgid "Dpkg is not locking dpkg status area, good."
+msgstr "dpkg は dpkg ステータスエリアをロックしていません, good."
+
+#. This is the update-menus --help message
+#: ../update-menus/update-menus.cc:855
+#, fuzzy
+msgid ""
+"Usage: update-menus [options] \n"
+"Gather packages data from the menu database and generate menus for\n"
+"all programs providing menu-methods, usually window-managers.\n"
+"  -d                     Output debugging messages.\n"
+"  -v                     Be verbose about what is going on.\n"
+"  -h, --help             This message.\n"
+"  --menufilesdir=<dir>   Add <dir> to the lists of menu directories to "
+"search.\n"
+"  --menumethod=<method>  Run only the menu method <method>.\n"
+"  --nodefaultdirs        Disable the use of all the standard menu "
+"directories.\n"
+"  --nodpkgcheck          Do not check if packages are installed.\n"
+"  --remove               Remove generated menus instead.\n"
+"  --stdout               Output menu list in format suitable for piping to\n"
+"                         install-menu.\n"
+"  --version              Output version information and exit.\n"
+msgstr ""
+"使用方法: update-menus [オプション] \n"
+"メニューデータベースからパッケージデータを収集し、メニューメソッドを備える\n"
+"通常ウィンドウマネージャなどへのプログラム用としてメニューを生成する.\n"
+"  -d                     デバッグメッセージを出力.\n"
+"  -v                     何を実行中か冗長表示する.\n"
+"  -h, --help             このメッセージ.\n"
+"  --menufilesdir=<dir>   検索用メニューディレクトリのリストに <dir> を追加.\n"
+"  --menumethod=<method>  メニューメソッド <method> のみ実行.\n"
+"  --nodefaultdirs        全ての標準メニューディレクトリの使用をやめる.\n"
+"  --stdout               install-menu にパイプで渡す時に適したフォーマット"
+"で\n"
+"                         メニューリストを出力.\n"
+
+#: ../update-menus/update-menus.h:151
+msgid ""
+"Unknown install condition \"%1\" (currently, only \"package\" is supported)."
+msgstr ""
+"未知のインストール条件 \"%1\" (現在のところ \"package\" だけがサポートされて"
+"いる)."
+
+#~ msgid "  --version              Output version information and exit.\n"
+#~ msgstr "  --version              バージョン情報を出力して終了する.\n"
+
+#~ msgid ""
+#~ "install-menu: At least one of genmenu, startmenu, endmenu\n"
+#~ "is undefined. All of these have to be defined \n"
+#~ "(although they may be equal to \"\").\n"
+#~ msgstr ""
+#~ "install-menu: 少なくとも genmenu, startmenu, endmenu のうちの1つが未定義で"
+#~ "す.\n"
+#~ "(\"\" と同じになるかも知れませんが) これらの全てが\n"
+#~ "定義されていなければなりません.\n"
+
+#~ msgid "Using compatibility with %1.\n"
+#~ msgstr "%1 との互換性を用います.\n"
+
+#~ msgid ""
+#~ "Missing (or empty) tag: %1\n"
+#~ "This tag needs to be defined for the menu entry to make sense.\n"
+#~ "Note that update-menus rearranges the order of the tags found\n"
+#~ "in the menu-entry files, so that the part above isn't literal."
+#~ msgstr ""
+#~ "行方不明 (または空) のタグ: %1\n"
+#~ "このタグはメニューエントリが意味をなすために定義されてなければなりませ"
+#~ "ん.\n"
+#~ "参考までに, update-menus は menu-entry ファイル中で見つかったタグの順番"
+#~ "を\n"
+#~ "再整列するので, そのため上記は誤字ではありません."
+
+#~ msgid "Cannot open file %1."
+#~ msgstr "ファイル %1 が開けません."
+
+#~ msgid "Reading menu-entry file %1."
+#~ msgstr "メニューエントリファイル %1 を読込み中."
+
+#~ msgid "Directory is expected after --menufilesdir option.\n"
+#~ msgstr "--menufilesdir オプションの後にディレクトリが必要.\n"
+
+#~ msgid "Filename is expected after --menumethod option.\n"
+#~ msgstr "--menumethod オプションの後にファイル名が必要.\n"

@@ -1,0 +1,383 @@
+# translation of ru.po to Russian
+# Russian translation of menu.
+# Copyright (C) 2004 Debian menu team
+# This file is distributed under the same license as the menu package.
+#
+# Dan Korostelev <dan@ats.energo.ru>, 2004.
+# Yuri Kozlov <kozlov.y@gmail.com>, 2004, 2006, 2007.
+msgid ""
+msgstr ""
+"Project-Id-Version: menu 2.1.37\n"
+"Report-Msgid-Bugs-To: menu@packages.debian.org\n"
+"POT-Creation-Date: 2007-10-05 07:30+0200\n"
+"PO-Revision-Date: 2007-10-10 21:13+0400\n"
+"Last-Translator: Yuri Kozlov <kozlov.y@gmail.com>\n"
+"Language-Team: Russian <debian-l10n-russian@lists.debian.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: ../install-menu/functions.cc:92
+msgid "Zero-size argument to print function."
+msgstr "В функцию print передан аргумент нулевого размера."
+
+#: ../install-menu/install-menu.cc:202
+msgid "install-menu: checking directory %1\n"
+msgstr "install-menu: проверка каталога %1\n"
+
+#: ../install-menu/install-menu.cc:215
+msgid "install-menu: creating directory %1:\n"
+msgstr "install-menu: создание каталога %1:\n"
+
+#: ../install-menu/install-menu.cc:217
+msgid "Could not create directory(%1): %2"
+msgstr "Невозможно открыть каталог(%1): %2"
+
+#: ../install-menu/install-menu.cc:219
+msgid "Could not change directory(%1): %2"
+msgstr "Невозможно сменить каталог(%1): %2"
+
+#: ../install-menu/install-menu.cc:222
+msgid "install-menu: directory %1 already exists\n"
+msgstr "install-menu: каталог %1 уже существует\n"
+
+#. Do not translate supported
+#: ../install-menu/install-menu.cc:447
+msgid "install-menu: [supported]: name=%1\n"
+msgstr "install-menu: [поддерживается]: имя=%1\n"
+
+#: ../install-menu/install-menu.cc:464
+msgid "Menu entry lacks mandatory field \"%1\".\n"
+msgstr "В записи пункта меню отсутствует необходимое поле \"%1\".\n"
+
+#: ../install-menu/install-menu.cc:470
+msgid "Unknown value for field %1=\"%2\".\n"
+msgstr "Неизвестное значение поля %1=\"%2\".\n"
+
+#. Do not translate quoted text
+#: ../install-menu/install-menu.cc:617
+msgid ""
+"install-menu: \"hotkeycase\" can only be \"sensitive\" or \"insensitive\"\n"
+msgstr ""
+"install-menu: \"hotkeycase\" может иметь значение только \"sensitive\" или "
+"\"insensitive\"\n"
+
+#: ../install-menu/install-menu.cc:647
+msgid ""
+"install-menu: Warning: Unknown identifier `%1' on line %2 in file %3. "
+"Ignoring.\n"
+msgstr ""
+"install-menu: Внимание: Неизвестный идентификатор `%1' в строке %2 в файле %"
+"3. Игнорируется.\n"
+
+#: ../install-menu/install-menu.cc:657
+msgid "install-menu: %1 must be defined in menu-method %2"
+msgstr "install-menu: %1 должен быть определён в menu-method %2"
+
+#: ../install-menu/install-menu.cc:824
+msgid "Cannot open file %1 (also tried %2).\n"
+msgstr "Не удалось открыть файл %1 (также и %2).\n"
+
+#: ../install-menu/install-menu.cc:832 ../install-menu/install-menu.cc:839
+#: ../install-menu/install-menu.cc:847
+msgid "Cannot open file %1.\n"
+msgstr "Не удалось открыть файл %1.\n"
+
+#: ../install-menu/install-menu.cc:849
+msgid ""
+"In order to be able to create the user config file(s) for the window "
+"manager,\n"
+"the above file needs to be writeable (and/or the directory needs to exist).\n"
+msgstr ""
+"Для создания пользовательских файлов конфигурации менеджера окон,\n"
+"вышеуказанные файлы должны быть доступны на запись (и/или каталоги должны "
+"существовать).\n"
+
+#: ../install-menu/install-menu.cc:871
+msgid "Warning: the string %1 did not occur in template file %2\n"
+msgstr "Внимание: строка %1 не найдена в файле шаблона %2\n"
+
+#. Don't translate quoted string
+#: ../install-menu/install-menu.cc:896
+msgid ""
+"install-menu [-vh] <menu-method>\n"
+"  Read menu entries from stdin in \"update-menus --stdout\" format\n"
+"  and generate menu files using the specified menu-method.\n"
+"  Options to install-menu:\n"
+"     -h --help    : this message\n"
+"        --remove  : remove the menu instead of generating it.\n"
+"     -v --verbose : be verbose\n"
+msgstr ""
+"install-menu [-vh] <метод-меню>\n"
+"  Читает записи пунктов меню из stdin в формате \"update-menus --stdout\"\n"
+"  и генерирует файлы меню, используя указанный метод-меню.\n"
+"  Опции install-menu:\n"
+"     -h --help    : это сообщение\n"
+"        --remove  : удалить меню, а не создавать.\n"
+"     -v --verbose : выдавать подробную информацию\n"
+
+#: ../install-menu/install-menu.cc:943
+msgid "install-menu: no menu-method script specified!"
+msgstr "install-menu: не указан метод-меню сценарий!"
+
+#: ../install-menu/install-menu.cc:956
+msgid "Cannot open script %1 for reading.\n"
+msgstr "Не удалось открыть сценарий %1 на чтение.\n"
+
+#: ../install-menu/install-menu.cc:979
+msgid "Warning: script %1 does not provide removemenu, menu not deleted\n"
+msgstr ""
+"Предупреждение: сценарий %1 не содержит функции removemenu, меню не удалено\n"
+
+#: ../install-menu/install-menu.cc:1014
+msgid "Running: \"%1\"\n"
+msgstr "Запуск: \"%1\"\n"
+
+#: ../install-menu/install-menu.cc:1030
+msgid "install-menu: %1: aborting\n"
+msgstr "install-menu: %1: отмена\n"
+
+#: ../install-menu/install-menu.h:199
+msgid "Number of arguments to function %1 does not match."
+msgstr "Неверное число аргументов функции %1."
+
+#: ../install-menu/install-menu.h:207
+msgid "Unknown function: \"%1\""
+msgstr "Неизвестная функция: \"%1\""
+
+#: ../install-menu/install-menu.h:216
+msgid "Indirectly used, but not defined function: \"%1\""
+msgstr "Неявное использование неопределённой функции: \"%1\""
+
+#: ../install-menu/install-menu.h:225
+msgid "Unknown identifier: \"%1\""
+msgstr "Неизвестный идентификатор: \"%1\""
+
+#: ../install-menu/install-menu.h:234
+msgid "Encoding conversion error: \"%1\""
+msgstr "Ошибка при преобразовании кодировки: \"%1\""
+
+#: ../update-menus/exceptions.h:43
+msgid "Unknown error."
+msgstr "Неизвестная ошибка."
+
+#: ../update-menus/exceptions.h:55 ../update-menus/parsestream.h:114
+msgid "Unknown error, message=%1"
+msgstr "Неизвестная ошибка, сообщение=%1"
+
+#: ../update-menus/exceptions.h:64
+msgid "Unable to open file \"%1\"."
+msgstr "Не удалось открыть файл \"%1\"."
+
+#: ../update-menus/exceptions.h:73
+msgid "Failed to pipe data through \"%1\" (pipe opened for reading)."
+msgstr "Ошибка передачи данных через канал \"%1\" (канал открыт на чтение)."
+
+#: ../update-menus/exceptions.h:89
+msgid "%1: missing required tag: \"%2\""
+msgstr "%1: отсутствует необходимый тег: \"%2\""
+
+#: ../update-menus/parsestream.cc:50
+msgid "(probably) stdin"
+msgstr "(возможно) stdin"
+
+#: ../update-menus/parsestream.cc:450
+msgid "In file \"%1\", at (or in the definition that ends at) line %2:\n"
+msgstr ""
+"В файле \"%1\", в строке (или в определении, которое кончается на) %2:\n"
+
+#: ../update-menus/parsestream.cc:471
+msgid "Somewhere in input file:\n"
+msgstr "Где-то во входном файле:\n"
+
+#: ../update-menus/parsestream.h:122
+msgid "Unexpected end of file."
+msgstr "Неожиданный конец файла."
+
+#: ../update-menus/parsestream.h:129
+msgid "Unexpected end of line."
+msgstr "Неожиданный конец строки."
+
+#: ../update-menus/parsestream.h:136
+msgid "Identifier expected."
+msgstr "Ожидается идентификатор."
+
+#: ../update-menus/parsestream.h:144
+msgid "Expected: \"%1\""
+msgstr "Ожидается: \"%1\""
+
+#: ../update-menus/parsestream.h:153
+msgid "Unexpected character: \"%1\""
+msgstr "Неожиданный символ: \"%1\""
+
+#: ../update-menus/parsestream.h:162
+msgid ""
+"Boolean (either true or false) expected.\n"
+"Found: \"%1\""
+msgstr ""
+"Ожидается Boolean (либо true, либо false).\n"
+"Найдено: \"%1\""
+
+#: ../update-menus/parsestream.h:172
+msgid "Unknown compat mode: \"%1\""
+msgstr "Неизвестный compat режим: \"%1\""
+
+#: ../update-menus/stringtoolbox.cc:85
+msgid ""
+"replacewith($string, $replace, $with): $replace and $with must have the same "
+"length."
+msgstr ""
+"replacewith($string, $replace, $with): $replace и $with должны иметь "
+"одинаковую длину."
+
+#: ../update-menus/update-menus.cc:150
+msgid ""
+"file %1 line %2:\n"
+"Discarding entry requiring missing package %3."
+msgstr ""
+"файл %1, строка %2:\n"
+"Удаляемая запись требует отсутствующего пакета %3."
+
+#. Translation here and below refer to the file
+#. /etc/menu-methods/translate_menus that allow to rename and reorganize
+#. menu entries automatically. It does not refer to the localisation
+#. (translation to other languages).
+#.
+#: ../update-menus/update-menus.cc:364
+msgid "Reading translation rules in %1."
+msgstr "Чтение правил трансляции из %1."
+
+#: ../update-menus/update-menus.cc:444
+msgid "Reading installed packages list..."
+msgstr "Чтение списка установленных пакетов..."
+
+#: ../update-menus/update-menus.cc:493
+msgid "Execution of %1 generated no output or returned an error.\n"
+msgstr "Выполнение %1 завершилось без результата или с ошибкой.\n"
+
+#: ../update-menus/update-menus.cc:534 ../update-menus/update-menus.cc:538
+msgid "Skipping file because of errors...\n"
+msgstr "Пропуск файла из-за ошибок...\n"
+
+#: ../update-menus/update-menus.cc:555
+msgid "Reading menu-entry files in %1."
+msgstr "Чтение пунктов меню из %1."
+
+#: ../update-menus/update-menus.cc:578
+msgid "Error reading %1.\n"
+msgstr "Ошибка чтения %1.\n"
+
+#: ../update-menus/update-menus.cc:584
+msgid "%1 menu entries found (%2 total)."
+msgstr "Найдено %1 пунктов меню (всего %2)."
+
+#: ../update-menus/update-menus.cc:595
+msgid "Running method: %1 --remove"
+msgstr "Запуск метода: %1 --remove"
+
+#: ../update-menus/update-menus.cc:607 ../update-menus/update-menus.cc:669
+#: ../update-menus/update-menus.cc:990
+msgid "Script %1 could not be executed."
+msgstr "Сценарий %1 не может быть выполнен."
+
+#: ../update-menus/update-menus.cc:610 ../update-menus/update-menus.cc:672
+msgid "Script %1 returned error status %2."
+msgstr "Сценарий %1 вернул статус ошибки %2."
+
+#: ../update-menus/update-menus.cc:613 ../update-menus/update-menus.cc:675
+msgid "Script %1 received signal %2."
+msgstr "Сценарий %1 получил сигнал %2."
+
+#: ../update-menus/update-menus.cc:630
+msgid "Running method: %1"
+msgstr "Запуск метода: %1"
+
+#: ../update-menus/update-menus.cc:633
+msgid "Cannot create pipe."
+msgstr "Не удалось создать канал."
+
+#: ../update-menus/update-menus.cc:685
+msgid "Running menu-methods in %1."
+msgstr "Запускается menu-methods из %1."
+
+#: ../update-menus/update-menus.cc:717
+msgid "Other update-menus processes are already locking %1, quitting."
+msgstr "Уже запущены другие процессы update-menus, блокирующие %1, выход."
+
+#: ../update-menus/update-menus.cc:720
+msgid "Cannot lock %1: %2 - Aborting."
+msgstr "Невозможно заблокировать %1: %2 - Отмена."
+
+#: ../update-menus/update-menus.cc:730
+msgid "Cannot write to lockfile %1 - Aborting."
+msgstr "Невозможно удалить файл блокировки %1 - Отмена."
+
+#: ../update-menus/update-menus.cc:743
+msgid "Cannot remove lockfile %1."
+msgstr "Невозможно удалить файл блокировки %1."
+
+#: ../update-menus/update-menus.cc:759
+msgid "Update-menus is run by user."
+msgstr "Update-menus запущен пользователем."
+
+#: ../update-menus/update-menus.cc:813
+msgid ""
+"Waiting for dpkg to finish (forking to background).\n"
+"(checking %1)"
+msgstr ""
+"Ожидание завершения работы dpkg (работа в фоновом режиме).\n"
+"(проверка %1)"
+
+#: ../update-menus/update-menus.cc:816
+msgid "Further output (if any) will appear in %1."
+msgstr "Дальнейший вывод (если есть) будет перенаправлен в %1."
+
+#: ../update-menus/update-menus.cc:845
+msgid "Dpkg is not locking dpkg status area, good."
+msgstr "Dpkg не блокирует область статистики, хорошо."
+
+#. This is the update-menus --help message
+#: ../update-menus/update-menus.cc:855
+msgid ""
+"Usage: update-menus [options] \n"
+"Gather packages data from the menu database and generate menus for\n"
+"all programs providing menu-methods, usually window-managers.\n"
+"  -d                     Output debugging messages.\n"
+"  -v                     Be verbose about what is going on.\n"
+"  -h, --help             This message.\n"
+"  --menufilesdir=<dir>   Add <dir> to the lists of menu directories to "
+"search.\n"
+"  --menumethod=<method>  Run only the menu method <method>.\n"
+"  --nodefaultdirs        Disable the use of all the standard menu "
+"directories.\n"
+"  --nodpkgcheck          Do not check if packages are installed.\n"
+"  --remove               Remove generated menus instead.\n"
+"  --stdout               Output menu list in format suitable for piping to\n"
+"                         install-menu.\n"
+"  --version              Output version information and exit.\n"
+msgstr ""
+"Использование: update-menus [опции] \n"
+"Собирает данные о пакетах из базы данных меню и генерирует меню для\n"
+"всех программ, которые предоставляют методы-меню, обычно это менеджеры "
+"окон.\n"
+"  -d                   Выводить сообщения отладки.\n"
+"  -v                   Подробно сообщать что происходит при работе.\n"
+"  -h, --help           Это сообщение.\n"
+"  --menufilesdir=<кат> Добавить <кат> в список поиска каталогов меню.\n"
+"  --menumethod=<метод> Выполнить только указанный <метод> меню.\n"
+"  --nodefaultdirs      Не использовать стандартные каталоги меню.\n"
+"  --nodpkgcheck        Не проверять, установлены ли пакеты.\n"
+"  --remove             Удалять, а не создавать меню.\n"
+"  --stdout             Вывод списка меню в формате, пригодном для передачи\n"
+"                       по каналу в install-menu.\n"
+"  --version            Показать версию и закончить работу.\n"
+
+#: ../update-menus/update-menus.h:151
+msgid ""
+"Unknown install condition \"%1\" (currently, only \"package\" is supported)."
+msgstr ""
+"Неизвестное условие установки \"%1\" (пока поддерживается только \"package"
+"\")."

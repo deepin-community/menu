@@ -1,5 +1,2267 @@
-template-repository (1.0-1) unstable; urgency=medium
+menu (2.1.49) unstable; urgency=medium
 
-  * Initial release
+  * The "Oujda" release
+  * debian/control:
+    + Bump Standards-Version to 4.6.0.
+    + Build-Depends on debhelper-compat (= 13).
+  * debian/rules: add missing targets. Closes: #999049
+  * scripts/su-to-root: replace which by command -v
+  * doc/menu.direntry: replace tempfile by mktemp
+  * doc/su-to-root.1: fix typo
 
- -- Tsic404 <liuheng@deepin.org>  Sat, 28 Jan 2023 13:46:49 +0800
+ -- Bill Allombert <ballombe@debian.org>  Mon, 13 Dec 2021 22:17:09 +0100
+
+menu (2.1.48) unstable; urgency=low
+
+  * The "Talence" release
+  * debian/control:
+    + Bump Standards-Version to 4.5.0.
+    + Add Vcs-Git/Vcs-Browser fields
+    + Add Multi-Arch: same
+    + Build-Depends on debhelper-compat (= 12). Closes: #965717
+    + Replace Suggests: kde-runtime by kde-cli-tools. Closes: #950837
+  * debian/compat: removed
+  * debian/source/format: set to 3.0 (native)
+  * debian/copyright: update URL.
+  * po-su-to-root:
+    + ro.po: updated Romanian translation by Cristian Secară. Closes: #931443
+  * debian/rules:
+    + call configure with --host option. Closes: #837297
+  * scripts/su-to-root, doc/su-to-root:
+    - SU_TO_ROOT_X: new option sudo-askpass: use ssh-askpass via sudo --askpass.
+      Closes: #827914. Thanks Jordi Pujol Palomer.
+
+ -- Bill Allombert <ballombe@debian.org>  Wed, 30 Sep 2020 19:27:58 +0200
+
+menu (2.1.47) unstable; urgency=low
+
+  * The "Tours" release
+  * Update to automake 1.11
+  * debian/control
+    + Bump Standards-Version to 3.9.5.
+    + Clean up Suggests for su-to-root: Closes: #666545. Thanks Pino Toscano
+      - added: kde-runtime
+      - removed: kdebase-bin, kdebase-runtime, sux
+    + Add Multi-Arch: foreign. Closes: #698800. Thanks Frédéric Brière
+  * debian/rules:
+    - Use dh_prep instead of dh_clean -k
+    - Add -Wl,-z,relro to LDFLAGS
+    - call dh_lintian
+  * debian/menu.lintian-overrides: added
+    - suppress prerm-calls-updatemenus
+  * debian/update-menus.sh: removed (useless since 2.1.26)
+  * doc/menufile.5, doc/menufile.fr.5:
+    - Add full icon path in example. Closes: #742490. Thanks Markus Koschany
+  * su-to-root:
+    + Fix support (hopefully) for sux. Closes: #695882. Thanks Ian Pangilinan
+
+ -- Bill Allombert <ballombe@debian.org>  Fri, 13 Jun 2014 19:05:17 +0200
+
+menu (2.1.46) unstable; urgency=low
+
+  * The "Marseille" release.
+  * Handling of l10n by Christian Perrier:
+    + Programs translations:
+      - Ukrainian updated by Serhij Dubyk.
+      - Brazilian Portuguese updated by Sérgio Cipolla.
+        Closes: #623121
+    + su-to-root translations:
+      - Ukrainian updated by Serhij Dubyk.
+      - Brazilian Portuguese updated by Sérgio Cipolla.
+        Closes: #623121
+    + Menu sections translations:
+      - Ukrainian updated by Serhij Dubyk.
+      - Brazilian Portuguese updated by Sérgio Cipolla.
+        Closes: #623121
+      - Danish updated by Joe Dalton. Closes: #624656
+
+  * doc/menu.sgml:
+    + Fix typo in chapter 3.7. Thanks Hideki Yamane. Closes: #625736
+  * update-menus/update-menus.cc
+    + 'update-menus --remove' failed to remove lock file.
+       Thanks Dave Steele. Closes: #648268
+  * debian/control
+    + Bump Standards-Version to 3.9.2.
+
+ -- Bill Allombert <ballombe@debian.org>  Wed, 16 Nov 2011 12:33:27 +0100
+
+menu (2.1.45) unstable; urgency=low
+
+  * The "no ghost" release
+  * Handling of l10n by Christian Perrier:
+    + Programs translations:
+      - Danish updated. Closes: #609583
+  * su-to-root: add support for gksudo and kdesudo. Closes: #604085, #602118.
+  * update-menus/update-menus.cc:
+    + option --menufilesdir: do not require a trailing slash. Closes: #595032.
+  * debian/prerm:
+    + automatically remove generate system menu files when menu is removed.
+      Closes: #305764, #592441.
+  * update-menus/parsestream.cc:
+    + catch endoffile exception in init method, thanks Renzo Davoli.
+
+ -- Bill Allombert <ballombe@debian.org>  Mon, 07 Mar 2011 11:58:39 +0100
+
+menu (2.1.44) unstable; urgency=low
+
+  * The "Bordeaux" release.
+  * Handling of l10n by Christian Perrier:
+    + Menu sections translations:
+      - Estonian added. Closes: #582243
+    + Programs translations:
+      - Estonian added.
+    + su-to-root translations:
+      - Estonian added.
+  * debian/control:
+    - Suggests menu-l10n.
+    - Bump Standards-Version to 3.9.1.
+  * Fix spelling error in /usr/share/menu/README.
+    Thanks to Filipus Klutiero. Closes: #592114
+
+ -- Bill Allombert <ballombe@debian.org>  Mon, 06 Sep 2010 16:48:27 +0200
+
+menu (2.1.43) unstable; urgency=low
+
+  * The "Javier Jugendtraum" release.
+  * menu repository on alioth.debian.org converted to subversion
+  * doc/su-to-root.1:
+    + Fix typo. Closes: #552153. Thanks Filipus Klutiero.
+  * doc/menu.sgml:
+    + Mention that the new menu structure was drafted by Linas Zvirblis.
+  * install-menu/functions.cc, install-menu/install-menu.cc:
+    + Add support for translation of menu entries in gettext domain
+     'menu-entries'. Translations will be provided by the menu-l10n package.
+      Closes: #37716
+  * update automake-related scripts.
+
+ -- Bill Allombert <ballombe@debian.org>  Sun, 24 Jan 2010 13:08:52 +0100
+
+menu (2.1.42) unstable; urgency=low
+
+  * The "answer to life, the universe and menu" release.
+  * Handling of l10n by Christian Perrier:
+    + Menu sections translations:
+      - Asturian added. Closes: #511622
+      - Kazakh added. Closes: #520998
+      - Bengali updated
+      - Breton added. Closes: #532686
+      - Slovak updated. Closes: #522746
+    + Programs translations:
+      - Asturian added. Closes: #511622
+
+  * debian/compat, debian/control
+    - Switch to debhelper v5.
+
+  * debian/control:
+    - Depends: add ${misc:Depends}
+    - Bump Standards-Version to 3.8.3.
+
+  * install-info transition:
+    + doc/Makefile.am, doc/menu.direntry:
+      - Add @direntry to menu.info. Closes: #528892
+    + debian/postinst, debian/prerm:
+      - Remove call to install-info.
+    + debian/rules:
+      - call dh_installinfo to handle info document.
+
+  * debian/postinst, debian/prerm:
+    - Remove useless commented parts.
+
+  * su-to-root:
+    - su-to-root failed to interpolate command when run by root.
+      Patch from Stefan Monnier. Closes: #522301
+
+  * menu.h:
+    - default setting of sort was disabling $sort.
+      Patch from Vaclav Ovsik. Closes: #504508
+
+  * doc/menu.sgml:
+    - Do not use /etc/X11 as example path. Closes: #498590
+    - Clean up 'postrm purge' example.
+    - Mention existence of dh_installmenu. Closes: #503140
+    - Remove note about wm-menu-config.
+
+  * configure.ac, */Makefile.am
+    - Fix uninstall target so that 'make distcheck' work again.
+
+ -- Bill Allombert <ballombe@debian.org>  Fri, 18 Sep 2009 20:37:19 +0200
+
+menu (2.1.41) unstable; urgency=low
+
+  * The "true bubulle never burst" release
+  * Handling of l10n by Christian Perrier:
+    + Menu sections translations:
+      - Brazilian Portuguese updated by Eder Marques. Closes: #494159
+      - Georgian added by Aiet Kolkhi. Closes: #498422
+      - Greek updated by Emmanuel Galatoulas. Closes: #498463
+      - Catalan updated by Jordi mallach. Closes: #499298
+  * l10n: menu sections translation into Croatian updated by Josip Rodin,
+    Closes: #498055.
+
+ -- Bill Allombert <ballombe@debian.org>  Fri, 24 Oct 2008 00:52:01 +0200
+
+menu (2.1.40) unstable; urgency=low
+
+  * The "Saint-Malo" release.
+  * Handling of l10n by Christian Perrier:
+    + Menu sections translations:
+      - Turkish updated by Mert Dirik. Closes: #484795
+      - Macedonian updated by Georgi Stanojevski. Closes: #486005
+      - Esperanto updated by Felipe Castro. Closes: #488591
+      - Swedish added by Martin Bagge. Closes: #488668
+      - Dutch updated by Benno Schulenberg. Closes: #490109
+      - Arabic updated by Ossama Khayat. Closes: #491541
+      - Italian updated by Milo Casagrande. Closes: #492387
+    + Programs translations:
+      - Esperanto updated by Felipe Castro. Closes: #488592
+
+  * debian/control:
+    + Bump Standards-Version to 3.8.0.
+
+  * update-menus/update-menus.cc:
+    + Accept states triggers-awaited and triggers-pending as installed.
+      Thanks Joey Hess for his explanation. Closes: #489040
+
+ -- Bill Allombert <ballombe@debian.org>  Thu, 24 Jul 2008 16:06:55 +0200
+
+menu (2.1.39) unstable; urgency=low
+
+  * The "thanks for all the patches" release.
+  * Handling of l10n by Christian Perrier:
+    + Menu sections translations:
+      - Indonesian updated by Arief Fitrianto. Closes: #469955
+      - Japanese updated by Hideki Yamane. Closes: #475543, #477982
+      - Malayalam updated by Praveen A. Closes: #479294
+      - Finnish updated by Tommi Vainikainen. Closes: #479351
+      - Malayalam updated by SZERVÁC Attila. Closes: #479354
+      - Kurdish updated by Erdal Ronahi. Closes: #479444
+      - Lithuanian updated by Kestutis Biliunas. Closes: #479451
+      - Turkish updated by Mert Dirik. Closes: #480013
+      - Albanian updated by Elian Myftiu. Closes: #480281
+      - Irish added by Kevin Scannell. Closes: #480880
+      - Polish updated by Marcin Owsiany. Closes: #481635
+    + su-to-root translations:
+      - Lithuanian updated by Kestutis Biliunas. Closes: #479453
+
+  * Patches from Robert Luberda:
+    - Fix diversion of output to /tmp/update-menus.XXX
+    - Exit cleanly if the dpkg database is broken. Closes: #341701
+
+  * debian/control, doc/su-to-root.1, doc/su-to-root.fr.1, scripts/su-to-root:
+    - Add support for ktsuss. Closes: #478841. Thanks Yves-Alexis Perez.
+
+  * Patch from Joey Hess:
+    - add trigger support stage 1. Closes: #473467.
+     *Note* To allow partial upgrades, lenny packages should not assume
+        menu support triggers.
+      + this fix a rare race condition when upgrading. Closes: #473464.
+
+ -- Bill Allombert <ballombe@debian.org>  Mon, 12 May 2008 20:41:42 +0200
+
+menu (2.1.38) unstable; urgency=low
+
+  * The "little zebra" release.
+  * Handling of l10n by Christian Perrier:
+    + Menu sections translations:
+      - Russian updated by Yuri Kozlov. Closes: #462283
+      - Traditional Chinese updated by Tetralet. Closes: #464855
+      - Romanian updated by stan ioan-eugen. Closes: #466618
+      - Basque updated by Piarre Beobide. Closes: #468682
+    + programs translations:
+      - French completed by Christian Perrier. Closes: #468466
+      - Romanian updated by stan ioan-eugen. Closes: #466618
+    + su-to-root translations:
+      - Romanian updated by stan ioan-eugen. Closes: #466618
+
+  * Work-around apt bug #463030 by calling setsid in daemon mode.
+    Closes: #462648. Thanks Dmitry E. Oboukhov for the patch.
+
+  * Patch from Robert Luberda:
+    - Dependency check now handles virtual packages. Closes: #452801
+
+  * doc/menu.sgml:
+    - Remove excerpt from menu policy about authoritativeness
+      pasted by mistake.  Closes: #466248. Thanks Robert Luberda.
+
+  * debian/bug.presubj:
+    - Remove color escape codes which are not displayed correctly by
+      current reportbug. Thanks Dan Jacobson.
+
+  * su-to-root:
+    - Fix support for sux.
+    - Fix command quoting for sudo.  Closes: #465136. Thanks Daniel Hahler.
+    - Fix typo passwd->password. Closes: #462645. Thanks Salvatore Bonaccorso.
+
+  * examples/translate_menus:
+    - automatic conversion from old section names to new names would replace
+      Locking by Lockinging. Closes: #468385. Thanks Yves-Alexis Perez.
+
+  * doc/Makefile.am:
+    - No more install the 'default' directory. Closes: #467238.
+    - Work around debiandoc-sgml bug #468772 by forcing locale to C.
+      Closes: #467239.  Thanks Dan Jacobson.
+
+ -- Bill Allombert <ballombe@debian.org>  Wed, 05 Mar 2008 16:59:55 +0100
+
+menu (2.1.37) unstable; urgency=low
+
+  * the "what happened to release early, release often ?" release.
+  * Handling of l10n by Christian Perrier:
+    + programs translations:
+      - Dutch updated by Tim Dijkstra. Closes: #446009
+      - Traditional Chinese updated by Kanru Chen. Closes: #446125
+      - Russian updated by Yuri Kozlov. Closes: #446136
+      - Spanish updated by Javier Fernández-Sanguino Peña. Closes: #446309
+      - Finnish updated by Tommi Vainikainen. Closes: #445927
+      - Spanish updated by Jacobo Tarrio. Closes: #446481
+      - Czech updated by Miroslav Kure. Closes: #446677
+      - Dutch updated by Tim Dijkstra. Closes: #446009
+      - Vietnamese updated by Clytie Siddall. Closes: #446993
+      - German updated by Sven Joachim. Closes: #448943
+      - Norwegian Bokmål updated by Hans F. Nordhaug.
+        Closes: #450959, #451298
+      - Basque by Piarres Beobide. Closes: #445939
+      - Swedish by Daniel Nylander. Closes: #445948
+      - Polish by Wojciech Zareba. Closes: #445977, #445962
+      - Thai by Theppitak Karoonboonyanan. Closes: #445931
+      - Portuguese by Antonio Amorim. Closes: #445994
+    + Menu sections translations:
+      - Belarusian updated by Pavel Piatruk. Closes: #446557
+      - Czech updated by Miroslav Kure. Closes: #446677
+      - Galician updated by Jacobo Tarrio. Closes: #446616
+      - German updated by Sven Joachim. Closes: #447044
+      - Korean updated by Sunjae Park. Closes: #448051
+      - Hebrew updated by Lior Kaplan. Closes: #442234
+      - Dzongkha updated by Tenzin Dendup. Closes: #455862
+      - Spanish updated by Javier Fernández-Sanguino Peña. Closes: #457707
+      - Simplified Chinese updated by Xu Wang. Closes: #459983
+      - Slovak updated by Peter Mann. Closes: #460520
+      - Polish by Emil Nowak. Closes: #443797
+    + su-to-root translations:
+      - Czech added by Miroslav Kure. Closes: #446677
+
+  * doc/menufile.fr.5:
+    - corrected typo, thanks to Cyril Brulebois for spotting it.
+      Closes: #449067
+
+  * debian/control:
+    + Remove versionned Depends on >= pre-sarge dpkg.
+    + Bump Standards-Version to 3.7.3
+
+  * update-menus/update-menus.cc:
+    - Fix g++-4.2 warning about string conversion.  Closes: #445490.
+      Thanks Sven Joachim.
+
+  * install-menu/install-menu.cc, install-menu/menu-tree.cc,
+    update-menus/update-menus.cc:
+    - Add missing #include <cstring>, required with g++ 4.3. Closes: #455435.
+      Thanks Martin Michlmayr for his explanation.
+
+  * update-menus/parsestream.cc:
+    - Fix segfault for unknown compatibility level. Closes: #431988.
+      Thanks Rafael Laboissiere.
+
+  * debian/control, doc/su-to-root.1, doc/su-to-root.fr.1, scripts/su-to-root:
+    - Add support for the KDE4 version of kdesu (hereby nicknamed kde4su).
+      Closes: #460483. Thanks Armin Berres.
+
+  * doc/menufile.5:
+    - Apply patch from Kobayashi Noritada to fix typos. Closes: #449388.
+
+  * debian/changelog:
+    - Remove useless 'Local variables' section at the end of the file.
+      Closes: #445483. Thanks Sven Joachim.
+
+  * debian/menu.doc-base:
+    - Change section to Debian. Closes: #450924.
+      Thanks to Colin Watson and Drew Parsons.
+    - Rewrite abstract and update Author field.
+
+  * update-menus/update-menus.cc, po/fr.po:
+    - error "Execution of %1 generated no output or returned an error.":
+      + Fix French translation.
+      + Does not display it when there is no output and the exit status is 0.
+        Closes: #445728. Thanks Andreas Tille.
+
+ -- Bill Allombert <ballombe@debian.org>  Mon, 21 Jan 2008 21:54:26 +0100
+
+menu (2.1.36) unstable; urgency=low
+
+  * The "slow but steady" release
+  * Handling of l10n by Christian Perrier:
+    + Menu sections translations:
+      - Remove duplicate entries in the POT file
+      - Re-generate PO files from the new POT file
+      - Tamil completed by Tirumurti Vasudevan. Closes: #432177
+      - Vietnamese completed by Clytie Siddall. Closes: #432282
+      - Basque completed by Piarres Beobide. Closes: #432295
+      - Thai completed by Theppitak Karoonboonyanan. Closes: #433431
+      - Bulgarian completed by Damyan Ivanov. Closes: #433626
+      - French completed by Jean-Philippe Guérard. Closes: #435919
+      - Portuguese completed by Miguel Figueiredo. Closes: #433679
+      - Nepali completed by Shiva Prasad Pokharel. Closes: #435342
+      - Gujarati completed by Kartik Mistry. Closes: #435436
+
+    + su-to-root translations:
+      - Basque added by Piarres Beobide. Closes: #432301
+      - Norwegian Bokmål added by Hans Fredrik Nordhaug. Closes: #433046
+      - Thai completed by Theppitak Karoonboonyanan. Closes: #433435
+      - Bulgarian completed by Damyan Ivanov. Closes: #433621
+
+    + programs translations:
+      - Basque added by Piarres Beobide. Closes: #432303
+
+  * doc/menu.sgml, doc/menufile.5, doc/menufile.fr.5:
+    - update examples to new menu structure. Closes: #434217, #438444.
+  * update-menus, doc/update-menus.1, doc/update-menus.fr.1, po/menu.pot:
+    - new option --nodpkgcheck to allow to proceed external databases.
+
+ -- Bill Allombert <ballombe@debian.org>  Wed, 03 Oct 2007 12:03:14 +0200
+
+menu (2.1.35) unstable; urgency=low
+
+  * The "far cry" release.
+  * su-to-root translations
+    - Gujarati added by Kartik Mistry. Closes: #428481
+    - Hungarian added by SZERVÁC Attila. Closes: #428495
+    - Galician added by Jacobo Tarrio. Closes: #428501
+    - Swedish added by Daniel Nylander. Closes: #428542
+    - Tamil added by Tirumurti Vasudevan. Closes: #428562
+    - Bulgarian added by Damyan Ivanov. Closes: #428648
+    - Arabic added by Ossama Khayat. Closes: #428652
+    - Portuguese added by Ricardo Silva. Closes: #428657
+    - Vietnamese added by Clytie Siddall. Closes: #428789
+    - German added by Helge Kreutzmann. Closes: #428912
+    - Spanish added by Javier Fernández-Sanguino Peña. Closes: #429000
+    - Malayalam added by Praveen. Closes: #429369
+    - Korean added by Sunjae Park. Closes: #430753
+    - French added by Steve Petruzzello.
+    - Russian added by Yuri Kozlov. Closes: #431245
+  * su-to-root: fix missing quotes in printf arguments.
+  * debian/rules: use 'install -p' to preserve timestamp.
+  * move to new menu structure:
+    - examples/translate_menus: convert old section names to new names.
+    - doc/menu.sgml doc/menufile.5 doc/menufile.fr.5: updated.
+    - po-sections/menu-messages.pot: updated.
+
+ -- Bill Allombert <ballombe@debian.org>  Wed,  4 Jul 2007 15:23:06 +0200
+
+menu (2.1.34) unstable; urgency=low
+
+  * The "black arrow" release.
+  * Apply patch from Martin Michlmayr to fix compilation with GCC 4.3.
+    Closes: #417431.
+  * su-to-root:
+    - tighten the script. Closes: #416302.
+    - add support for SU_TO_ROOT_SU=sudo. Closes: #410875
+    - l10n support. Closes: #383321. Thanks Michelle Konzack.
+    - support for a /etc/su-to-rootrc config file.
+  * Menu translations
+    - Marathi added by Priti Patil. Closes: #416797
+    - Punjabi added by Amanpreet Singh Alam. Closes: #427300
+  * Programs translations
+    - Spanish updated by Javier Fernández-Sanguino Peña. Closes: #423277
+
+ -- Bill Allombert <ballombe@debian.org>  Wed,  6 Jun 2007 20:09:59 +0200
+
+menu (2.1.33) unstable; urgency=low
+
+  * The "and justice for all" release.
+  * Apply patch from Tim Dijkstra to simplify wait_dpkg() to not require
+    signal to be sent between the parent and the child to work around a
+    race condition in glibc, probably bug #223110. Closes: #374834.
+  * Menu translations
+    - Portuguese updated by Miguel Figueiredo. Closes: #399241
+    - Malayalam added by Praveen. Closes: #402016
+    - Tamil added by Tirumurti Vasudevan.
+
+ -- Bill Allombert <ballombe@debian.org>  Fri, 22 Dec 2006 15:20:52 +0100
+
+menu (2.1.32) unstable; urgency=medium
+
+  * The "maintainer on strike" release
+  * Medium urgency for i18n only upload.
+  * This release was prepared by Christian Perrier.
+  * Menu translations
+    - Bengali added by Jamil Ahmed
+    - Gujarati added by Kartik Mistry
+    - Albanian added by Elian Myftiu. Closes: #394702
+    - Macedonian added by Georgi Stanojevski. Closes: #396033
+    - Bosnian added by Safir Secerovic.
+      Closes: #396403, #396432, #396651, #397326
+    - Hindi added by Guntupalli Karunakar (still 4u)
+  * Programs translations
+    - Vietnamese updated by Clytie Siddal. Closes: #393622
+
+ -- Bill Allombert <ballombe@debian.org>  Sat, 11 Nov 2006 18:36:22 +0100
+
+menu (2.1.31) unstable; urgency=medium
+
+  * The "it is not dead, it's sleeping" release.
+  * Medium urgency for i18n and documentation fix only upload.
+  * menufile.5, menufile.fr.5:
+    - section WindowManagers was mispelled.
+  * Program translations: (Thanks Christian Perrier for processing them).
+    - French update by Jean-Luc Coulon. Closes: #344434
+    - Russian update by Yuri Kozlov. Closes: #386789
+    - Swedish update by Daniel Nylander. Closes: #386701
+    - Thai update by Theppitak Karoonboonyanan. Closes: #386921
+    - Czech update by Miroslav Kure. Closes: #387343
+    - Vietnamese update by Clytie Siddall. Closes: #387577
+  * Menu translations
+    - Slovak update by Peter Mann.
+    - Wolof translation by Mouhamadou Mamoune Mbacke.
+    - Kurdish translation by Erdal Ronahi. Closes: #387763, 387764
+    - Korean translation by Sunjae Park. Closes: #391335
+
+ -- Bill Allombert <ballombe@debian.org>  Wed, 11 Oct 2006 01:17:24 +0200
+
+menu (2.1.30) unstable; urgency=low
+
+  * The "check for free" release.
+  * New po/menu.pot file to translate.
+  * Add Dzongkha menu sections translation. Thanks, Jurmey Rabgay.
+  * Add Arabic menu sections translation. Thanks, Ossama M. Khayat.
+    Closes: #377427
+  * Add Thai menu messages and sections translations.
+    Thanks, Theppitak Karoonboonyanan. Closes: #377511
+  * Add Tagalog menu sections translation. Thanks, Eric Pareja.
+    Closes: #382337
+  * configure.ac, po/Makefile.am, po-sections/Makefile.am:
+    + automatically compute the list of available po files when running
+      configure instead of hard-coding them. This should make life easier
+      for Christian and Mohammed.
+  * su_to-root: if both gksu and kdesu are available, select kdesu
+    in preference of gksu if running under KDE. Thanks Fathi Boudra.
+  * su_to-root.1, su_to-root.fr.1: document which program is called when
+    SU_TO_ROOT_X is not set. Closes: #352464. Noticed by Filipus Klutiero.
+  * Improve menu.sgml and manpages following suggestions from Daniel Barclay.
+    Closes: #354403, thanks a lot for the thorough review.
+  * update-menus:
+    + In verbose mode, report menu entries that depend on a missing package.
+      Closes: #386446.  Requested by Frank Küster.
+
+ -- Bill Allombert <ballombe@debian.org>  Fri,  8 Sep 2006 19:08:30 +0200
+
+menu (2.1.29) unstable; urgency=low
+
+  * The "spotted giraffe" release.
+  * Replace depcomp symlink by the depcomp script. Closes: #375103.
+  * Add Khmer menu sections translation. Thanks, Khoem Sokhem. Closes: #375062.
+
+ -- Bill Allombert <ballombe@debian.org>  Tue, 27 Jun 2006 20:52:38 +0200
+
+menu (2.1.28) unstable; urgency=low
+
+  * The "Happy birthday" release
+  * Morten Brix Pedersen:
+    - Actually write pid to update-menus.pid.
+      Thanks to Pierre Thierry who discovered this bug.
+  * Fix the menu.pot file. Closes: #343327. Thanks Thomas Huriaux.
+  * debian/rules:
+    + Undo incorrect change in 2.1.26 that caused update-menus to be shipped
+      executable. Closes: #368814. Thanks Peter Chubb
+  * Fix typos in su-to-root's French manpage. Thanks Filipus Klutiero.
+    Closes: #352465.
+  * Improve menu.sgml following suggestions from Daniel Barclay, first stage,
+    see bug #354403.
+  * Update Greek menu sections translation. Thanks Konstantinos Margaritis.
+    Closes: #344587.
+  * Update Galician menu sections translation. Thanks Jacobo Tarrio.
+    Closes: #359074.
+  * Add Nepali menu sections translation. Thanks, Shiva Pokharel
+    Closes: #374272
+  * Add Belarusian menu sections translation. Thanks, Pavel Piatruk
+    Closes: #373240
+  * Update Hungarian menu sections translation. Thanks, Attila Szervác
+    Closes: #374622
+  * Bump Standards-Version to 3.7.2.
+
+ -- Bill Allombert <ballombe@debian.org>  Thu, 22 Jun 2006 20:40:52 +0200
+
+menu (2.1.27) unstable; urgency=low
+
+  * The "Mock Turtle" release
+  * Allow to remove generated menus. Closes: #81495, thanks Yann Dirson.
+   - New config option removemenu that should remove the menu.
+   - New install-menu option --remove to call removemenu.
+   - New update-menus option --remove to call install-menu with --remove.
+  * Clean up manpages (first stage).
+  * Changes proposed by Nicolas François:
+   - Add French su-to-root.1 and menufile.5 translations.
+   - Remove verbatim environment from su-to-root.1 and install-menu.1
+
+ -- Bill Allombert <ballombe@debian.org>  Sun, 11 Dec 2005 14:35:19 +0100
+
+menu (2.1.26) unstable; urgency=low
+
+  * The "And no, I'm not accepting job offers (2)" release.
+  * Menu-methods should now use #!/usr/bin/install-menu
+  * Fix update-menus counting of menuentries in verbose mode.
+    Closes: #315304. Thanks Shlomi Fish.
+  * Add Bulgarian menu sections translation. Thanks Yavor Doganov.
+    Closes: #315841.
+  * Add Slovak menu sections translation. Thanks Peter Mann.
+    Closes: #330182
+  * Bump Standards-Version to 3.6.2.
+  * debian/postinst, debian/prerm, debian/rules: Undivert update-menus.
+  * scripts/wm-menu-config, doc/wm-menu-config.8: removed.
+  * install-menu and su-to-root are now in /usr/bin and symlinks in
+    /usr/sbin.
+  * debian/copyright: update FSF address and bump copyright date.
+  * debian/menu.sgml: Fix typos, thanks Francesco Poli and
+    Miguel Gea Milvaques. Closes: #328947.
+  * debian/rules, debian/control, debian/conffiles:
+    + Switch to debhelper v4.
+    + Hack to prevent /etc/menu/README and /etc/menu-methods/README
+      to be marked as conffiles.
+  * update-menus was segfaulting on non-readable directories.
+    Closes: #331247. Thanks Felipe Almeida Lessa.
+  * The functions firstentry(), entryindex() and lastentry() did not work
+    when sorting was used.  Closes: #231826. Thanks Jorgen Schäfer.
+  * Morten Brix Pedersen:
+    - Add missing virtual destructor to class 'func'.
+
+ -- Bill Allombert <ballombe@debian.org>  Tue,  4 Oct 2005 18:31:56 +0200
+
+menu (2.1.25) unstable; urgency=low
+
+  * The "Welcome to Etch" release
+  * Documentation changes-only upload to transition from /usr/lib/menu
+    to /usr/share/menu. Sarge menu support both locations already,
+    /usr/lib/menu having higher priority than /usr/share/menu.
+    Closes: #92428. Thanks Jochen Voss.
+  * debian/rules: Move README from /usr/lib/menu to /usr/share/menu.
+  * debian/control: Rewrite package description.
+  * Clean up manpages.
+  * Update Portuguese menu sections translation.
+    Thanks Miguel Figueiredo. Closes: #311308.
+  * Remove gpm default menu entry. Closes: #187728.
+  * Changes by Christian Perrier:
+    - Correct extra space before exclamation mark before a program message
+    - Update german menu messages and sections translations.
+      Thanks Jens Seidel. Closes: #312852
+
+ -- Bill Allombert <ballombe@debian.org>  Sun, 12 Jun 2005 18:57:18 +0200
+
+menu (2.1.24) unstable; urgency=medium
+
+  * The "head or tail" release
+  * Fix .menus typo in menufile.5. Closes: #306564. Thanks Sean Finney.
+  * Add Vietnamese menu messages and menu sections translations.
+    Thanks Clytie Siddall. Closes: #307450, #308953.
+  * Update Esperanto menu sections translation. Thanks MJ Ray.
+  * Add Esperanto menu messages translation. Thanks MJ Ray.
+  * Unfuzzy Norwegian Bokmål menu messages translation.
+
+ -- Bill Allombert <ballombe@debian.org>  Tue, 24 May 2005 10:34:47 +0200
+
+menu (2.1.23) unstable; urgency=low
+
+  * The "getting over Vancouver" release
+  * Add Norwegian Bokmål menu messages and sections translation. Thanks
+    Hans Fredrik Nordhaug. Closes: #298079.
+  * Fix quoting in su-to-root manpage. Thanks Kevin Ryde. Closes: #300643.
+  * default/csh: moved to csh package. Thanks Matej Vela.
+
+ -- Bill Allombert <ballombe@debian.org>  Wed, 23 Mar 2005 18:49:10 +0100
+
+menu (2.1.22) unstable; urgency=low
+
+  * The "Debian translators still rule" release
+  * Add Basque menu sections translation. Thanks Piarres Beobide.
+    Closes: #295598.
+  * Update Russian menu sections translation. Thanks Nikolai Prokoschenko.
+    Closes: #295607.
+  * Add Galician menu messages and sections translation. Thanks Jacobo Tarrio.
+    Closes: #295620, #295768.
+  * Add Traditional Chinese menu messages and sections translation.
+    Thanks Kanru Chen and Asho Yeh.  Closes: #295794, #295683.
+  * Update Turkish menu messages translation. Thanks Recai Oktas.
+    Closes: #295732.
+  * Add Bahasa Indonesian menu sections translation. Thanks Arief S Fitrian.
+    Closes: #295796.
+  * Add Greek menu messages translation. Thanks Konstantinos Margaritis.
+    Closes: #295987
+  * Add Romanian menu sections translation. Thanks Sorin Batariuc.
+    Closes: #296090.
+  * Clean up the BUGS file.
+  * debian/bug.presubj: display "Reporting menu bugs" in red to stand out.
+  * su-to-root: add support for sux and for a .su-to-rootrc config file.
+    Closes: #272752. Thanks Fabian Franz.
+  * Morten Brix Pedersen:
+    - Fixed two typos in the Danish menu program translation.
+    - Corrected the counting of menu entries in verbose output.
+      Closes: #280081. Thanks Andrew Burton.
+
+ -- Bill Allombert <ballombe@debian.org>  Thu, 24 Feb 2005 16:53:25 +0100
+
+menu (2.1.21) unstable; urgency=low
+
+  * The "time for ugly work-around" release
+  * Add Czech menu messages translation. Thanks Miroslav Kure.
+    Closes: #287308.
+  * debian/control: uncapitalize synopsis.
+  * debian/postinst, debian/prerm, debian/rules:
+    Divert update-menus by a script that checks if update-menus is executable.
+    This is a work-around for broken postrm scripts in woody. Closes: #289702.
+    Thanks Adam C Powell IV for noticing them.
+
+ -- Bill Allombert <ballombe@debian.org>  Thu, 20 Jan 2005 17:21:31 +0100
+
+menu (2.1.20) unstable; urgency=low
+
+  * The "deer Rudolf" release
+  * Call getpwuid() once and cache the value. This avoid stressing
+    needlessly NIS. Thanks to Steven R. Evatt.
+  * Extend the documentation of onlyrunasuser.
+
+ -- Bill Allombert <ballombe@debian.org>  Wed, 15 Dec 2004 00:51:03 +0100
+
+menu (2.1.19) unstable; urgency=low
+
+  * The "Debian translators rule!" release
+  * Update Finnish menu section translations, fixing a serious translation
+    error noticed by Mika Wahlroos. Closes: #276122.
+  * Update Brazillian menu section translation. Thanks André Luís Lopes.
+  * Update Russian menu messages translation. Thanks Yuri Kozlov.
+    Closes: #268638.
+  * Fix Norwegian Nynorsk menu message translation. Thanks Håvard Korsvoll.
+  * Update Spanish menu messages translation. Thanks Javier Fernandez-Sanguino
+    Peña.
+  * Update Chinese menu messages translation. Thanks Carlos Z.F. Liu.
+  * Add German menu messages translation. Thanks Tobias Toedter.
+  * Add Portuguese menu message and menu section translation. Thanks
+    António Amorim.
+
+ -- Bill Allombert <ballombe@debian.org>  Mon,  1 Nov 2004 17:15:40 +0100
+
+menu (2.1.18) unstable; urgency=low
+
+  * The "Sarge is still warm" release
+  * Update Japanese menu message translation. Thanks Goto Masanori.
+  * Update Finnish menu message translation. Thanks Tommi Vainikainen.
+  * Update Brazillian menu message translation. Thanks André Luís Lopes.
+  * Update Dutch menu message translation. Thanks Tim Dijkstra.
+    Closes: #274355.
+  * Update Norwegian Nynorsk menu message translation. Thanks Håvard Korsvoll.
+  * Add file README.translations to document the way menu sections are
+    translated.
+  * Document it is possible to add entries for menu sections.
+  * Morten Brix Pedersen:
+    - Allow character classes in regular expressions. This fix the parsing
+      of translate_menus. Closes: #271659. Thanks, Paul Seelig.
+    - Only use letters and digits as possible shortcut keys. Closes: #259349
+
+ -- Bill Allombert <ballombe@debian.org>  Mon,  4 Oct 2004 10:59:02 +0200
+
+menu (2.1.17) unstable; urgency=medium
+
+  * The "yellow pig" release
+  * urgency medium: i18n-only release.
+  * Add Lithuanian menu section translation, by Kęstutis Biliūnas.
+    Closes: #266134
+  * Add Croatian menu section translation by Krunoslav Gernhard.
+    Closes: #268054
+  * Add Hebrew menu section translation by Lior Kaplan.
+    Closes: #269120
+
+ -- Bill Allombert <ballombe@debian.org>  Fri,  3 Sep 2004 13:45:06 +0200
+
+menu (2.1.16) unstable; urgency=low
+
+  * The "Sarge is waiting for us!" release
+  * Jens Arvidsson:
+    - Update Swedish translation.
+  * Morten Brix Pedersen:
+    - Treat userprefix prefixed by // as an absolute path instead of just a
+    relative path. Closes: #252637, #252891.
+    - Revert change in 2.1.15: Don't let outputencoding default to LOCALE by
+    default. This was causing too many problems. Closes: #258865.
+  * Update Polish menu message translation, thanks Marcin Owsiany.
+  * Add Italian menu message translation, by Stefano Canepa.
+
+ -- Bill Allombert <ballombe@debian.org>  Sat,  7 Aug 2004 11:25:22 +0200
+
+menu (2.1.15) unstable; urgency=low
+
+  * The "spring clean up" release
+  * Jens Arvidsson:
+    - Update Swedish translation.
+  * Update Italian menu-section translation. Thanks Stefano Canepa.
+  * Fix German menu-section translation. Closes: #254416.
+    Thanks Eduard Bloch and Sebastian Rittau.
+  * Update French translation of update-menus manpage. Closes: #256992.
+    Thanks Sylvain Cherrier.
+  * Fix po/Makefile.am so that tr.mo is installed. Sorry for not noticing
+    sooner.
+  * Morten Brix Pedersen:
+    - Update Danish translation.
+    - Fix wrong error message when install-menu couldn't open a menu-method.
+    - outputencoding now defaults to LOCALE when no value is specified.
+    - No longer require startmenu and endmenu to be defined.
+    - Call getuid() once and cache the result.
+    - Document behaviour when multiple fields are specified in the same menu
+      entry. Closes: #250224.
+    - Add example of an executable menufile to examples/. Closes: #252606
+      Thanks Marc Haber.
+  * Sort menu entry according to the current locale. Note that this works
+    only if the menu-method uses the locale encoding. Closes: #200447.
+  * Fix error message for update-menus --menumethod.  Closes: #251857.
+  * Parse update-menus options with getopt_long.
+  * Improve update-menus --help message.
+  * Avoid [a-z] regexp since that breaks under Estonian locales.
+    Closes: #254894. Thanks to Jaan Pullerits for the explanation.
+
+ -- Bill Allombert <ballombe@debian.org>  Fri,  2 Jul 2004 18:35:16 +0200
+
+menu (2.1.14) unstable; urgency=low
+
+  * The "multilingual" release
+  * Update German menu-section translation. Thanks Sebastian Rittau.
+  * Update Hungarian menu-section translation. Thanks Attila Szervá.
+  * Update Italian menu-section translation. Thanks Stefano Canepa.
+  * Morten Brix Pedersen:
+     - Change a wrong error message from "Could not open directory" to "Could
+     not create directory".
+     - Added --version option to update-menus.
+  * Rename 'repeat_lang' menu option to 'outputlanguage' to match
+    'outputencoding'.
+  * Document --version in update-menus.1 and update-menus.fr.1.
+  * Add /etc/menu-methods/lang.h which define sections_translations() as
+    the list of translations available in this package.
+  * Do not install obsolete README.changes.
+  * Fix term() definition in /etc/menu-methods/menu.h.
+
+ -- Bill Allombert <ballombe@debian.org>  Thu, 27 May 2004 15:58:52 +0200
+
+menu (2.1.13) unstable; urgency=low
+
+  * The "sell your car" release
+  * Apply patch from Carlos O'Donell for hppa support.
+    Closes: #248773. Thanks Grant Grundler.
+  * Move wm-menu-config manpage to section 8 and insist it is deprecated.
+  * Fix cppesc() to work correctly under non C locales.
+  * Fix su-to-root to not change $HOME. This make sure xlib can find
+    the X session cookie. Thanks to isaac on IRC for testing the patch.
+    Closes: #246886. This adresses the last case of #150314.
+  * Add Ukrainian menu sections translation by Eugeniy Meshcheryakov.
+    Closes: #244067.
+  * Add Russian menu sections and messages translation by Dan Korostelev.
+    Closes: #245353.
+  * Add Greek menu sections translation by Konstantinos Margaritis.
+
+ -- Bill Allombert <ballombe@debian.org>  Fri, 14 May 2004 17:17:07 +0200
+
+menu (2.1.12) unstable; urgency=low
+
+  * The "quickfix" release.
+  * Jens Arvidsson:
+    - Updated Swedish menu messages translation.
+  * Morten Brix Pedersen:
+    - Fix bug where section="/" failed when translations were enabled.
+      Closes: #243531.
+    - Prevent infinite recursion in replace($s,$replace,$with) when $with
+      match $replace.
+  * Fix typo in Chinese menu sections translation.  Closes: #242742. Thanks
+    Carlos Z.F. Liu.
+  * Add Turkish translations of menu messages and menu sections.
+    Closes: #243690. Thanks Cagatay Tengiz and Recai Oktas.
+  * Update Catalan menu sections translation. Thanks Jordi Mallach.
+  * Rename --menufiledir to --menufilesdir as documented. Update translations
+    accordingly. Closes: #241289. Thanks Jean-Luc Coulon.
+  * Reformat and extend the documentation about the menu entry format.
+
+ -- Bill Allombert <ballombe@debian.org>  Thu, 15 Apr 2004 17:43:07 +0200
+
+menu (2.1.11) unstable; urgency=low
+
+  * The "Go bravely with Joey" release.
+  * Morten Brix Pedersen:
+    - Only enable translated section names when both 'outputencoding' and
+      'repeat_lang' has been set.
+    - Set repeat_lang="LOCALE" per default. menu-methods now only need to set
+      outputencoding in order to enable translations.
+    - Update Danish menu translation.
+    - Fixed some inconsistent behaviour with "substitute section->section"
+      Closes: #216851. Thanks Jean-Philippe Guérard.
+    - Fix compilation with g++ 2.95.
+  * su-to-root:
+    + New -X for need=X11 entries that support for gksu and kdesu.
+      Closes: #166844. Thanks Jason Hildebrand.
+    + Handle usage by root more sanely.
+    + update manpage.
+  * debian/control:
+    + Suggest gksu|kdebase-bin. Install one of those if su-to-root cannot
+      access the X server. Closes: #150314. Thanks Raoul Borenius.
+  * Update Brazillian menu messages translation. Thanks André Luís Lopes.
+  * Add Norwegian nynorsk menu messages and sections translations.
+    Thanks Håvard Korsvoll.
+  * Add Swedish menu messages and sections translation. Thanks Jens Arvidsson.
+  * Update Spanish menu sections translation and add Spanish menu messages
+    translation. Thanks Javier Fernandez-Sanguino Peña.
+  * Update Japanese menu sections translation and add Japanese menu messages
+    translation. Thanks Goto Masanori.
+  * Update Dutch menu messages translation. Closes: #239324.
+    Thanks Tim Dijkstra.
+  * Add French menu messages translation. Thanks Jean-Luc Coulon.
+  * Jens Arvidsson:
+    - Add Swedish menu messages and sections translation.
+
+ -- Bill Allombert <ballombe@debian.org>  Tue,  6 Apr 2004 00:38:55 +0200
+
+menu (2.1.10-1) unstable; urgency=low
+
+  * The "Friday 12" release.
+  * Morten Brix Pedersen:
+    - replacewith($str, $replace, $with) now outputs an error if $replace and
+    $with isn't the same length.
+    - Don't segfault when there are syntax errors in translate_menus
+      (Closes: #221757)
+    - Unknown identifiers now generates a warning instead of an error.
+    - Implement a replace() function. Closes: #223948
+    - Modify basename() function to do as advertised in the documentation.
+    - When conversion for a translated menu section failed, fallback to the
+    original string.
+    - Implement a shell() function.
+  * Update Dutch menu message translation. Closes: #230525. Thanks Tim
+    Dijkstra.
+  * Add Chinese menu messages and sections translations. Closes: #232403.
+    Thanks Carlos Z.F. Liu and Yongtao Yang.
+  * Remove dconfig-text entry from gpm default menu entry: Closes: #234178.
+  * Document that menu files must be encoded in 7bit only.
+
+ -- Bill Allombert <ballombe@debian.org>  Fri, 12 Mar 2004 13:39:31 +0100
+
+menu (2.1.9-5) unstable; urgency=low
+
+  * The "calc inflates severity" release.
+  * Add Polish menu message translation and update Polish menu section
+    translation. Thanks Marcin Owsiany.
+  * Update French menu section translation. Closes: #225716. Thanks
+    Jean-Philippe Guérard.
+  * Fix typos in error messages. Closes: #227070. Thanks Tommi Vainikainen.
+  * Add Finnish translations. Closes: #227038. Thanks Tommi Vainikainen.
+  * Add Brazillian menu message translation. Closes: #227627. Thanks Gustavo
+    Noronha Silva.
+  * Add GPL boiler-plate to all C++ source files.
+  * Add Dutch menu message translation. Closes: #228221. Thanks Tim Dijkstra.
+  * Remove documentation of non-existent function process_menudirs.
+    Closes: #228448. Thanks Chris Cheney.
+  * Fix userprefix() and rootprefix() functions. Closes: #228628. Thanks Chris
+    Cheney.
+  * Add Czech menu section translation. Closes: #229203. Thanks Miroslav Kure.
+  * Morten Brix Pedersen:
+    - Update Danish sections translation and convert to UTF-8.
+    - Update Danish menu translation and convert to UTF-8.
+
+ -- Bill Allombert <ballombe@debian.org>  Sat, 24 Jan 2004 15:43:43 +0100
+
+menu (2.1.9-4) unstable; urgency=low
+
+  * The "Happy New Year" release.
+  * Add Polish menu message translation and update menu section translation.
+    Thanks Marcin Owsiany.
+  * Add Dutch menu section translation. Closes: #224292. Thanks Tim Dijkstra.
+  * Set root umask to 022 not 002. Closes: #224685. Thanks Ethan Benson.
+  * Add GPL boiler-plate to update-menus/update-menus.cc
+  * Improve term() examples in menu.h.
+
+ -- Bill Allombert <ballombe@debian.org>  Mon, 22 Dec 2003 02:15:35 +0100
+
+menu (2.1.9-3) unstable; urgency=low
+
+  * The "i18n" release.
+  * Improved messages.
+  * Menu will skip menu-method with no userprefix (resp. rootprefix) if run
+    as user (resp. root). Closes: #81493.
+  * Add symlinks for su-to-root and install-menu in /usr/bin.  Note that sarge
+    packages must use the /usr/sbin path. Closes: #202857. Thanks Joey Hess.
+  * Add /usr/share/bug/menu/presubj for bugs reporting tips.
+  * Fix update-menus options handling.
+  * doc/menu.sgml:
+    + deprecate onlyrunasroot and onlyrunasuser.
+    + deprecate wm-menu-config.
+    + document proper postinst/postrm scripts.
+  * Add unofficial but frequently used sections to po-sections.
+  * Update french translation of menu sections. Closes: #200738. Thanks
+    Jean-Philippe Guérard. I forgot it in the previous release.
+  * Fix unicodification of this file.
+
+ -- Bill Allombert <ballombe@debian.org>  Fri, 12 Dec 2003 16:31:38 +0100
+
+menu (2.1.9-2) unstable; urgency=low
+
+  * The "long awaited" release.
+  * Add Catalan translation of menu sections. Thanks Jordi Mallach.
+  * Add Japanese translation of menu sections. Thanks GOTO Masanori.
+  * Morten Brix Pedersen:
+    - Finally make the output of update-menus and install-menu properly
+    i18n'ed. Translators should now start translating menu.pot in po/.
+    Closes: #200072
+    - Added Danish translation of the above.
+    - Add menu sections Games/Simulation and Apps/Education to
+    menu-section.pot.
+    - Executable menu entries weren't executed. Fixed. Closes: #217502
+  * Add menu sections Games/Simulation and Apps/Education to menu.sgml and
+    menufile.5.
+  * Convert this file to UTF-8.
+  * Bump Standards-Version to 3.6.1.
+  * install-menu now accept options before argument. Thanks Denis Barbier.
+  * Remove Conflicts: pdmenu (<=0.5.9) dated 1997.
+  * Don't ship the outdated README.changes file.
+  * Fix typo in menu.h file and add sort=tolower(title()) to make sort order
+    case insensitive. Closes: #209257. Thanks Daniel Burrows.
+  * menu.sgml: insist that menu title must be capitalized.
+  * postinst/postrm: Remove pre-menu-1.0 kludges.
+  * debian/rules: ship update-menus non executable.
+
+ -- Bill Allombert <ballombe@debian.org>  Mon,  3 Nov 2003 15:51:57 +0100
+
+menu (2.1.9-1) unstable; urgency=low
+
+  * The "And no, I'm not accepting job offers" release.
+  * Change contact address to `menu@packages.debian.org'.
+  * doc/menufile.5: Update list of menu sections.
+  * default/bash: removed. Thanks Matthias Klose.
+  * debian/rules: do not create empty dir /usr/share/pixmaps.
+    Closes: #196713. Thanks Ryan Murray.
+  * doc/menu.sgml:
+    + Fix capitalisation of `Debian'.
+    + Improve section `How a user can override the menus'.
+    + Move 'Variables and functions' to a new chapter and format it properly.
+  * update-menus.cc: use F_GETLK instead of F_SETLK to query dpkg lock.
+  * Morten Brix Pedersen:
+    - Just skip the file when its missing a tag, instead of stopping
+    completely. Closes: #56839
+    - menu-methods can now define the charset/encoding which the outputted
+    section names should be in by using the outputencoding variable.
+
+ -- Bill Allombert <ballombe@debian.org>  Thu, 26 Jun 2003 22:25:08 +0200
+
+menu (2.1.8-2) unstable; urgency=low
+
+  * The "Thanks Joost, for the great Debian menu system" release.
+  * Set myself as maintainer since Joost has officially retired.
+  * Add menu-one-file to doc, for building alioth doc.
+  * Add Italian translation of menu sections. Thanks Stefano Canepa.
+  * Add German translation of menu sections. Thanks Sebastian Rittau.
+  * Complete Brazilian translation of menu sections. Thanks André Luís Lopes.
+  * Add French translation of update-menus man pages.
+    Thanks Sylvain Cherrier. Closes: #193004
+  * Remove hello, octave and xftp default menu entries.
+  * Bump Standards-Version to 3.5.10.0.
+  * No more require icons to use the colors from cmap.xpm.
+    Closes:#193231, #175430, #192218, #97080
+  * No more install cmap.xpm. Closes:#172092
+  * Document menu methods are required to use title(), icon() and term()
+    instead of $title, $icon and hard-coded call to x-terminal-emulator,
+    so that user can configure the behaviour in menu.h.
+
+ -- Bill Allombert <ballombe@debian.org>  Fri, 23 May 2003 00:08:40 +0200
+
+menu (2.1.8-1) unstable; urgency=low
+
+  * Put in CVS at alioth.debian.org
+  * Hard code version in configure.in so that menu can be build without
+    the debian directory.
+  * Complete french translation of menu sections. Thanks Jean-Philippe
+    Guérard.
+  * Complete spanish translation of menu sections. Thanks Javier
+    Fernández-Sanguino Peña.
+  * Complete polish translation of menu sections. Thanks Marcin Owsiany.
+  * Add brazilian translation of menu sections. Thanks André Luís Lopes.
+  * Remove obsolete Apps/Games --> Games in translate_menus.
+  * Morten Brix Pedersen <morten@wtf.dk>:
+    - Add Danish translation of menu sections.
+    - Fix a segmentation fault which happened when translate_menus only
+      contained one line.
+    - Special characters no longer needs to be double-escaped. Closes: #94466
+    - Document the fact that titles in entries must be unique. Closes: #46629
+    - Fix segmentation fault when using forcetree and hint_optimize.
+      Closes: #149468, #189396
+    - Add basesection variable. Closes: #136947
+    - Support multiple package requirement. Closes: #114620
+  * Ship prebuild documentation in source tarball to work around sp failure
+    on m68k.
+
+ -- Bill Allombert <ballombe@debian.org>  Mon,  7 Apr 2003 20:31:51 +0200
+
+menu (2.1.7-3) unstable; urgency=low
+
+  * Fix es.trme translation. Closes: #144043.
+  * Apply patch from Morten Brix Pedersen to document how to put
+    entries in the root menu. Closes: #41132
+  * Document that !include menu.h is required in menu-method.
+  * Remove 'Ja, hoor' debugging message when using hints.
+  * debiandoc-sgml 1.1.75 has reached testing so remove the versionned
+    Build-Depends.
+  * Depends on dpkg (>= 1.10). Thanks Jens Müller. Closes: #186160
+  * Patch from Morten Brix Pedersen :
+   - Added documentation for several methods in menutree and hints classes.
+   - Rename variables to more saner names, instead of single-letter variable
+     names, thus making the code more readable.
+   - Many code cleanups (more consistent placement of braces and parens,
+     better use of iterator-pointer syntax).
+   - Added "const" to several methods..
+   - Fixes warnings with g++ 3.3.
+   - Some size() and length() checks replaced by empty() checks.
+   - Some variables declaration moved closer to their use.
+   - Removal of some unused variables and members in classes. This makes the
+     binary slightly smaller.
+   - messages/menufile2pot: Changed #!/bin/perl to #!/usr/bin/perl
+  * Rename menu-messages to menu-sections and messages to po-sections.
+  * Rename po-section/Makefile to Makefile.am so that Dagfinn can bash me.
+  * Fix po directory.
+  * Fix the autostuff to the point where make distcheck works.
+  * Fix manpages sections.
+  * Add polish translation of menu sections. Thanks Marcin Owsiany.
+  * Add hungarish translation of menu sections. Thanks <gcoder@coder.hu>.
+  * Remove obsolete default menu entries.
+
+ -- Bill Allombert <ballombe@debian.org>  Thu,  3 Apr 2003 17:19:28 +0200
+
+menu (2.1.7-2) unstable; urgency=low
+
+  * Fix double slash bug in verbose output. Thanks Olivier Guilyardi.
+  * Apply patch from Morten Brix Pedersen that fix segfault when
+    hint_optimize=true. Closes: #152324, #182592.
+  * Remove doc/bugreport (superseded by BUGS).
+  * Update BUGS and menu.sgml to use --stdout insteat of cat.
+  * Update Joey email address in menu.sgml.
+  * Apply patch from Dagfinn Ilmari Mannsaker <ilmari@ping.uio.no>
+    that make doc/Makefile.am more automake compliant. Closes: #182771
+  * Build-Depends on debiandoc-sgml (>= 1.1.74) to work around a bug in
+    previous versions. Thanks Dagfinn Ilmari Mannsaker. Closes: #182778
+  * Apply patch from Morten Brix Pedersen to get the list of installed
+    packages instead of the list of selected packages.
+    Closes: #62086, #166298, #182684
+  * Add french translation of menu section (by myself).
+  * Fix missing charset/encoding in other po files.
+
+ -- Bill Allombert <ballombe@debian.org>  Thu,  6 Mar 2003 18:02:41 +0100
+
+menu (2.1.7-1) unstable; urgency=low
+
+  * The "Won't that be grand fun ?" release.
+  * Try to not link statically on mips and arm.
+  * Try setlocale patch from Goto Masanori.  Closes: #125700
+  * Some fix in menufile(5). Documents hints. Closes: #79046
+  * Make update-menus -h and manpage up-to-date with the code.
+  * Remove obsolete add-log-mailing-address from changelog.
+  * Bump Standards-Version to 3.5.8
+  * Credit Morten in AUTHORS file.
+  * Patch from Morten Brix Pedersen :
+   - Compiles with gcc 2.95 again.
+   - install-menu now creates all new files with umask 002, ignoring root
+     umask Closes: #136864, #126525
+   - When verbose is enabled, the number of menu entries read in each directory
+     is outputted to console.
+   - Renamed some variables and functions to more saner names.
+   - Moved all #defines to common.h.
+   - Reorder declarations in header files to move important stuff to the top.
+   - std::string is now used directly instead of using the derived wrapper
+     class String, which shouldn't have been there in the first place.
+   - Many unnecessary calls to new and delete removed, prefer construction on
+     the stack instead.
+   - Make some member functions const.
+   - Compatibility with automake 1.7.
+   - New --stdout option for update-menus.
+
+ -- Bill Allombert <ballombe@debian.org>  Tue, 25 Feb 2003 14:58:45 +0100
+
+menu (2.1.6-2) unstable; urgency=low
+
+  * The "What ? Nothing ? Not even the slightliest remorse ?" release.
+  * Fix some low caps in long description.
+  * Add -g to build options according to new policy.
+  * Add support for DEB_BUILD_OPTIONS noopt. nostrip is handled by dh_strip.
+  * Remove confusing CXXFLAGS setting in */Makefile.am
+  * Remove default/amd. Thanks Philippe Troin.
+  * Remove obsolete default menu entries.
+  * Better error message for autogen.sh. Closes: #178927
+  * 'make install' now install install-menu in /usr/sbin. Closes: #178924
+  * Remove obsolete menu-method directory
+  * Remove broken l10n support( intl and po directories.)
+    This should be redone properly.
+  * Convert doc/Makefile to automake and fix it.
+  * Now make install/uninstall should work even as non root.
+  * Patch from Morten Brix Pedersen :
+   - fix g++ 3.2 issues. Closes: #177663
+   - Doesn't depend on the HOME variable anymore, but on the value in
+    /etc/passwd instead. Falls back to the HOME variable if this fails.
+   - Removed gcc-2.7.2.1 work arounds.
+   - 0 used instead of NULL (more correct in C++)
+   - map<String, String, less<String> > changed to map<String, String> -
+   since less is the default sort anyway.
+   - changed some C header types to use the C++ equal one. e.g. cstdlib
+   instead of stdlib.h
+   - use empty() instead of checking on size() or length()
+   - at some places, avoid calling new, just allocate object on the stack
+   - remove after() function from String class, just use substr() directly
+   - some old outcommented code removed
+   - use a templated funcN class instead of the func0, func1, func2 etc. classes
+   - removed 'using namespace std' in header files, thus meaning that many types
+   now are prefixed by std::
+   - removed exception class not used
+   - removed duplicated function with different name
+   - install-menu -h was referencing itself as menu-method.
+   - Removed --showtime optim from install-menu, it had no effect when
+   being used.
+   - Renamed -dodebug option to -v / --verbose
+  * Closes: #90617,#57576 which are no more reproducible with this patch.
+
+ -- Bill Allombert <ballombe@debian.org>  Fri, 31 Jan 2003 17:24:31 +0100
+
+menu (2.1.6-1) unstable; urgency=low
+
+  * The "If it boots, it's perfect" release.
+  * Add support for menu entries in /usr/share/menu.
+  * Move default entries to /usr/share/menu/default.
+  * Update documentation to reflect /usr/share/menu/default changes.
+  * su-to-root script: Apply patch from Matt Zimmerman for handling uid 0 user
+    sanely. Closes: #172831
+  * Patch from Morten Brix Pedersen to avoid some C++ exceptions.
+  * Move cmap.xpm to doc so that it is not installed twice. Closes:#172282
+    Thanks Matej Vela <vela@debian.org>.
+  * Don't install the doc twice.
+  * Synchronize the preferred menu structure with the menu-policy document.
+    Closes:#172281 Thanks Matej Vela <vela@debian.org>.
+  * Remove the dummy install-fvwmgenmenu program.
+
+ -- Bill Allombert <ballombe@debian.org>  Wed, 18 Dec 2002 13:58:35 +0100
+
+menu (2.1.5-14) unstable; urgency=low
+
+  * Apply patch from Morten Brix Pedersen <morten@wtf.dk> for building
+    with gcc-3.2.
+  * Add menufile.5 to debian/manpages. Closes: #162172 Thanks, Tobias Wolter
+  * Apply patch from Javier Fernandez-Sanguino Pena to menufile2pot.
+    Closes: #110737.
+  * Add a comment about translation in update-menus manpage. Closes: #144050.
+  * postinst/prerm use /bin/sh and check for pidof.
+
+ -- Bill Allombert <ballombe@debian.org>  Mon, 23 Sep 2002 20:56:58 +0200
+
+menu (2.1.5-13) unstable; urgency=low
+
+  * The "Lucky 13 but for which ?" release.
+  * Apply patch from Morten Brix Pedersen <morten@wtf.dk> for building
+  with gcc-3.0. Closes: #95366, #104732
+  * Fix po files to work with gettext 0.11. Closes: #159987.
+  * Update po/Makefile.in.in to match aclocal.m4.
+  * More s,/usr/doc,/usr/share/doc, Closes: #159589 Thanks Laurent Bonnaud.
+  * Spurious less wm-menu-config.1.
+  * Add doc-base support (debian/menu.doc-base). Closes: #31160
+  * Remove obsolete debian/menu file.
+  * Add debhelper token in maintainer scripts.
+  * Acknowledge Joey Hess patch (Closes: #87497)
+  * Bump Standards-Version to 3.5.7.0
+
+ -- Bill Allombert <ballombe@debian.org>  Sun,  8 Sep 2002 12:58:20 +0200
+
+menu (2.1.5-12) unstable; urgency=low
+
+  * Add gettext to Build-Depends. Closes: #159629. Thanks, James Troup.
+  * Change references to /usr/X11R6/include/X11/{bitmaps,pixmaps}
+    to /usr/share/pixmaps. Closes: #102310. Thanks Henrique de Moraes Holschuh
+  * fix may->many typo in doc/README.package-menus.
+    Closes: #151979. Thanks Frederico Grau.
+  * Acknowledge previous NMUs:
+    Thanks Joey Hess (Closes: #84936, #127921)
+    Thanks Julian Gilbey (Closes: #55603)
+  * Closes: #44714, #86260, #103059 which are `fixed' for ages.
+    Thanks go to Colin Watson for spotting them.
+
+ -- Bill Allombert <ballombe@debian.org>  Thu,  5 Sep 2002 11:09:07 +0200
+
+menu (2.1.5-11) unstable; urgency=low
+
+  * Add myself to Uploaders field.
+  * Add Build-Depends. Closes: #95341,#95151
+  * Remove dangerous use of automake in debian/rules.
+    Closes: #133159 Thanks, Guido Guenther.
+  * Add AM_MAINTAINER_MODE to configure.in, add file autogen.sh
+  * Remove unused/dangerous files ltconfig,ltmain.sh
+  * Fix various typo (reported by), thanks :
+  s/menu's/menu/ in description. Closes: #79475 (Jonathan D. Amery)
+  s/frontents/frontends/ in description. Closes: #125128 (Matt Zimmerman)
+  s/quite/quiet/ in update-menus.1.
+    Closes: #96886 (Malcolm Parsons,Edward Betts)
+  s/it's/its/ in update-menus.1. Closes: #129881 (Ken Shan)
+  s/generate the/generation of/ in install-menu.1.
+    Closes: #120735 (Tomas Pospisek)
+  s,/usr/doc/menu,/usr/share/doc/menu, in all files.
+    Closes: #98363,#103188,#134924
+    (Stephen Stafford,Martin Quinson,André Dahlqvist)
+  lots of typo in menu.sgml. Closes: #57832 (Christian T. Steigies)
+  * Install and remove info file correctly in postinst/prerm.
+  * Rename menu info entry to "Debian menu".
+    Closes: #42333,#117236 Thanks David Coe, John Candlish.
+  * Add synopsis to su-to-root and its manpage.
+    Closes: #103039 Thanks, Galen Hancock.
+  * Apply patch from Colin Watson to su-to-root. Closes: #103879
+  * Policy compliant compiler options in debian/rules.
+  * Move cmap.xpm to /usr/share/pixmaps. Closes: #125588 Thanks, Lee Maguire.
+  * Switch to dh_installman and install install-fvwmgenmenu.sh.1 in the
+    right directory. Closes: #104383 Thanks, Colin Watson.
+  * Remove call to install-menu in postrm. Thanks, Lintian.
+  * Use pidof instead of killall, since killall is not essential.
+
+ -- Bill Allombert <ballombe@debian.org>  Sun,  1 Sep 2002 00:05:29 +0200
+
+menu (2.1.5-10.2) unstable; urgency=high
+
+  * NMU.  Link statically on ARM as well. 
+
+ -- Phil Blundell <pb@debian.org>  Sun, 14 Jul 2002 15:58:16 +0100
+
+menu (2.1.5-10.1) unstable; urgency=low
+
+  * NMU. Statically link menu on mips and mipsel to work around a
+    likely toolchain bug of some sort. sorta kinda Closes: #127921
+
+ -- Joey Hess <joeyh@debian.org>  Fri, 15 Feb 2002 23:01:02 -0500
+
+menu (2.1.5-10) unstable; urgency=low
+
+  * Added .ja translations, from GOTO Masanori <gotom@debian.or.jp>
+  * Added .es franslations, from user-es package, 
+    Javier Fernandez-Sanguino Pen~a <jfs@computer.org>,
+    closes: #106505
+  * Added patch from Fabian Sturm <f@rtfs.org> for GNU Hurd,
+    Closes: #105674
+
+ -- joost witteveen <joostje@debian.org>  Sun,  29 July 2001 15:02:27 +0300
+menu (2.1.5-9) unstable; urgency=low
+
+  * Now only use the locale for LC_MESSAGES, also for install-menu
+    (forgot to add this in 2.1.5-7).
+    
+
+ -- joost witteveen <joostje@debian.org>  Mon,  2 May 2001 14:02:27 +0300
+menu (2.1.5-8) unstable; urgency=low
+
+  * Now only use the locale for LC_MESSAGES. Closes: #90317, #95658
+
+ -- joost witteveen <joostje@debian.org>  Mon, 30 Apr 2001 14:02:27 +0300
+
+menu (2.1.5-7) unstable; urgency=low
+
+  * Applied patch for Hurd locking issue. Closes: #72166
+  * update-menus locking code hoped errno wouldn't be changed
+    after a successful call to close(). Wrong, and showed up
+    on the Hurd. Fixed.
+  * manually applied (hopefully all) fixes to the manual pages in 
+    bugreport. Closes: 86260
+
+ -- joost witteveen <joostje@debian.org>  Thu, 29 Mar 2001 10:02:27 +0200
+
+menu (2.1.5-6.1) unstable; urgency=low
+
+  * NMU for bug-squashing party. The -prune in doc/Makefile
+    was being used correctly. Package now builds again. Closes: #84936
+
+ -- Joey Hess <joeyh@debian.org>  Sat, 24 Feb 2001 15:02:27 -0800
+
+menu (2.1.5-6) unstable; urgency=low
+
+  * Fixed error thouwn in case translation file could not be found
+    (this cased errors if user didn't have that file in home dir).
+    closes: #63586, #64805
+  * removed dpkg-dev entry in default dpkg menu entry file.     
+    closes: #58999
+  * the default menu.h file now uses x-terminal-emulator, instead of xterm
+    Closes: #67557
+  * the sort function in the menu-methods file now by default is
+    $sort ":" $title.  This makes it work more like it's expected.
+    (before, it would ignore the $sort tag-variable from the menu entry
+    files). Closes: #44674
+  * if run while another update-menus is already running, but dpkg
+    is not running (manually started), then update-menus now exits
+    (as the verbose output promised, but it never did in older versions).
+    Closes: #67760
+  
+ -- joost witteveen <joostje@debian.org>  Sat, 29 Jul 2000 00:51:12 +0300
+
+menu (2.1.5-5) unstable; urgency=low
+
+  * allowed 'section="/"' in the menu entry files.
+  * added also_run command, suggestion from Mandrake developer 
+    Frederic Lepied, <flepied@mandrakesoft.com>.
+  * install-menu now doesn't generate empty menus any more
+    (also reported by Frederic Lepied)
+  * Applied patch from (again) Frederic Lepied to make it (at least
+    some times) continue if there's an error in a menu-entry-file.
+    Whether that's a good thing I don't know, but there have been
+    so many people requesting that now that I'll just give in.
+  * same patch from Frederic also made the install-menu processes
+    have the parent's environment.
+
+ -- joost witteveen <joostje@debian.org>  Mon,  3 Apr 2000 00:22:24 +0300
+
+menu (2.1.5-3) frozen unstable; urgency=low
+
+  * recompile, rest identical to version of Julian Gilbey.
+    Just recompiling sems to fixing the `missing menu entry' problem.
+
+ -- joost witteveen <joostje@debian.org>  Sat, 22 Jan 2000 19:11:35 +0100
+
+menu (2.1.5-2.1) frozen unstable; urgency=low
+
+  * Non-maintainer upload (at joost's request)
+  * Correct install-menu problem which was leaving some generated menus
+    incomplete and broken (closes: #55603 (RC bug))
+
+ -- Julian Gilbey <jdg@debian.org>  Thu, 20 Jan 2000 23:31:24 +0000
+
+menu (2.1.5-2) unstable; urgency=low
+
+  * Should add: (see 2.1.4-5).
+  * "onlyrunasroot" checking done as soon as possible, so that
+    install-menu doens't check for sane-ness of varables if
+    run as non-root.
+  * Fixed segfault in case rootprefix/usrprefix is undefined.
+    Closes: #53933, #52961
+  * added a `repeat_lang="LOCALE"' directive, to get back the old
+    `unasked for' translation behavior (where update-menus would
+    translate into the current LOCALE).
+    
+ -- joost witteveen <joostje@debian.org>  Wed,  5 Jan 2000 22:09:12 +0100
+
+menu (2.1.5-1) unstable; urgency=low
+
+  * This is an interim release; it breaks the (never used anyway)
+    `old' gettext translations, but allows gnome etc WM's to
+    creat startup files with translations for various languages.
+
+  * moved last files from /usr/doc to /usr/share/doc. Same for /usr/info.
+  * install-menu: added a translate() function.
+  * install-menu: added a forall() function.
+  
+ -- joost witteveen <joostje@debian.org>  Sun,  5 Dec 1999 19:04:42 +0100
+
+
+menu (2.1.4-4) unstable; urgency=low
+
+  * Applied patch in 47259, to fix spaces/tabs in menu.sgml.
+    Closes: #47259.
+  * (minor) updates to menu.sgml docs.
+  * Corrected help (-h) text of install-menu
+  * when user starts install-menu, and it wants to read an
+    examplercfile, install-menu now also searches it in $rootprefix
+    (not just in ${HOME}/$userprefix/).
+    Closes: #50867, #50298
+  * !include-ed files in the menu-methods are also looked for in
+    /etc/menu-methods, if they cannot be found in ~/.menu-methods.
+    (if non-root starts install-menus).
+  * (install-menu) error message if $section etc are empty should
+    be clearer about that menu first reads whole line, and that somewhere
+    on that line section wasn't defined.
+  * (adstring.cc) if `basepos' in report() isn't 0, then maybe I should
+    print `[...]' at the start of the line.
+
+ -- joost witteveen <joostje@debian.org>  Mon, 22 Nov 1999 22:36:16 +0100
+
+menu (2.1.4-3) unstable; urgency=low
+
+  * Upgraded debhelper, and added usr/doc link removeal/link creation
+    stuff in prerm/postinst.
+  * Upgraded standards version.
+  * now use `string::size_type' for all string iterators, rather
+    than `unsigned int'. Closes: #47177
+
+ -- joost witteveen <joostje@debian.org>  Tue, 12 Oct 1999 21:43:26 +0200
+
+menu (2.1.4-2) unstable; urgency=low
+
+  * In update-menus, terminate arguments to execve /etc/menu-methods/*
+    scripts with NULL. (forgot that, didn't actually seem to cause 
+    problems, though).
+  * install-menu segfault-ed on the prefix() function if run from
+    update-menus as non-root (and only then). Caused by clearing of
+    enviromenent of new update-menus. Fixed (in install-menu).
+  * In update-menus, just before execve-ing the /etc/menu-methods/*
+    scritps, close(1), and then dup it from fd 0. This appears to
+    make pipes work again in the postrun etc commands in the 
+    /etc/menu-methods/* scripts. Closes: #46971
+	
+ -- joost witteveen <joostje@debian.org>  Sat,  9 Oct 1999 17:01:14 +0200
+
+menu (2.1.4-1) unstable; urgency=low
+
+  * remove -n "$icon" as xterm arguments, as that was fake. Closes: #46788
+  * update-menus now reports error status of /etc/menu-methods/*
+    scripts
+  * When run under dpkg, don't print messages about
+    /tmp/update-menus.$$ files any more.
+  * Partially removed debugstatements to debug menu-2.1.3-2 actually
+    caused line numbers reported on errors to be wrong. Fixed.
+  * Finally used derived execptions (removed those for g++ 2.7, but
+    now they work again).
+  * More adoptations to stdc++'s string class (warning!)
+  * Use -Wall again.
+	
+ -- joost witteveen <joostje@debian.org>  Tue,  7 Oct 1999 22:28:08 +0200
+
+menu (2.1.3-3) unstable; urgency=low
+
+  * Due to changes in the way the rope::find() function in
+    libstdc++ works, menu 2.1.3-2 at all mem and then segfaulted.
+    now using `string' again (no rope), and fixed that segfault.
+  * Applied second patch from Joey Hess, to close open 
+    filehandles (this time the `32!=r' version)
+	
+ -- joost witteveen <joostje@debian.org>  Tue,  5 Oct 1999 22:28:08 +0200
+	
+menu (2.1.3-2) unstable; urgency=low
+
+  * Added menuentries for gpm, dpkg. (in default menu files, should be
+    in gpm/dpkg packages anyway).
+  * Applied patch from Joey Hess, to close open filehandles.
+  * Fixed error in adstring.h, that caused (one) compilation error
+    on newer versions of g++/libstdc++
+  * Fixed minor `possibly uninitialised variable' warning
+  * Replaced -Wall with -W on the g++ commandline, as a bug in
+    newer g++ or libstdc++-dev versions cause a whole load of warning 
+    messages, on just including rope.h.
+
+ -- joost witteveen <joostje@debian.org>  Sat,  2 Oct 1999 22:28:08 +0200
+
+menu (2.1.3-1) unstable; urgency=low
+
+  * Updated the description of this package, as it was 
+    somewhat outdated.
+  * Added /etc/menu-methods/menu.config to the conffiles. Fixes: Bug#42379
+  * use sigprocmask to unblock the signal I use. Under apt, libc&pthread
+    used to block SIGUSR1. To get around this, also use SIGUSR2 now.
+    I don't want to see this bug any more! Fixes: 42051, etc.
+  
+ -- joost witteveen <joostje@debian.org>  Wed,  4 Aug 1999 12:41:08 +0200
+
+menu (2.1.2-4) unstable; urgency=low
+
+  * Another test-release for bug 42051. More debugging added
+
+ -- joost witteveen <joostje@debian.org>  Mon,  2 Aug 1999 18:18:46 +0200
+
+menu (2.1.2-3) unstable; urgency=low
+
+  * Another test-release for bug 42051. Added printf just before
+    the exit(0) in the signal hander, and made the debugging output
+    slightly more clear.
+
+ -- joost witteveen <joostje@debian.org>  Sat, 31 Jul 1999 01:39:06 +0200
+
+menu (2.1.2-2) unstable; urgency=low
+
+  * Test-release for bug 42051. Added tests for returnvalues of
+    fork() and kill() calls. Although it seems unlikely that fork()
+    returning -1 is the cause of the hangs, it is good to exclude it.
+
+ -- joost witteveen <joostje@debian.org>  Thu, 29 Jul 1999 12:52:11 +0200
+
+menu (2.1.2-1) unstable; urgency=low
+
+  * #41783, `furter->further';
+  * #41783, delete empty logfiles. Fixes: #41783
+    (Note: the empty logfile does stay some time in /tmp: it only
+    vanishes when update-menus finished running).
+  * Using signals to communicate between forked-in-background child
+    and parent as to when the parent can exit(0). Now the
+    second update-menus started in one run of dpkg will (by default)
+    exit totally silently.
+ 
+ -- joost witteveen <joostje@debian.org>  Fri, 23 Jul 1999 16:23:13 +0200
+
+menu (2.1.1-1) unstable; urgency=low
+
+  * Fixed segfault on empty menu-entry-files. Fixes: #41131
+  * Fixed messy translate_menu handling. Fixes: Bug#41077
+
+ -- joost witteveen <joostje@debian.org>  Thu, 22 Jul 1999 15:45:16 +0200
+
+menu (2.1.1-0) unstable; urgency=low
+
+  * Applied patch in Bug#41620, fixes: #41620
+  * Added stripdir() function, that does what basename() 
+    should have done
+  * Fixed bug in basename(), that made it drop the last char.
+
+ -- joost witteveen <joostje@debian.org>  Tue, 20 Jul 1999 22:53:05 +0200
+
+menu (2.1.0-2) unstable; urgency=low
+
+  * OK, postrm actually installed the info file instead of removing it.
+  * /etc/menu-method/menu.h was messed up. Fixed.
+
+ -- joost witteveen <joostje@debian.org>  Tue,  6 Jul 1999 04:34:48 +0200
+
+menu (2.1.0-1) unstable; urgency=low
+
+  * menu.text now called menu.txt, fixing: #40569
+  * While I was at it, also added menu.info
+  * Now use automake, autoconf.
+  * Now use debhelper
+  * Now i18n-ized. (Though only available language is Esperanto,
+    and it's not very much use internationalising menu, as it only
+    is used by system admins etc. I done it mostly to get experience
+    with the process).
+  * Also `i18n'-ized the text in the Debian tree. So, if you now
+    do "LC_ALL=eo update-menus", the tree (and some titles) will
+    appear in Esperanto (That's the only language available now).
+    Documentation, and some structure for the maintainers work etc,
+    shoudl still be provided, but techinically it's working.
+
+ -- joost witteveen <joostje@debian.org>  Tue,  6 Jul 1999 03:25:53 +0200
+
+menu (2.0.0-5) unstable; urgency=low
+
+  * Removed bugs from the hint_mixedpenalty, should now work OK.
+  * removed strange code that would cause menu to write to
+    the rootprefix instead of userprefix, if userprefix didn't exist.
+  * Speedup, especially for systems with big menutrees.
+  * Added for menu-methods: onlyrunasroot, onlyrunasuser, preruntest
+
+ -- joost witteveen <joostje@debian.org>  Tue, 29 Jun 1999 21:57:46 +0200
+
+menu (2.0.0-4) unstable; urgency=low
+
+  * Applied spelling-fixes patch to install-fvwmgenmenu.sh.
+    Fixes: #39847
+  * Added file /usr/doc/menu/menu.text.gz. Fixes: #39829
+  * Added sort= definition in install-menu config file.
+    Now it's possible to sort depending on whether something
+    is a submenu etc.
+  * Added a hint_mixedpenalty parameter to the hint optimization
+    routines. (still buggy)
+
+ -- joost witteveen <joostje@debian.org>  Tue, 22 Jun 1999 23:45:36 +0200
+
+menu (2.0.0-3) unstable; urgency=low
+
+  * Spelling fixes by Ray dassen
+  * removed bashisms in debian/rules
+  * minor corrections to menu.sgml
+  * the cat `menu-method' now doesn't cercumvent the silly compat
+    restrictions of menu-1.5 any more, as those restrictions don't exist
+    any more.
+  * oops, nearly made lintian report an error, as install-fvwmgenmenu.sh
+    didn't have an manual page yet... (Created one, and updated the
+    install-fvwmgenmenu manual page)
+  * upped the default hint_mlpenalty in menu.h to 2000, as it seems that
+    people with more packages installed need it, and execution time
+    doesn't really grow to the moon.
+
+ -- joost witteveen <joostje@debian.org>  Sun, 20 Jun 1999 22:56:53 +0200
+
+menu (2.0.0-2) unstable; urgency=low
+  * Added little bit of info about the hints in /usr/doc/menu/menu.sgml
+    (and corrected errors)
+  * added compat= option in the update-menus config file, so that
+    one could also have all menu entry files in menu-2 format (though
+    that is not advisable!)
+  * fixed bug in install-fvwmgenmenu.sh script, that would generate
+    wrong cp commant in explanation of what to do.
+  
+ -- joost witteveen <joostje@debian.org>  Sat, 19 Jun 1999 16:30:45 +0200
+
+menu (2.0.0-1) unstable; urgency=low
+
+  * Hints. (automatic optimization of menu tree)
+  * Removed /usr/lib/menu/default/debiandoc-sgml, fixes: 32530
+  * changed /etc/menus/ to /etc/menu in menufile(5).
+  * in update-menus I now check for the return value of stat()
+  * Finally removed that compat code. Now all menu-method files
+    that still used the two-years old syntax will not work any more
+    (generate an nice message, as opposed to the segfault in 1.5-20).
+    Also, the first (#!/...) line in the menu-method scripts doesn't
+    have to be "#!/usr/sbin/install-menu" any more, as the new-syntax
+    menu data is now always used.
+  * Now using stl rope, instead of that home-brewn replacement of the
+    String class from libg++.
+  * typo in default dpkg menuentry file.
+  * update-menus doesn't read menu entry files that have names that
+    end in ".bak" or start with "menu.config".
+  * There's now a `menu-2' compat mode, where you don't have to
+    use '\' at the end of every continuation line, but have to
+    use ';' to signal the end of a line of input. (activate in menu-method
+    files by "compat=menu-2", or in any file with "!C menu-2")
+  * Fixed segmentation fault in Translate stuff, and another error
+    that caused update-menus to use only the first translate definition
+    in /etc/menu-methods/translate_menus
+ -- joost witteveen <joostje@debian.org>  Fri, 18 Jun 1999 21:50:18 +0200
+
+menu (1.5-20) unstable; urgency=low
+
+  * added rm -rf debian/files, to clean target in rules file,
+    fixes: 34178
+  * removed bash-isms from the example postinst file in 
+    the documentation.
+  * many other documentation updates.
+  * mentioned in the docs that you can use `#' as comment 
+    specifier in the menu entry files. Fixes: 34371
+  * removed xbase menu-entry-file. Fixes: ???. Hope all entries in
+    there really now are present in the X packages, though.
+  * removed xrn, xpuzzles, tcsh, rxvt, latex2html, imagemagick 
+    default menuentry files, as they are now all in their own packages.
+  * spelling fix in su-to-root (priveleges -> privileges), fixes: 35720
+  * new functions: level(), firstentry(), lastentry(), nstring()
+  * entrycount() now doesn't return the number of entries in submenu of
+    the current child, but the number of entries in this menu.
+  * Although the $sort support was largely untested, it does work. Added
+    better explanation to menu.sgml
+  * error messages now report the line with the error better. 
+  * New functions: rcfile() examplercfile()  mainmenutitle() rootsection()
+    rootprefix() userprefix() treewalk() postoutput() preoutput(). They
+    output whatever they are defined to be in the menu-method file.
+    Fixes: 36171
+
+ -- joost witteveen <joostje@debian.org>  Sat,  1 May 1999 16:57:59 +0200
+
+menu (1.5-19) unstable; urgency=low
+
+  * Finaly fixed that `cannot remove lockfile' bug.
+    (now using `real' advisory locking, this really appears neccecary).
+    the new mechanism is a lot simpler, and every second update-menus
+    that gets started will die itself if there's already a lock on 
+    the pidfile.
+    For this, also changed the postinst file, to `manually'
+    kill any old update-menus still running, as in this case we really
+    want the new update-menus to take over (not the old one).
+
+ -- joost witteveen <joostje@debian.org>  Thu,  4 Mar 1999 23:10:58 +0100
+
+menu (1.5-18) unstable; urgency=low
+
+  * s/Udate/Update/, in update-menus.cc. fixes: 30214
+  * removed definition of def_error in configinfo, so that `throw
+    def_error' can now be caught outside the configinfo class. Maybe this
+    fixes NN. (not sure, cannot reproduce it).
+  * default `verbosity' level is now `quiet', fixing: 30372
+  * Added information about the /etc/menu-methods/menu.config file,
+    as this was completely lacking in the manual page.
+  
+ -- joost witteveen <joostje@debian.org>  Sun,  6 Dec 1998 21:20:37 +0100
+
+menu (1.5-17) frozen; urgency=low
+
+  * Added 'technical' section to preferred menu layout. (promised to do
+    that already long ago...) 
+  * If install-menu runs as user, $rootprefix/ is used if $userprefix
+    doesn't exist. Fixes 26851, but not as nicely as Joey suggests.
+    (install-menu tests for the existance of the directory, not for the
+    files within that dir, so if $userprefix exists, it has to contain all
+    files).
+  * Updated standards version.
+  * Added manual pages for install-menu, install-fvwmgenmenu, su-to-root
+    wm-menu-config (for lintian)
+  * Fixed some misplacements in the menu.sgml file. In particular, part of
+    the section intended for `packages with wm's', was put under `packages
+    with applications'. This should have caused serious confusion.
+
+ -- joost witteveen <joostje@debian.org>  Tue, 20 Oct 1998 22:33:00 +0200
+
+menu (1.5-16) unstable; urgency=low
+
+  * Corrected 'WindowManagers' entry in preferred menu tree (in the docs)
+  * Added plurals to pixmap directories. Fixes: 26479
+  * Changed 8 spaces to one tab in debian/rules. Fixes:26865
+
+ -- joost witteveen <joostje@debian.org>  Sun, 20 Sep 1998 20:54:01 +0200
+
+menu (1.5-15) unstable; urgency=low
+
+  * Applied suggested changes in bugreport 25231. Fixes: 25231
+  * Added Apps/hamradio to preferred menu structure (nobody but
+    hamradioers will see it anyway (request by: Joop Stakenborg, 
+    stakenborg@hyph.azr.nl))
+  * replaced '[[:space:]]' with '[ \t]' in update-menus. Should at
+    least make menu work around sed changes (Fixes: 25035)
+  * Moved 'waiting for dpkg to finnish' message to just before the fork(),
+    so that the user will now see it where it's expected (before, the
+    message sometimes came after dpkg started installing the next
+    pacakge). Also the message now only comes with the '-v' option.
+ -- joost witteveen <joostje@debian.org>  Fri, 14 Aug 1998 22:24:43 +0200
+
+menu (1.5-14) unstable; urgency=low
+
+  * Added "Apps/Text" to the documentation
+  * now uses "dpkg --get-selections" to get the installed packages.
+  * applied suggested patch to su-to-root (default exit 1, only
+    retry if user answered Y or y).
+
+ -- joost witteveen <joostje@debian.org>  Sat, 11 Jul 1998 22:30:08 +0200
+
+menu (1.5-13) unstable; urgency=low
+
+  * Removed the packaging manual entry.
+  * removed comments in the debian/rules file from imurdoc, saying it was
+    "last modified 1994", and other rather out of date stuff.
+  * Fixes to compile with egcs. (now uses optimisation!)
+  * More understandable error message if menuentry files are incorrectly
+    installed executable.
+  * update-menus now installs without the executable bit on, the postinst
+    turns it on.
+
+ -- joost witteveen <joostje@debian.org>  Sat, 23 May 1998 16:33:12 +0200
+
+menu (1.5-12) frozen unstable; urgency=low
+  * Fixed postrm example in documentation. (actually, quite serious --
+    many window managers should now be changed, but fortunately the
+    bug fixed doesn't occur very easily).    
+  * Fixed mis-handling of files that don't end with newline.
+    noticed by Jochen Kronjaeger <Kronjaeg@Stud-Mailer.Uni-Marburg.DE>
+    (thanks!)
+
+ -- joost witteveen <joost@rulcmc.leidenuniv.nl>  Mon, 23 Mar 1998 20:42:14 +0100
+
+menu (1.5-11) unstable; urgency=low
+
+  * Went through the buglist again, and updated the default
+    menuentryfiles (and removed those that now exists in other
+    debian packages). Fixes: 13880 15081 17171 17215 17292.
+
+ -- joost witteveen <joost@rulcmc.leidenuniv.nl>  Sun, 15 Mar 1998 10:39:08 +0100
+
+menu (1.5-10) unstable; urgency=low
+
+  * Oh, yes, Aaron Howell, you were right. I did forget to close (free)
+    some files. Fixed that, so this fixes: 17253
+  * Fixed error in install-menu that caused the creation directories
+    in / (at least for KDE and wmaker. Not sure why not for other wm's)
+  
+ -- joost witteveen <joost@rulcmc.leidenuniv.nl>  Sun, 15 Mar 1998 10:02:23 +0100
+
+menu (1.5-9) unstable; urgency=low
+
+  * Fixed several possible segmentation faults (all in error-reporting
+    routines)
+  * Input buffer for 'readline' increased to 10240 bytes. Fixes: #19482
+    (should really fix this sometime)
+
+ -- joost witteveen <joost@rulcmc.leidenuniv.nl>  Thu, 12 Mar 1998 21:23:13 +0100
+menu (1.5-8) unstable; urgency=low
+
+  * Removed reference to README in all files where it was still referenced.
+    (many, many files, that was!)
+  * changed a \fL to a \fB in the menufile.5 manpage
+    (fix suggested by Joey Hess).  fixes: #17187
+  * Make wm-menu-config an executable script.
+  * applied suggested fixes to doc/menu.sgml, fixes: #17475
+  * changed default warning "#Automatically generated file. Do not edit
+    (see /usr/doc/menu/README)" to point to /usr/doc/menu/html/index.html.
+    (This is placed at the top of the files install-menu generates).
+  * document the availability of "!include file" in the menuentry files
+  * Changed a "~/menu-methods" to "~/.menu-methods" in update-menus.1
+  * Numerous changes to the documentation, after many suggestions
+    from Yann Dirson (thanks!)
+  * Applied patch from Herberd, fixes:19056  
+  * removed the libg++ dependancy code (not the libg++ package, it still
+    uses libstdc++).
+ -- joost witteveen <joost@rulcmc.leidenuniv.nl>  Sun, 8 Mar 1998 12:00:13 +0100
+
+menu (1.5-7) unstable; urgency=low
+
+  * Really added wm-menu-config file (Fixes: #17169)
+  * compressed menufile.5 (Fixes: #17168)
+  * Added geometry to rxvt entry in menu.h (as suggested in #17171)
+  * Really removed gv default menuentry. (Fixes: #17170)
+
+ -- joost witteveen <joost@rulcmc.leidenuniv.nl>  Fri, 16 Jan 1998 02:23:13 +0100
+
+menu (1.5-6) unstable; urgency=low
+  * done nothing at all, fixes: #13648, #13657, #13676, #13677, #13680, #15765
+    (fixing 6 GRAVE bugs, by doing nothing)
+  * Removed default menufiles for xlockmore, fixes: #10831 
+  * Added the "suggested" variables "geometry" and "visability" to
+    the menu.sgml file, and /etc/menu-method/menu.h.
+  * Added some comments to /usr/doc/menu/examples/cat
+  * Fixed the dpkg default menuentry file. Fixes: #14170, #15847
+  * Finally applied (most of) patch supplied by Nikita Schmidt.
+    Fixes: #14318
+  * removed convert-menuentry, fixes: #15914
+  * Applied patch from Dirk Luetjens <dirk@luedi.oche.de>
+    fixes: Bug#15871
+  * Now compresses update-menus.1 manual page
+    fixes: #14569
+  * Compressed changelog.Debian. Fixes: #15429
+  * Removed the following default menuentry files: 
+      afterstep ddd fvwm2 fvwm95 gnuplot gv menu olvwm pixmap procps
+      vim xfig xpaint xxgdb
+    as they are already present in the packages themselves.
+    (list supplied by Andreas Jellinghaus <aj@fw-athene.wiwi.uni-karlsruhe.de>)
+  * Added a wm-menu-config script, and updated documentation.
+    Now window managers are encouraged to use this instead of directly
+    calling update-menus. (the script does more).
+
+ -- joost witteveen <joost@rulcmc.leidenuniv.nl>  Thu, 15 Jan 1998 00:48:08 +0100
+
+menu (1.5-5) unstable; urgency=low
+
+  * Added ifelsefile, and catfile functions for Andreas Jellinghaus.
+
+ -- joost witteveen <joost@rulcmc.leidenuniv.nl>  Tue,  7 Oct 1997 22:21:24 +0200
+
+menu (1.5-4) unstable; urgency=low
+
+  * Removed several "debugging" files (gmon.out, output of strace, etc).
+  * Now really create html documentation during pacakge build.
+
+ -- joost witteveen <joost@rulcmc.leidenuniv.nl>  Thu, 18 Sep 1997 19:38:27 +0200
+
+menu (1.5-3) unstable; urgency=low
+  * Fixed a bug found by a close cooperation with the xpat2 maintainer
+    and Lars Wirzenius: if a menuentry (for xpat2 in this case) begins with
+    "?package(non-installed-package)", and has less than some number of
+    variable-assignements after the colon, update-menus reported an error.
+    (if there are "enough" assignemnts, no error will be reported, but
+    update-menu would create a bogus menuentry). Good work, guys!
+  * Switched the "postinst" and "postrm" labels in the documentation,
+    fixing bug#12522 (and 12521, for that matter).
+  * added a much bigger xbase menuentry file. This one really should
+    go into xbase itself, and Mark asked me for it, but I've had too
+    little time to really check this. Hopefully by including it in
+    menu it will recieve some more checking, untill I feel confident
+    enough to send it to Mark Eichin.
+  * Removed xlockmore menuentry file, is now part of xlockmore.
+  * (and I removed another menuentry file, but cannot remember
+    which one).
+ -- joost witteveen <joost@rulcmc.leidenuniv.nl>  Thu, 18 Sep 1997 19:18:44 +0200
+
+menu (1.5-2) unstable; urgency=low
+
+  * Added a sanity-check for instal-menus config file (prevents
+    setfaults).
+  * removed xlockmore default menu entries, they are now in the
+    xlockmore package (or will be, soon).
+  * corrected default dpkg menu entries.
+  
+ -- joost witteveen <joost@rulcmc.leidenuniv.nl>  Sun,  3 Aug 1997 22:19:11 +0200
+
+menu (1.5-1) unstable; urgency=low
+
+  * Added entrycount(), entryindex functions. 
+  * Added add(), sub(), mult(), div() functions.
+  * moved cmap.xpm to .../pixmaps
+  * now includes sgml and html versions of README.
+    (due to restrictions of debiandoc, no info files can be made!)
+  
+ -- joost witteveen <joost@rulcmc.leidenuniv.nl>  Sun, 13 Jul 1997 13:13:11 +0200
+
+menu (1.4-2) unstable; urgency=low
+
+  * Now depends on libg++272. (Made possible by a dpkg-source bugfix
+    from Joey Hess).
+    
+  * Few fixes to how debugging/error output is handled (cosmetic).
+  * this release still has a (harmless) race-condition (noticed
+    by Joey Hess),when two update-menus programmes run simultaniously
+    while dpkg -i something is running (or Suspended).
+
+ -- joost witteveen <joost@rulcmc.leidenuniv.nl>  Thu, 10 Jul 1997 23:05:14 +0200
+
+menu (1.4-1) unstable; urgency=low
+
+  * Due to extra features/bugreporting, this version doesn't work well
+    with the menu-bugs in fvwm95_2.0.42a-10, and latex2html_96.1.h-5.
+
+  * added ability do "define" functions to install-menu.
+    (very usefull if you want to have a common xterm/rxvt for all
+    window managers)
+  * '!include \"/etc/menu-method/filename\"'
+  * read !include "filename" relative to current direcotry
+  * provide /etc/menu-method/menu.h example file.
+  * parsing of (all) files files somewhat rewritten; should be
+    more stable now (except for bugs).
+  * trailing spaces are stripped (so a \ at the end of the
+    line will always be a continuation line, even if there's a
+    space after it).
+  * _Much_ better error reporting.
+  * removed all those pesky "icon=none" from the example menufiles.
+  * in new menu format, "package(local.*)" is considered installed
+  * fix bug in hotkey generation
+  * first check for "examplercfile" (system.$wm-menu), and then create
+    output file.
+  * made the README in /usr/doc/menu/example/README somewhat clearer as
+    to what the purpose of these files is
+  * incorporated afterstep-package menu-method's into my example
+    menu-method (allong with the "!include menu.h" stuff).
+  * install-menu: added toupper() and tolower() functions
+  * do not attempt to read menuentry files with the name "core".
+  * Using libc6 now
+  * fixed gpmconfig entry.
+  * added Joey's cmap.xpm file.
+  * in compat mode (for old /etc/menu-methods's), write esccpp($title)
+    as identifier (fixes "install-menu uses text instead of x11 entry"
+    bug).
+  * in case of missing "section=" (in new-format menuentry), assume
+    seciont="/". (fixes a reported bug, I believe).
+  * "+" can now be part of a package name, in new-format menuentries.
+    (previously, doc++ and libg++ couldn't have a new-format menuentry).
+  * executable menuentries are now executed, and the stdout used as
+    menuentry (nice feature request from Joey Hess)
+  * update-menus now reads config info in /etc/menu-methods/menu.config
+    (or ~/.menu-methods/menu.config). Currently can specify only error
+    logging. (set "verbosity=quite" in /etc/menu-methods/menu.config to
+    remove all messages). Not very well tested yet.
+  
+ -- joost witteveen <joost@rulcmc.leidenuniv.nl>  Sat, 21 Jun 1997 13:24:55 +0200
+
+menu (1.3-2) frozen unstable; urgency=low	
+  * couple of simple bug-fixes. All not very serious, but would
+    like this to go into frozen anyway.
+  * fixed menuentry(5) manual page (was simply wrong)
+  * made the default install messages somewhat nicer (in order not
+    to scare away newbies)
+  * Redirected stderr of the killall command in postinst to /dev/null
+  * fixed typos in extended description (in control file).
+  
+ -- joost witteveen <joost@rulcmc.leidenuniv.nl>  Wed, 14 May 1997 22:13:01 +0200
+  
+menu (1.3-1) frozen unstable; urgency=low
+
+  * Only change: added ifeq(), ifneq(), ifeqelse(), ifroot() to install-menu
+    (and the README).
+  * Added a "killall update-menus" to postinst (to prevent problems if
+    update-menus is upgraded along with other packages that use it).
+  
+ -- joost witteveen <joost@rulcmc.leidenuniv.nl>  Thu, 8 May 1997 12:43:00 +0200
+
+menu (1.2-3) frozen unstable; urgency=low
+
+  * Another two-line-fix to update-menus, fixing the compat mode code.
+    (if no icon was defined, that resulted in errors for the compat mode).
+  * I would like this release to go into frozen, as it does
+    fix a long-standing bug (still present in frozen), and will
+    improve many people's experience with the menu's after isntalling
+    some "unstable" packages (some of which may need the new menu
+    functionality).
+  
+ -- joost witteveen <joost@rulcmc.leidenuniv.nl>  Mon, 5 May 1997 15:29:12 +0200
+
+menu (1.2-2) unstable; urgency=low
+
+  * Thanks, Andy Mortimer, for noticing I don't close the fd's. 
+    doing that now.
+
+ -- joost witteveen <joost@rulcmc.leidenuniv.nl>  Sat, 3 May 1997 15:43:46 +0200
+
+menu (1.2-1) unstable; urgency=low
+
+  * Changes to README (documents parent(), basename()).
+  * Slichtly changed the dpkg-lockfile detection in update-menus,
+    after a report from Andy Mortimer
+
+ -- joost witteveen <joost@rulcmc.leidenuniv.nl>  Sat, 3 May 1997 14:52:45 +0200
+
+menu (1.2) unstable; urgency=low
+
+  * Fixes to example dwww script (though Jim Pick has a much
+    better one)
+  * Fixes to install-menu, for submenu entries.
+  * Fixes to update-menus, no core dup on malformed "?package(..)" in
+    menuentry files.
+  * extra functions replacewith(), prefix() (install-menu)
+  * make hotkeys case-insensitive.
+  * the genmenu=, prerun=, postrun= assignments can now contain
+    substitutions just like the startmenu etc ones.
+  * Added a "|| errno==EACCES" after the attempt to lock the dpkg lockfile
+    to hopefully check for all possible errno valus fcntl creates.
+  * changed the "your system is messed up badly" message to 
+    something nicer (now it is "please help me track down 
+    this problem I have")
+  * update-menus only gives the "forking to backround" text when
+    it didn't kill any other update-menus (so you'll only see it
+    once in a multy-package install session).
+
+
+ -- joost witteveen <joost@rulcmc.leidenuniv.nl>  Wed, 30 Apr 1997 22:55:57 +0200
+
+menu (1.1) unstable; urgency=low
+
+  * Added a few more example-menumenthods (afterstep, ctwm, twm, fvwm,
+    fvwm95, dwww). With dwww you now have descriptions of the packages
+    in the http://rulcmc.leidenuniv.nl/dwww/menu.html page.
+    (make that http://localhost/dwww/menu.html, after you've instaled it).
+  * These new menu-methods are now better than the old ones, as they
+    properly quote the title.
+  * fixed a few bugs in install-menu that caused it to interpret
+    ifnempty() and ifempty() the wrong way around (also ifelse,...).
+  * fixed permissions in /usr/doc/examples/*
+  * fixed a few "default" menuentries.
+    
+
+ -- joost witteveen <joost@rulcmc.leidenuniv.nl>  Mon, 21 Apr 1997 23:30:28 +0200
+
+menu (1.0) unstable; urgency=low
+
+  * complete remake, added a lot of functionality.
+  * New features
+     - support for long titles and descriptions,
+     - much more flexible /etc/menu-methods files,
+     - if dpkg is running, forks into background, to get rid of that
+       "need to run update-menus twice" syndrome.
+     - support for hotkeys
+  * see /usr/doc/menu/BUGS for known limitations of this release.
+
+ -- joost witteveen <joost@rulcmc.leidenuniv.nl>  Wed, 16 Apr 1997 20:06:45 +0200
+
+menu (0.11) unstable; urgency=low
+
+  * fix "#" bug (a # is only a comment if it follows a space or newline)
+  * add an example to create a www page for packages providing
+    "dwww" documentation
+  
+ -- joost witteveen <joost@rulcmc.leidenuniv.nl>  Thu, 23 Jan 1997 22:27:30 +0100
+
+menu (0.10) unstable; urgency=low
+  
+  * Manpages by Joey Hess (now it's a real package!)
+  * if user runs, and ~/.menu-methods exists, read the
+    config files from there (and don't process /etc/menu-methods).
+  * Add support for olvwm ("treewalk" attribute /etc/menumethods)
+  * -f -stdio is now standard (options are ignored, and always passed on
+    to /etc/menu-methods/*)
+  * files in /etc/menu-methods with anything other than letters/figures/_-
+    are silently ignored by update-menus
+  * some speedup in install-fvwmgenmenu (not as much as I'd hoped).
+  * added $d{var}, $s{var}, $b{var} variable substitutions
+    (request from Joey Hess).
+  * if getuid()!=0, also parse /etc/menus, /usr/lib/menus.
+  * Moved Lockscreen and Savescreen to Screen/ in default menus
+  
+ -- joost witteveen <joost@rulcmc.leidenuniv.nl>  Sun, 12 Jan 1997 00:46:38 +0100
+
+menu (0.9) unstable; urgency=low
+
+  * "popup" bugfix
+  * Don't read /etc/menu-methods/*.* files (with a dot in it, usually
+    backup files from dpkg).
+ -- joost witteveen <joost@rulcmc.leidenuniv.nl>  Fri, 3 Jan 1997 14:31:15 +0100
+
+menu (0.8) unstable; urgency=low
+  * Fixing longstanding bug (one Joey reported loads of times)
+    when update-menus is run from a postinst (from a previously
+    uninstalled package), update-menus assumes this pacage is not installed.
+    Fixed by looking at commandline of ppid, and checking for
+    "bash /var/lib/dpkg/info/$package.postinst"
+  * The fvwmgenmenu now has a more general compat mode that should
+    supports all window-managers, without recompilation.
+    For more robustness, this mode is incompatible with the old
+    install-fvwm2menu programme, though (different/no cache files).
+  * update-menus has a mode to pipe the menuentries through
+    stdin of the menu-method installer programmes (-f --stdin option).
+    This should make everything somewhat faster.
+  * The old /etc/menu-methods/* config files may not work any more.
+    (Although I tried fvwm95, and that still works).
+    If your window manager doesn't have the debian menus any more, please
+    copy the relevant files from /usr/doc/menu/examples to
+    /etc/menu-methods, and run "update-menus -f".
+  * removes couple of /usr/lib/menu/default files that now are in the packages
+    themselves.
+  * update-menus hands -f uption to menu-methods
+
+ -- joost witteveen <joost@rulcmc.leidenuniv.nl>  Sun, 15 Dec 1996 22:37:25 +0100
+
+menu (0.7) unstable; urgency=low
+
+  * Added some 9wm support (now gwm is the only manager without support)
+    (Although only the pdmenu and fvwm95 packages support it. The other
+    window manager have support files in /usr/doc/menu/examples)
+  * One bugfix in update-menus. 
+  * Added a few shells. These are in the "/Apps/Shells" section, and
+    therefore I had to rename "/Shells" to "/XShells". That OK with everybody?
+  * fvwm/twm/9wm install-fvwmgen menu compat modes now use full id's
+    for the submenu's (request from Joey)
+  * install-fvwmgenmenu now replaces $%{icon} with %icon% if icon!="none"
+    in the "supported" section in the config file. This is added
+    to the example config files for install-fvwmgenmenu
+  
+ -- joost witteveen <joost@rulcmc.leidenuniv.nl>  Fri, 13 Dec 1996 19:01:39 +0100
+
+menu (0.6) unstable; urgency=low
+
+  * Added example files for twm and afterstep window manager. (along with
+    the already avaliable fvwm, fvwm2 example files).
+  * Again, the "default" support for fvwm2 has been removed (version 0.5),
+    as this should be in fvwm2. See /usr/doc/menu/examples/${wm} on how
+    to add support.
+  
+ -- joost witteveen <joost@rulcmc.leidenuniv.nl>  Sun, 8 Dec 1996 21:53:52 +0100
+
+menu (0.5) unstable; urgency=low
+
+  * do space-stripping for fvwm2 (should be in fvwm2 package, but never mind)
+
+ -- joost witteveen <joost@rulcmc.leidenuniv.nl>  Sun, 1 Dec 1996 13:54:10 +0100
+
+menu (0.4) unstable; urgency=low
+
+  * if the .updated-menus "cache" file has incorrect entries, update-menus
+    could loop forever. Removed this bug.
+
+ -- joost witteveen <joost@rulcmc.leidenuniv.nl>  Thu, 28 Nov 1996 12:28:17 +0100
+
+menu (0.3) unstable; urgency=medium
+  * Added Depends: shlibs line to controlfile.
+  * allowed for spaces in description fields (quote them with "sp ace")
+    (so now the "hello" App/Programming entry works!)
+  * install default menufile if new one in /etc/menu vanished
+  * Assume all packages called "local*" to be installed
+  * Now has provision for starting other menu managers (twm),
+    and fvwm{,2} modules (mostly untested). (this should be in the fvwm2
+    package, though). Note that due to a bug in fvwm2 (install-fvwm2menu?)
+    these don't work, at the moment. (See BUGS file in source)
+  * First remove the menu-id's of to-be-updated menufiles, as the old
+    menufile may have stale menu-id's in it.
+  * Added "-v" (verbose) option to update-menus and
+    /etc/menu-methods/fvwm2 
+  * Still using filenames to encode the package names, but Lars has nearly
+    convinced me! (If only I knew how solaris works). Still, I made the
+    default menuentries conform Lars' ideas, and people using this package
+    can just make (temporarily) both the filename and the entryid have
+    the package name in it.
+ -- joost witteveen <joost@rulcmc.leidenuniv.nl>  Wed, 27 Nov 1996 21:08:02 +0100
+
+menu (0.2) unstable; urgency=low
+
+  * Added a few README's to the menu directories
+  * now advice the packages to put their menufiles in /usr/lib/menu, after
+    suggestion form Joey.
+  * Removed buglet from update-menus.
+  * Next is from the (unreleased) 0.1 version:
+  * Totally changed menu idea; the menu files are now conffiles
+    living in /etc/menu; and systemadm and users can run update-menus
+    any time something changed in the /etc/menu or the user's ~/.menu
+    database.
+  * Users can override system-wide menu-database.
+    (this is currently not fully implemented: there still is a bug
+    when removing system-menu entries)
+  * This menu-package now provides some 50 menu entries in /usr/lib/menu
+    after installes this package you'll get a nice menu instantly, and
+    hopefully, this will serve as a skeleton for other pacakge provides.
+    (of cource, /etc/menu entries override the /usr/lib/menu entries).
+ -- joost witteveen <joost@rulcmc.leidenuniv.nl>  Mon, 25 Nov 1996 20:35:34 +0100
+
+menu (0.1) unstable; urgency=low
+  * Totally changed menu idea; the menu files are now conffiles
+    living in /etc/menu; and systemadm and users can run update-menus
+    any time something changed in the /etc/menu or the user's ~/.menu
+    database.
+  * Users can override system-wide menu-database.
+    (this is currently not fully implemented: there still is a bug
+    when removing system-menu entries)
+  * This menu-package now provides some 50 menu entries in /usr/lib/menu
+    after installes this package you'll get a nice menu instantly, and
+    hopefully, this will serve as a skeleton for other pacakge provides.
+    (of cource, /etc/menu entries override the /usr/lib/menu entries).
+
+ -- joost witteveen <joost@rulcmc.leidenuniv.nl>  Sun, 24 Nov 1996 19:22:41 +0100
+
+menu (0.0) unstable; urgency=low
+
+  * initial release
+
+ -- joost witteveen <joost@rulcmc.leidenuniv.nl>  Tue, 5 Nov 1996 22:42:09 +0100
+
